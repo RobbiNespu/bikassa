@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2011 SSI Schaefer Noell GmbH
- *
- * $Header: $
- */
-
 package com.eb.warehouse.io.ngkp.message;
 
 import static com.eb.warehouse.io.ngkp.BytesToInt.shortFromBytes;
@@ -13,25 +7,25 @@ import static com.eb.warehouse.io.ngkp.BytesToInt.shortFromBytes;
  * 
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
  * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author:
- * dennis.chong $
+ *          dennis.chong $
  */
 
 public abstract class TT1434 extends NGKPTelegram {
 
-  public static TT1434 fromBytes(byte[] bytes) {
-    int version = shortFromBytes(bytes[8], bytes[9]);
+  public static TT1434 fromBytes(byte[] bytes, int offset) {
+    int version = shortFromBytes(bytes[offset + 8], bytes[offset + 9]);
     TT1434 msg = null;
     if (version == 0) {
-      msg = TT1434Version1.fromBytes(bytes);
+      msg = new TT1434Version1();
     } else if (version == 1) {
-      msg = TT1434Version2.fromBytes(bytes);
+      msg = TT1434Version2.fromBytes(bytes, offset);
     }
 
-    msg.setSenderID(shortFromBytes(bytes[0], bytes[1]));
-    msg.setReceiverID(shortFromBytes(bytes[2], bytes[3]));
-    msg.setTelegramType(shortFromBytes(bytes[4], bytes[5]));
+    msg.setSenderID(shortFromBytes(bytes[offset + 0], bytes[offset + 1]));
+    msg.setReceiverID(shortFromBytes(bytes[offset + 2], bytes[offset + 3]));
+    msg.setTelegramType(shortFromBytes(bytes[offset + 4], bytes[offset + 5]));
     msg.setVersion(version);
-    msg.setTopic(shortFromBytes(bytes[10], bytes[11]));
+    msg.setTopic(shortFromBytes(bytes[offset + 10], bytes[offset + 11]));
     return msg;
   }
 

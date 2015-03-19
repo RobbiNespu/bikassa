@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.ngkp;
 
 /**
@@ -9,14 +8,13 @@ package com.eb.warehouse.io.ngkp;
 
 public final class BytesToInt {
 
-  private BytesToInt() {
-  }
+  private BytesToInt() {}
 
   public static int shortFromBytes(byte msb, byte lsb) {
-    return (msb >> 8) & 0xFF + lsb & 0xFF;
+    return ((msb & 0xFF) << 8) + (lsb & 0xFF);
   }
 
   public static int intFromBytes(byte msb, byte b2, byte b3, byte lsb) {
-    return (msb >> 24) & 0xFF + (b2 >> 16) & 0xFF + shortFromBytes(b3, lsb);
+    return ((msb & 0xFF) << 24) + ((b2 & 0xFF) << 16) + shortFromBytes(b3, lsb);
   }
 }

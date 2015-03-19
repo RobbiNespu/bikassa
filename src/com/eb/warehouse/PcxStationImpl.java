@@ -1,4 +1,3 @@
-
 package com.eb.warehouse;
 
 import java.util.Set;
@@ -37,8 +36,8 @@ public class PcxStationImpl implements PcxStation {
   private ResponseQuery pendingQuery;
 
   @Inject
-  public PcxStationImpl(@Named("outgoing") EventBus outgoingEventBus, @Named("stationId") String stationId, Set<String> targets,
-                        PcxTargetSelector targetSelector) {
+  public PcxStationImpl(@Named("outgoing") EventBus outgoingEventBus,
+      @Named("stationId") String stationId, Set<String> targets, PcxTargetSelector targetSelector) {
     this.outgoingEventBus = outgoingEventBus;
     this.stationId = stationId;
     this.targets = targets;
@@ -80,7 +79,8 @@ public class PcxStationImpl implements PcxStation {
           rs.setFrom(atLocation);
           rs.setOrder("");
           a.setStation(rs);
-          L.info("Send PCX message={} to hardware over eventBusId={}.", a, outgoingEventBus.hashCode());
+          L.info("Send PCX message={} to hardware over eventBusId={}.", a,
+              outgoingEventBus.hashCode());
           outgoingEventBus.post(a);
 
         } else {
@@ -88,7 +88,8 @@ public class PcxStationImpl implements PcxStation {
         }
 
       } else {
-        L.trace("Discarded received PCX query={}. {} is not responsible for station={}.", query, this, atLocation);
+        L.trace("Discarded received PCX query={}. {} is not responsible for station={}.", query,
+            this, atLocation);
       }
 
     } else if (r.getStation() != null) {
@@ -119,11 +120,8 @@ public class PcxStationImpl implements PcxStation {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this)
-                      .add("outgoingEventBusId", outgoingEventBus.hashCode())
-                      .add("stationId", stationId)
-                      .add("targets", targets)
-                      .add("targetSelector", targetSelector)
-                      .toString();
+    return MoreObjects.toStringHelper(this).add("outgoingEventBusId", outgoingEventBus.hashCode())
+        .add("stationId", stationId).add("targets", targets).add("targetSelector", targetSelector)
+        .toString();
   }
 }

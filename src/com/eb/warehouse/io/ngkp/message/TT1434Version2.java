@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2011 SSI Schaefer Noell GmbH
- *
- * $Header: $
- */
-
 package com.eb.warehouse.io.ngkp.message;
 
 import static com.eb.warehouse.io.ngkp.BytesToInt.intFromBytes;
@@ -13,14 +7,15 @@ import static com.eb.warehouse.io.ngkp.BytesToInt.intFromBytes;
  * 
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
  * @version $Revision: 1687 $, $Date: 2014-03-14 15:35:59 +0100 (Fr, 14 Mrz 2014) $, $Author:
- * dennis.chong $
+ *          dennis.chong $
  */
 
 public class TT1434Version2 extends TT1434 {
 
-  public static TT1434Version2 fromBytes(byte[] bytes) {
+  public static TT1434Version2 fromBytes(byte[] bytes, int offset) {
     TT1434Version2 msg = new TT1434Version2();
-    msg.setStatusRequestID(intFromBytes(bytes[12], bytes[13], bytes[14], bytes[15]));
+    msg.setStatusRequestID(intFromBytes(bytes[offset + 12], bytes[offset + 13], bytes[offset + 14],
+        bytes[offset + 15]));
     return msg;
   }
 

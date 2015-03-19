@@ -1,8 +1,8 @@
 
 package com.eb.warehouse.io.ngkp;
 
-import com.eb.warehouse.io.SendableConnectionService;
-import com.eb.warehouse.io.socket.PermanentSocketConnectionModule;
+import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.io.socket.ReconnectingSocketConnectionModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.PrivateModule;
 import com.google.inject.name.Names;
@@ -27,13 +27,13 @@ public class Ngkp2ConnectionModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new PermanentSocketConnectionModule(port) {
+        install(new ReconnectingSocketConnectionModule(port) {
           @Override
-          protected void configureBinding(Class<SendableConnectionService> def, Class<? extends SendableConnectionService> impl) {
+          protected void configureBinding(Class<SocketConnection> def, Class<? extends SocketConnection> impl) {
             bind(def).annotatedWith(Names.named("ngkp-test")).to(impl);
           }
         });
-        expose(SendableConnectionService.class);
+        expose(SocketConnection.class);
       }
     });
   }

@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.ngkp;
 
 import com.eb.warehouse.io.ngkp.message.TT1411;
@@ -13,14 +12,14 @@ import com.google.common.base.MoreObjects;
 
 public class Ngkp2Telegram {
 
-  public static Ngkp2Telegram fromHeaderAndBytes(Ngkp2Header header, byte[] payloadBytes) {
+  public static Ngkp2Telegram fromHeaderAndBytes(Ngkp2Header header, byte[] payloadBytes, int offset) {
     Ngkp2Telegram telegram = new Ngkp2Telegram();
     telegram.setHeader(header);
     if (header.getTelegramType() == 1411) {
-      telegram.setContent(TT1411.fromBytes(payloadBytes));
+      telegram.setContent(TT1411.fromBytes(payloadBytes, offset));
     } else if (header.getTelegramType() == 1434) {
       // Status and control reply
-      telegram.setContent(TT1434.fromBytes(payloadBytes));
+      telegram.setContent(TT1434.fromBytes(payloadBytes, offset));
     }
     return null;
   }
@@ -28,8 +27,7 @@ public class Ngkp2Telegram {
   private Ngkp2Header header;
   private Object content;
 
-  public Ngkp2Telegram() {
-  }
+  public Ngkp2Telegram() {}
 
   public Ngkp2Header getHeader() {
     return header;
@@ -50,6 +48,7 @@ public class Ngkp2Telegram {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("header", header).add("content", content).toString();
+    return MoreObjects.toStringHelper(this).add("header", header).add("content", content)
+        .toString();
   }
 }

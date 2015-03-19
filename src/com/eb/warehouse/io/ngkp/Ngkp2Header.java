@@ -22,7 +22,7 @@ public class Ngkp2Header {
     header.telegramLength = BytesToInt.shortFromBytes(bytes[0], bytes[1]);
     header.destinationAddress = bytes[2];
     header.telegramType = bytes[3];
-    header.telegramCounter = bytes[4];
+    header.telegramCounter = (char) bytes[4];
     header.protocolVersion = bytes[5];
     return header;
   }
@@ -30,7 +30,7 @@ public class Ngkp2Header {
   private int telegramLength;
   private int destinationAddress;
   private int telegramType;
-  private int telegramCounter;
+  private char telegramCounter;
   private int protocolVersion = 2;
 
   public Ngkp2Header() {
@@ -60,11 +60,11 @@ public class Ngkp2Header {
     this.telegramType = telegramType;
   }
 
-  public int getTelegramCounter() {
+  public char getTelegramCounter() {
     return telegramCounter;
   }
 
-  public void setTelegramCounter(int telegramCounter) {
+  public void setTelegramCounter(char telegramCounter) {
     this.telegramCounter = telegramCounter;
   }
 

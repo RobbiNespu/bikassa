@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2011 SSI Schaefer Noell GmbH
- *
- * $Header: $
- */
-
 package com.eb.warehouse.io.ngkp.message;
 
 import static com.eb.warehouse.io.ngkp.BytesToInt.*;
@@ -13,33 +7,34 @@ import static com.eb.warehouse.io.ngkp.BytesToInt.*;
  * 
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
  * @version $Revision: 1484 $, $Date: 2013-09-12 16:40:43 +0200 (Do, 12 Sep 2013) $, $Author:
- * dennis.chong $
+ *          dennis.chong $
  */
 public abstract class TT1411 extends TT141x {
 
-  public static TT1411 fromBytes(byte[] bytes) {
-    int subtype = shortFromBytes(bytes[6], bytes[7]);
+  public static TT1411 fromBytes(byte[] bytes, int offset) {
+    int subtype = shortFromBytes(bytes[offset + 6], bytes[offset + 7]);
     TT1411 msg = null;
     if (subtype == 1010 || subtype == 1110 || subtype == 1210) {
-      msg = TT1411Subtype1010.fromBytes(bytes);
+      msg = TT1411Subtype1010.fromBytes(bytes, offset);
     } else if (subtype == 1020 || subtype == 1120 || subtype == 1220) {
-      msg = TT1411Subtype1020.fromBytes(bytes);
+      msg = TT1411Subtype1020.fromBytes(bytes, offset);
     } else if (subtype == 2010 || subtype == 2110 || subtype == 2210) {
-      msg = TT1411Subtype2010.fromBytes(bytes);
+      msg = TT1411Subtype2010.fromBytes(bytes, offset);
     } else if (subtype == 2020 || subtype == 2120 || subtype == 2220) {
-      msg = TT1411Subtype2020.fromBytes(bytes);
+      msg = TT1411Subtype2020.fromBytes(bytes, offset);
     } else if (subtype == 2040 || subtype == 2140 || subtype == 2240) {
-      msg = TT1411Subtype2040.fromBytes(bytes);
+      msg = TT1411Subtype2040.fromBytes(bytes, offset);
     } else if (subtype == 4010 || subtype == 4110 || subtype == 4210) {
-      msg = TT1411Subtype4010.fromBytes(bytes);
+      msg = TT1411Subtype4010.fromBytes(bytes, offset);
     }
 
-    msg.setSenderID(shortFromBytes(bytes[0], bytes[1]));
-    msg.setReceiverID(shortFromBytes(bytes[2], bytes[3]));
-    msg.setTelegramType(shortFromBytes(bytes[4], bytes[5]));
-    msg.setVersion(shortFromBytes(bytes[8], bytes[9]));
-    msg.setRequestID(intFromBytes(bytes[10], bytes[11], bytes[12], bytes[13]));
-    msg.setMovementOptions(shortFromBytes(bytes[14], bytes[15]));
+    msg.setSenderID(shortFromBytes(bytes[offset + 0], bytes[offset + 1]));
+    msg.setReceiverID(shortFromBytes(bytes[offset + 2], bytes[offset + 3]));
+    msg.setTelegramType(shortFromBytes(bytes[offset + 4], bytes[offset + 5]));
+    msg.setVersion(shortFromBytes(bytes[offset + 8], bytes[offset + 9]));
+    msg.setRequestID(intFromBytes(bytes[offset + 10], bytes[offset + 11], bytes[offset + 12],
+        bytes[offset + 13]));
+    msg.setMovementOptions(shortFromBytes(bytes[offset + 14], bytes[offset + 15]));
     return msg;
   }
 

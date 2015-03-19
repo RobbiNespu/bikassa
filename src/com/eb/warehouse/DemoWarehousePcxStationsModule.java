@@ -1,4 +1,3 @@
-
 package com.eb.warehouse;
 
 import java.util.Collection;
@@ -37,11 +36,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new AnyTargetSelectingWithTuCountThresholdPcxStationModule(STATION_JPP01, ImmutableSet.of("any")) {
+        install(new AnyTargetSelectingWithTuCountThresholdPcxStationModule(STATION_JPP01,
+            ImmutableSet.of("any")) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP01)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP01)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_JPP01));
@@ -51,11 +52,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP02, ImmutableSet.of("TEJP12"/*, "TEJP11"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_JPP02,
+            ImmutableSet.of("TEJP12"/* , "TEJP11" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP02)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP02)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_JPP02));
@@ -65,11 +68,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP03, ImmutableSet.of("TCRS01"/*, "TEXIT"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_JPP03,
+            ImmutableSet.of("TCRS01"/* , "TEXIT" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP03)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP03)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_JPP03));
@@ -79,11 +84,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP04, ImmutableSet.of("TJPP02", "TJPP10")) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_JPP04, ImmutableSet.of("TJPP02",
+            "TJPP10")) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP04)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP04)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_JPP04));
@@ -93,11 +100,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP10, ImmutableSet.of("TJPP11"/*, "TTPS05"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_JPP10,
+            ImmutableSet.of("TJPP11"/* , "TTPS05" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP10)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP10)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_JPP10));
@@ -107,11 +116,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP11, ImmutableSet.of("TJPP12"/*, "TTPS06"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_JPP11,
+            ImmutableSet.of("TJPP12"/* , "TTPS06" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP11)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP11)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_JPP11));
@@ -121,11 +132,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP12, ImmutableSet.of("TJPP02", "TJPP10"/*, "TEXIT"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_JPP12, ImmutableSet.of("TJPP02",
+            "TJPP10"/* , "TEXIT" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP12)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_JPP12)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_JPP12));
@@ -135,11 +148,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS01, ImmutableSet.of("TCRS02"/*, "TTPS01"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_CRS01,
+            ImmutableSet.of("TCRS02"/* , "TTPS01" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS01)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS01)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_CRS01));
@@ -149,11 +164,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS02, ImmutableSet.of("TCRS03"/*, "TTPS02"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_CRS02,
+            ImmutableSet.of("TCRS03"/* , "TTPS02" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS02)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS02)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_CRS02));
@@ -163,11 +180,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS03, ImmutableSet.of("TCRS04", "TJPP02"/*, "TTPS03"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_CRS03, ImmutableSet.of("TCRS04",
+            "TJPP02"/* , "TTPS03" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS03)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS03)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_CRS03));
@@ -177,11 +196,13 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS04, ImmutableSet.of("TJPP04"/*, "TTPS04"*/)) {
+        install(new RandomTargetSelectingPcxStationModule(STATION_CRS04,
+            ImmutableSet.of("TJPP04"/* , "TTPS04" */)) {
           /** {@inheritDoc} */
           @Override
           protected void bindPcxStation() {
-            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS04)).to(PcxStationImpl.class);
+            bind(PcxStation.class).annotatedWith(Names.named(STATION_CRS04)).to(
+                PcxStationImpl.class);
           }
         });
         expose(PcxStation.class).annotatedWith(Names.named(STATION_CRS04));
@@ -191,16 +212,12 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
 
   @Provides
   Collection<PcxStation> createPcxStations(@Named(STATION_JPP01) PcxStation jpp01,
-                                           @Named(STATION_JPP02) PcxStation jpp02,
-                                           @Named(STATION_JPP03) PcxStation jpp03,
-                                           @Named(STATION_JPP04) PcxStation jpp04,
-                                           @Named(STATION_JPP10) PcxStation jpp10,
-                                           @Named(STATION_JPP11) PcxStation jpp11,
-                                           @Named(STATION_JPP12) PcxStation jpp12,
-                                           @Named(STATION_CRS01) PcxStation crs01,
-                                           @Named(STATION_CRS02) PcxStation crs02,
-                                           @Named(STATION_CRS03) PcxStation crs03,
-                                           @Named(STATION_CRS04) PcxStation crs04) {
-    return ImmutableSet.of(jpp01, jpp02, jpp03, jpp04, jpp10, jpp11, jpp12, crs01, crs02, crs03, crs04);
+      @Named(STATION_JPP02) PcxStation jpp02, @Named(STATION_JPP03) PcxStation jpp03,
+      @Named(STATION_JPP04) PcxStation jpp04, @Named(STATION_JPP10) PcxStation jpp10,
+      @Named(STATION_JPP11) PcxStation jpp11, @Named(STATION_JPP12) PcxStation jpp12,
+      @Named(STATION_CRS01) PcxStation crs01, @Named(STATION_CRS02) PcxStation crs02,
+      @Named(STATION_CRS03) PcxStation crs03, @Named(STATION_CRS04) PcxStation crs04) {
+    return ImmutableSet.of(jpp01, jpp02, jpp03, jpp04, jpp10, jpp11, jpp12, crs01, crs02, crs03,
+        crs04);
   }
 }

@@ -15,7 +15,7 @@ import javax.xml.bind.Marshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.eb.warehouse.io.SendableConnectionService;
+import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.pcx.message.Announce;
 import com.eb.warehouse.io.pcx.message.Life;
 import com.eb.warehouse.util.Service2;
@@ -35,8 +35,8 @@ public final class PcxConnection implements Service2 {
 
   private static final Logger L = LoggerFactory.getLogger(PcxConnection.class);
   private static final Life LIFE_MESSAGE = new Life();
-  private final SendableConnectionService command;
-  private final SendableConnectionService status;
+  private final SocketConnection command;
+  private final SocketConnection status;
   private final Marshaller marshaller;
   private final Set<String> associatedStationNames;
   private final byte delimiter;
@@ -44,7 +44,7 @@ public final class PcxConnection implements Service2 {
   private ListenableScheduledFuture<?> sendLifeFuture;
 
   @Inject
-  public PcxConnection(@Named("commandConnection") SendableConnectionService command, @Named("statusConnection") SendableConnectionService status, Marshaller marshaller,
+  public PcxConnection(@Named("commandConnection") SocketConnection command, @Named("statusConnection") SocketConnection status, Marshaller marshaller,
                           Set<String> associatedStationNames, byte delimiter,
                           @Named("sendLifeMessageService") ListeningScheduledExecutorService lifeMessageExecutorService) {
     this.command = command;
@@ -84,14 +84,14 @@ public final class PcxConnection implements Service2 {
     send(a, command);
   }
 
-  private void send(Object message, SendableConnectionService comm) {
+  private void send(Object message, SocketConnection comm) {
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     try {
       L.trace("Try marshalling PCX message={} to XML string.", message);
       marshaller.marshal(message, os);
       L.debug("Marshalled PCX message={} to XML string={} and send to hardware.", message, new String(os.toByteArray(), Charsets.UTF_8));
       os.write(delimiter);
-      comm.send(os.toByteArray());
+      comm.writeToSocket(os.toByteArray());
     } catch (JAXBException e) {
       L.error("Not marshalled PCX message={} to XML string.", message);
     } catch (IOException e) {

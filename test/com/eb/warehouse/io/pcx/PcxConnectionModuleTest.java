@@ -9,7 +9,7 @@ import javax.xml.bind.Marshaller;
 import org.assertj.core.util.Sets;
 import org.junit.Test;
 
-import com.eb.warehouse.io.socket.PermanentSocketConnectionModuleTest;
+import com.eb.warehouse.io.socket.ReconnectingSocketConnectionModuleTest;
 import com.eb.warehouse.util.Service2;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -21,7 +21,7 @@ public class PcxConnectionModuleTest {
   public void inject() {
     Injector injector =
       Guice.createInjector(new PcxConnectionModule(1, 2, Sets.<String> newHashSet(), "b"),
-                           new PermanentSocketConnectionModuleTest.TestModule(),
+                           new ReconnectingSocketConnectionModuleTest.TestModule(),
                            new AbstractModule() {
                              @Override
                              protected void configure() {

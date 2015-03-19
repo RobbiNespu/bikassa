@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx;
 
 import java.util.Set;
@@ -8,9 +7,11 @@ import java.util.concurrent.ThreadFactory;
 import javax.inject.Named;
 
 import com.eb.warehouse.io.ByteMessageListener;
-import com.eb.warehouse.io.SendableConnectionService;
+import com.eb.warehouse.io.ByteStreamConsumer;
+import com.eb.warehouse.io.MagicByteSlicingByteStreamConsumer;
+import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.XmlMessageListener;
-import com.eb.warehouse.io.socket.PermanentSocketConnectionModule;
+import com.eb.warehouse.io.socket.ReconnectingSocketConnectionModule;
 import com.eb.warehouse.util.EventBusRegistrationListener;
 import com.eb.warehouse.util.NamedThreadFactory;
 import com.eb.warehouse.util.Service2;
@@ -38,7 +39,8 @@ public class PcxConnectionModule extends AbstractModule {
   private final String sendLifeMessageThreadName;
   private final EventBus eventBus = new EventBus();
 
-  public PcxConnectionModule(int commandPort, int statusPort, Set<String> stationIds, String sendLifeMessageThreadName) {
+  public PcxConnectionModule(int commandPort, int statusPort, Set<String> stationIds,
+      String sendLifeMessageThreadName) {
     this.commandPort = commandPort;
     this.statusPort = statusPort;
     this.stationIds = stationIds;
@@ -49,38 +51,42 @@ public class PcxConnectionModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(ByteMessageListener.class).to(XmlMessageListener.class);
+    bind(ByteStreamConsumer.class).to(MagicByteSlicingByteStreamConsumer.class);
 
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new PermanentSocketConnectionModule(commandPort) {
+        install(new ReconnectingSocketConnectionModule(commandPort) {
           @Override
-          protected void configureBinding(Class<SendableConnectionService> def, Class<? extends SendableConnectionService> impl) {
+          protected void configureBinding(Class<SocketConnection> def,
+              Class<? extends SocketConnection> impl) {
             bind(def).annotatedWith(Names.named("commandConnection")).to(impl);
           }
         });
-        expose(SendableConnectionService.class).annotatedWith(Names.named("commandConnection"));
+        expose(SocketConnection.class).annotatedWith(Names.named("commandConnection"));
       }
     });
 
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new PermanentSocketConnectionModule(statusPort) {
+        install(new ReconnectingSocketConnectionModule(statusPort) {
           @Override
-          protected void configureBinding(Class<SendableConnectionService> def, Class<? extends SendableConnectionService> impl) {
+          protected void configureBinding(Class<SocketConnection> def,
+              Class<? extends SocketConnection> impl) {
             bind(def).annotatedWith(Names.named("statusConnection")).to(impl);
           }
         });
-        expose(SendableConnectionService.class).annotatedWith(Names.named("statusConnection"));
+        expose(SocketConnection.class).annotatedWith(Names.named("statusConnection"));
       }
     });
 
-    bind(new TypeLiteral<Set<String>>() {
-    }).toInstance(stationIds);
+    bind(new TypeLiteral<Set<String>>() {}).toInstance(stationIds);
 
-    bind(ThreadFactory.class).annotatedWith(Names.named("sendLifeMessageThreadFactory")).to(NamedThreadFactory.class);
-    bind(String.class).annotatedWith(Names.named("threadName")).toInstance(sendLifeMessageThreadName);
+    bind(ThreadFactory.class).annotatedWith(Names.named("sendLifeMessageThreadFactory")).to(
+        NamedThreadFactory.class);
+    bind(String.class).annotatedWith(Names.named("threadName")).toInstance(
+        sendLifeMessageThreadName);
     bind(EventBus.class).annotatedWith(Names.named("internal")).toInstance(eventBus);
     bindPcxConnection();
 
@@ -93,7 +99,9 @@ public class PcxConnectionModule extends AbstractModule {
 
   @Provides
   @Named("sendLifeMessageService")
-  ListeningScheduledExecutorService createLifeMessageSendService(@Named("sendLifeMessageThreadFactory") ThreadFactory threadFactory) {
-    return MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(threadFactory));
+  ListeningScheduledExecutorService createLifeMessageSendService(
+      @Named("sendLifeMessageThreadFactory") ThreadFactory threadFactory) {
+    return MoreExecutors.listeningDecorator(Executors
+        .newSingleThreadScheduledExecutor(threadFactory));
   }
 }

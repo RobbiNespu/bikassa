@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2011 SSI Schaefer Noell GmbH
- *
- * $Header: $
- */
-
 package com.eb.warehouse.io.ngkp.message;
 
 /**
@@ -11,42 +5,42 @@ package com.eb.warehouse.io.ngkp.message;
  * 
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
  * @version $Revision: 1484 $, $Date: 2013-09-12 16:40:43 +0200 (Do, 12 Sep 2013) $, $Author:
- * dennis.chong $
+ *          dennis.chong $
  */
 public class TT1411Subtype2040 extends TT1411 {
 
-  public static TT1411 fromBytes(byte[] bytes) {
+  public static TT1411 fromBytes(byte[] bytes, int offset) {
     TT1411Subtype2040 telegram = new TT1411Subtype2040();
 
     TT141xTOBlock toBlock = telegram.getToBlocks()[0];
-    intoTOBlock(bytes, 16, toBlock);
+    intoTOBlock(bytes, offset + 16, toBlock);
 
     TT141xTUBlock tuBlock = toBlock.getTuBlocks()[0];
-    intoTUBlock(bytes, 42, tuBlock);
+    intoTUBlock(bytes, offset + 42, tuBlock);
 
     tuBlock = toBlock.getTuBlocks()[1];
-    intoTUBlock(bytes, 76, tuBlock);
+    intoTUBlock(bytes, offset + 76, tuBlock);
 
     tuBlock = toBlock.getTuBlocks()[2];
-    intoTUBlock(bytes, 110, tuBlock);
+    intoTUBlock(bytes, offset + 110, tuBlock);
 
     tuBlock = toBlock.getTuBlocks()[3];
-    intoTUBlock(bytes, 144, tuBlock);
+    intoTUBlock(bytes, offset + 144, tuBlock);
 
     toBlock = telegram.getToBlocks()[1];
-    intoTOBlock(bytes, 178, toBlock);
+    intoTOBlock(bytes, offset + 178, toBlock);
 
     tuBlock = toBlock.getTuBlocks()[0];
-    intoTUBlock(bytes, 204, tuBlock);
+    intoTUBlock(bytes, offset + 204, tuBlock);
 
     tuBlock = toBlock.getTuBlocks()[1];
-    intoTUBlock(bytes, 238, tuBlock);
+    intoTUBlock(bytes, offset + 238, tuBlock);
 
     tuBlock = toBlock.getTuBlocks()[2];
-    intoTUBlock(bytes, 272, tuBlock);
+    intoTUBlock(bytes, offset + 272, tuBlock);
 
     tuBlock = toBlock.getTuBlocks()[3];
-    intoTUBlock(bytes, 306, tuBlock);
+    intoTUBlock(bytes, offset + 306, tuBlock);
 
     return telegram;
   }

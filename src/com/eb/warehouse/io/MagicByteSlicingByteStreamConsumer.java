@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io;
 
 import javax.inject.Inject;
@@ -14,7 +13,8 @@ public class MagicByteSlicingByteStreamConsumer extends ByteStreamBufferedByteCo
   private final ByteMessageListener listener;
 
   @Inject
-  public MagicByteSlicingByteStreamConsumer(@Named("bufferSize") int bufferSize, byte delimiter, ByteMessageListener listener) {
+  public MagicByteSlicingByteStreamConsumer(@Named("bufferSize") int bufferSize, byte delimiter,
+      ByteMessageListener listener) {
     super(bufferSize);
     this.delimiter = delimiter;
     this.listener = listener;
@@ -24,7 +24,9 @@ public class MagicByteSlicingByteStreamConsumer extends ByteStreamBufferedByteCo
   @Override
   public void consumeByte(byte b) {
     if (getPosition() >= getInitialBufferSize()) {
-      L.warn("Not found delimiterByte={} in stream before maximum buffer size={} exceeded. Reset byte consumer.", delimiter, getInitialBufferSize());
+      L.warn(
+          "Not found delimiterByte={} in stream before maximum buffer size={} exceeded. Reset byte consumer.",
+          delimiter, getInitialBufferSize());
       resetPosition();
       super.consumeByte(b);
 
@@ -41,7 +43,3 @@ public class MagicByteSlicingByteStreamConsumer extends ByteStreamBufferedByteCo
     }
   }
 }
-
-//---------------------------- Revision History ----------------------------
-//$Log$
-//
