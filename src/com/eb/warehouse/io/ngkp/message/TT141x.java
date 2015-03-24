@@ -4,40 +4,11 @@
 
 package com.eb.warehouse.io.ngkp.message;
 
-import static com.eb.warehouse.io.ngkp.BytesToInt.shortFromBytes;
-
 import com.google.common.base.Charsets;
 
+import static com.eb.warehouse.io.ngkp.BytesToInt.shortFromBytes;
+
 public abstract class TT141x extends NGKPTelegram {
-
-  static void intoTUBlock(byte[] bytes, int offset, TT141xTUBlock tuBlock) {
-    tuBlock.setTuType(shortFromBytes(bytes[offset], bytes[offset + 1]));
-    // TODO: add type flags
-    tuBlock.setLength(shortFromBytes(bytes[offset + 4], bytes[offset + 5]));
-    tuBlock.setWidth(shortFromBytes(bytes[offset + 6], bytes[offset + 7]));
-    tuBlock.setHeight(shortFromBytes(bytes[offset + 8], bytes[offset + 9]));
-    tuBlock.setWeight(shortFromBytes(bytes[offset + 10], bytes[offset + 11]));
-    // TODO: add error flags
-    tuBlock.setTuId(new String(bytes, offset + 12, 20, Charsets.US_ASCII));
-  }
-
-  static void intoTOBlock(byte[] bytes, int offset, TT141xTOBlock toBlock) {
-    toBlock.setAisle(shortFromBytes(bytes[offset], bytes[offset + 1]));
-    toBlock.setX(shortFromBytes(bytes[offset + 2], bytes[offset + 3]));
-    toBlock.setY(shortFromBytes(bytes[offset + 4], bytes[offset + 5]));
-    toBlock.setSide(shortFromBytes(bytes[offset + 6], bytes[offset + 7]));
-    toBlock.setDepth(shortFromBytes(bytes[offset + 8], bytes[offset + 9]));
-    toBlock.setSrm(shortFromBytes(bytes[offset + 10], bytes[offset + 11]));
-    toBlock.setLsd(shortFromBytes(bytes[offset + 12], bytes[offset + 13]));
-    toBlock.setPlace(shortFromBytes(bytes[offset + 14], bytes[offset + 15]));
-    toBlock.setTuAmount(shortFromBytes(bytes[offset + 16], bytes[offset + 17]));
-    toBlock.setOrder(shortFromBytes(bytes[offset + 18], bytes[offset + 19]));
-    // TODO: add orderExtensions
-    toBlock.setAcknowledge(shortFromBytes(bytes[offset + 22], bytes[offset + 23]));
-    // TODO: add ackExtensions
-  }
-
-  private static final long serialVersionUID = 1L;
 
   public static final int GET_ORDER = 14011;
   public static final int PUT_ORDER = 14021;
@@ -80,23 +51,49 @@ public abstract class TT141x extends NGKPTelegram {
   public static final int RACK_LOCATION_OCCUPIED = 14211;
   public static final int RACK_LOCATION_EMPTY = 14212;
   public static final int RACK_LOCATION_IN_BLOCKED_AREA = 14161;
-
+  private static final long serialVersionUID = 1L;
   protected TT141xTOBlock[] toBlocks;
-
   public TT141x() {
     super();
   }
 
+  static void intoTUBlock(byte[] bytes, int offset, TT141xTUBlock tuBlock) {
+    tuBlock.setTuType(shortFromBytes(bytes[offset], bytes[offset + 1]));
+    // TODO: add type flags
+    tuBlock.setLength(shortFromBytes(bytes[offset + 4], bytes[offset + 5]));
+    tuBlock.setWidth(shortFromBytes(bytes[offset + 6], bytes[offset + 7]));
+    tuBlock.setHeight(shortFromBytes(bytes[offset + 8], bytes[offset + 9]));
+    tuBlock.setWeight(shortFromBytes(bytes[offset + 10], bytes[offset + 11]));
+    // TODO: add error flags
+    tuBlock.setTuId(new String(bytes, offset + 12, 20, Charsets.US_ASCII));
+  }
+
+  static void intoTOBlock(byte[] bytes, int offset, TT141xTOBlock toBlock) {
+    toBlock.setAisle(shortFromBytes(bytes[offset], bytes[offset + 1]));
+    toBlock.setX(shortFromBytes(bytes[offset + 2], bytes[offset + 3]));
+    toBlock.setY(shortFromBytes(bytes[offset + 4], bytes[offset + 5]));
+    toBlock.setSide(shortFromBytes(bytes[offset + 6], bytes[offset + 7]));
+    toBlock.setDepth(shortFromBytes(bytes[offset + 8], bytes[offset + 9]));
+    toBlock.setSrm(shortFromBytes(bytes[offset + 10], bytes[offset + 11]));
+    toBlock.setLsd(shortFromBytes(bytes[offset + 12], bytes[offset + 13]));
+    toBlock.setPlace(shortFromBytes(bytes[offset + 14], bytes[offset + 15]));
+    toBlock.setTuAmount(shortFromBytes(bytes[offset + 16], bytes[offset + 17]));
+    toBlock.setOrder(shortFromBytes(bytes[offset + 18], bytes[offset + 19]));
+    // TODO: add orderExtensions
+    toBlock.setAcknowledge(shortFromBytes(bytes[offset + 22], bytes[offset + 23]));
+    // TODO: add ackExtensions
+  }
+
   /**
    * Returns the number of TO blocks of the telegram.
-   * 
+   *
    * @return the number of TO blocks
    */
   public abstract int getNumberOfTOBlocks();
 
   /**
    * Returns the number of TO blocks per TO blocks of the telegram.
-   * 
+   *
    * @return the number of TO blocks per TO blocks
    */
   public abstract int getNumberOfTUBlocks();

@@ -7,6 +7,7 @@ package com.eb.warehouse.io.ngkp.message;
 import java.io.Serializable;
 
 public abstract class TT141xTOBlock implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   protected TT141x parent;

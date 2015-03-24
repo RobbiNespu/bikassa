@@ -7,6 +7,7 @@ package com.eb.warehouse.io.ngkp.message;
 import java.io.Serializable;
 
 public class TT141xTUBlock implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   protected int tuType;
@@ -40,7 +41,15 @@ public class TT141xTUBlock implements Serializable {
   }
 
   public String fieldsToString(int mainindex, int index) {
-    return " tuType[" + mainindex + "," + index + "]=" + tuType + "," + " tuId[" + mainindex + "," + index + "]=" + tuId + "," + " length[" + mainindex + "," + index + "]=" + length + "," + " width[" + mainindex + "," + index + "]=" + width + "," + " height[" + mainindex + "," + index + "]=" + height + "," + " weight[" + mainindex + "," + index + "]=" + weight + "," + " tuTypeFlags1[" + mainindex + "," + index + "]=" + NGKPTelegram.bitsToString(tuTypeFlags1) + "," + " tuTypeFlags2[" + mainindex + "," + index + "]=" + NGKPTelegram.bitsToString(tuTypeFlags2) + "," + " errorFlags1[" + mainindex + "," + index + "]=" + NGKPTelegram.bitsToString(errorFlags1) + "," + " errorFlags2[" + mainindex + "," + index + "]=" + NGKPTelegram.bitsToString(errorFlags2) + ",";
+    return " tuType[" + mainindex + "," + index + "]=" + tuType + "," + " tuId[" + mainindex + ","
+           + index + "]=" + tuId + "," + " length[" + mainindex + "," + index + "]=" + length + ","
+           + " width[" + mainindex + "," + index + "]=" + width + "," + " height[" + mainindex + ","
+           + index + "]=" + height + "," + " weight[" + mainindex + "," + index + "]=" + weight
+           + "," + " tuTypeFlags1[" + mainindex + "," + index + "]=" + NGKPTelegram
+               .bitsToString(tuTypeFlags1) + "," + " tuTypeFlags2[" + mainindex + "," + index + "]="
+           + NGKPTelegram.bitsToString(tuTypeFlags2) + "," + " errorFlags1[" + mainindex + ","
+           + index + "]=" + NGKPTelegram.bitsToString(errorFlags1) + "," + " errorFlags2["
+           + mainindex + "," + index + "]=" + NGKPTelegram.bitsToString(errorFlags2) + ",";
   }
 
   public String toHex() {

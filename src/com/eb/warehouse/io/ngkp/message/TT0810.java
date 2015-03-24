@@ -12,10 +12,12 @@ import java.util.Queue;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1835 $, $Date: 2014-09-08 11:40:40 +0200 (Mon, 08 Sep 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1835 $, $Date: 2014-09-08 11:40:40 +0200 (Mon, 08 Sep 2014) $, $Author:
+ *          dennis.chong $
  */
 
 public class TT0810 extends TT081x {
+
   private static final long serialVersionUID = 1L;
 
   protected int reserve;
@@ -271,7 +273,9 @@ public class TT0810 extends TT081x {
     tuID = extractStringFromHex(hex, 78, 20);
     int offset = 98;
     if ((subType & 1 << 0) != 0) {
-      additionalBarcode = extractStringFromHex(hex, offset, 100); //TODO: changed to 100 bytes according to latest IFSOC
+      additionalBarcode =
+          extractStringFromHex(hex, offset,
+                               100); //TODO: changed to 100 bytes according to latest IFSOC
       offset += 100;
     }
     if ((subType & 1 << 1) != 0) {
@@ -684,7 +688,10 @@ public class TT0810 extends TT081x {
       destinationUnit[index] = destination.getDestinationUnit();
       destinationPosition[index] = destination.getDestinationPosition();
       destinationSystem[index] = destination.getDestinationSystem();
-      String destinationID = destinationSystem[index] + "/" + destinationUnit[index] + "/" + destinationPosition[index];
+      String
+          destinationID =
+          destinationSystem[index] + "/" + destinationUnit[index] + "/"
+          + destinationPosition[index];
       destinationList.add(destinationID);
       index++;
     }

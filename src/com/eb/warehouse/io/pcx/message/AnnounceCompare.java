@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
@@ -9,11 +8,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>
- * Java class for announce-compare complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for announce-compare complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="announce-compare">
  *   &lt;complexContent>
@@ -43,7 +40,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Gets the value of the barcode property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBarcode() {
@@ -52,7 +49,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Sets the value of the barcode property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBarcode(String value) {
@@ -61,7 +58,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Gets the value of the box property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBox() {
@@ -70,7 +67,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Sets the value of the box property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBox(String value) {
@@ -79,7 +76,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Gets the value of the order property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getOrder() {
@@ -88,7 +85,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Sets the value of the order property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setOrder(String value) {
@@ -97,7 +94,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Gets the value of the from property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFrom() {
@@ -106,7 +103,7 @@ public class AnnounceCompare implements Serializable {
 
   /**
    * Sets the value of the from property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFrom(String value) {

@@ -1,7 +1,7 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -11,9 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for status complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="status">
  *   &lt;complexContent>
@@ -32,8 +32,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "status", propOrder = {
@@ -41,212 +39,163 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "status")
 public class Status
-    implements Serializable
-{
+    implements Serializable {
 
-    private final static long serialVersionUID = 1L;
-    protected StatusStations stations;
-    protected StatusReports reports;
-    protected StatusCounters counters;
-    protected StatusBbs bbs;
-    protected StatusDimdirects dimdirects;
-    @XmlAttribute(name = "name")
-    protected String name;
-    @XmlAttribute(name = "version")
-    protected String version;
-    @XmlAttribute(name = "uptime")
-    protected String uptime;
+  private final static long serialVersionUID = 1L;
+  protected StatusStations stations;
+  protected StatusReports reports;
+  protected StatusCounters counters;
+  protected StatusBbs bbs;
+  protected StatusDimdirects dimdirects;
+  @XmlAttribute(name = "name")
+  protected String name;
+  @XmlAttribute(name = "version")
+  protected String version;
+  @XmlAttribute(name = "uptime")
+  protected String uptime;
 
-    /**
-     * Gets the value of the stations property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusStations }
-     *     
-     */
-    public StatusStations getStations() {
-        return stations;
-    }
+  /**
+   * Gets the value of the stations property.
+   *
+   * @return possible object is {@link StatusStations }
+   */
+  public StatusStations getStations() {
+    return stations;
+  }
 
-    /**
-     * Sets the value of the stations property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusStations }
-     *     
-     */
-    public void setStations(StatusStations value) {
-        this.stations = value;
-    }
+  /**
+   * Sets the value of the stations property.
+   *
+   * @param value allowed object is {@link StatusStations }
+   */
+  public void setStations(StatusStations value) {
+    this.stations = value;
+  }
 
-    /**
-     * Gets the value of the reports property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusReports }
-     *     
-     */
-    public StatusReports getReports() {
-        return reports;
-    }
+  /**
+   * Gets the value of the reports property.
+   *
+   * @return possible object is {@link StatusReports }
+   */
+  public StatusReports getReports() {
+    return reports;
+  }
 
-    /**
-     * Sets the value of the reports property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusReports }
-     *     
-     */
-    public void setReports(StatusReports value) {
-        this.reports = value;
-    }
+  /**
+   * Sets the value of the reports property.
+   *
+   * @param value allowed object is {@link StatusReports }
+   */
+  public void setReports(StatusReports value) {
+    this.reports = value;
+  }
 
-    /**
-     * Gets the value of the counters property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusCounters }
-     *     
-     */
-    public StatusCounters getCounters() {
-        return counters;
-    }
+  /**
+   * Gets the value of the counters property.
+   *
+   * @return possible object is {@link StatusCounters }
+   */
+  public StatusCounters getCounters() {
+    return counters;
+  }
 
-    /**
-     * Sets the value of the counters property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusCounters }
-     *     
-     */
-    public void setCounters(StatusCounters value) {
-        this.counters = value;
-    }
+  /**
+   * Sets the value of the counters property.
+   *
+   * @param value allowed object is {@link StatusCounters }
+   */
+  public void setCounters(StatusCounters value) {
+    this.counters = value;
+  }
 
-    /**
-     * Gets the value of the bbs property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusBbs }
-     *     
-     */
-    public StatusBbs getBbs() {
-        return bbs;
-    }
+  /**
+   * Gets the value of the bbs property.
+   *
+   * @return possible object is {@link StatusBbs }
+   */
+  public StatusBbs getBbs() {
+    return bbs;
+  }
 
-    /**
-     * Sets the value of the bbs property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusBbs }
-     *     
-     */
-    public void setBbs(StatusBbs value) {
-        this.bbs = value;
-    }
+  /**
+   * Sets the value of the bbs property.
+   *
+   * @param value allowed object is {@link StatusBbs }
+   */
+  public void setBbs(StatusBbs value) {
+    this.bbs = value;
+  }
 
-    /**
-     * Gets the value of the dimdirects property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusDimdirects }
-     *     
-     */
-    public StatusDimdirects getDimdirects() {
-        return dimdirects;
-    }
+  /**
+   * Gets the value of the dimdirects property.
+   *
+   * @return possible object is {@link StatusDimdirects }
+   */
+  public StatusDimdirects getDimdirects() {
+    return dimdirects;
+  }
 
-    /**
-     * Sets the value of the dimdirects property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusDimdirects }
-     *     
-     */
-    public void setDimdirects(StatusDimdirects value) {
-        this.dimdirects = value;
-    }
+  /**
+   * Sets the value of the dimdirects property.
+   *
+   * @param value allowed object is {@link StatusDimdirects }
+   */
+  public void setDimdirects(StatusDimdirects value) {
+    this.dimdirects = value;
+  }
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+  /**
+   * Gets the value of the name property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+  /**
+   * Sets the value of the name property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setName(String value) {
+    this.name = value;
+  }
 
-    /**
-     * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getVersion() {
-        return version;
-    }
+  /**
+   * Gets the value of the version property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getVersion() {
+    return version;
+  }
 
-    /**
-     * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setVersion(String value) {
-        this.version = value;
-    }
+  /**
+   * Sets the value of the version property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setVersion(String value) {
+    this.version = value;
+  }
 
-    /**
-     * Gets the value of the uptime property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUptime() {
-        return uptime;
-    }
+  /**
+   * Gets the value of the uptime property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getUptime() {
+    return uptime;
+  }
 
-    /**
-     * Sets the value of the uptime property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUptime(String value) {
-        this.uptime = value;
-    }
+  /**
+   * Sets the value of the uptime property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setUptime(String value) {
+    this.uptime = value;
+  }
 
 }

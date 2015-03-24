@@ -1,7 +1,7 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for remove complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="remove">
  *   &lt;complexContent>
@@ -24,8 +24,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "remove", propOrder = {
@@ -33,34 +31,27 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "remove")
 public class Remove
-    implements Serializable
-{
+    implements Serializable {
 
-    private final static long serialVersionUID = 1L;
-    protected RemoveStation station;
+  private final static long serialVersionUID = 1L;
+  protected RemoveStation station;
 
-    /**
-     * Gets the value of the station property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RemoveStation }
-     *     
-     */
-    public RemoveStation getStation() {
-        return station;
-    }
+  /**
+   * Gets the value of the station property.
+   *
+   * @return possible object is {@link RemoveStation }
+   */
+  public RemoveStation getStation() {
+    return station;
+  }
 
-    /**
-     * Sets the value of the station property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RemoveStation }
-     *     
-     */
-    public void setStation(RemoveStation value) {
-        this.station = value;
-    }
+  /**
+   * Sets the value of the station property.
+   *
+   * @param value allowed object is {@link RemoveStation }
+   */
+  public void setStation(RemoveStation value) {
+    this.station = value;
+  }
 
 }

@@ -8,10 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * @author <a href="mailto:draeger@ssi-schaefer-noell.com">draeger</a>
- * @version $Revision: 1793 $, $Date: 2014-07-14 16:55:41 +0200 (Mon, 14 Jul 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1793 $, $Date: 2014-07-14 16:55:41 +0200 (Mon, 14 Jul 2014) $, $Author:
+ *          dennis.chong $
  */
 
 public class TT34 extends NGKPTelegram {
+
   private static final long serialVersionUID = 1L;
 
   private int reserve;

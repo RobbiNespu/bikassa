@@ -1,14 +1,13 @@
 package com.eb.warehouse.io.ngkp;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public final class BytesToInt {
 
-  private BytesToInt() {}
+  private BytesToInt() {
+  }
 
   public static int shortFromBytes(byte msb, byte lsb) {
     return ((msb & 0xFF) << 8) + (lsb & 0xFF);

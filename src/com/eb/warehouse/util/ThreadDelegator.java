@@ -1,14 +1,11 @@
-
 package com.eb.warehouse.util;
-
-import java.util.concurrent.TimeUnit;
 
 import com.google.common.util.concurrent.Uninterruptibles;
 
+import java.util.concurrent.TimeUnit;
+
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public abstract class ThreadDelegator {
@@ -35,9 +32,6 @@ public abstract class ThreadDelegator {
 
   /**
    * TODO JavaDoc according to WAMAS C conventions
-   *
-   * @param reconnectDelay
-   * @param reconnectDelayTimeUnit
    */
   public abstract void sleepCurrentThread(int duration, TimeUnit unit) throws InterruptedException;
 

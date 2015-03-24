@@ -8,19 +8,18 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT10 telegrams.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1787 $, $Date: 2014-07-02 09:13:37 +0200 (Wed, 02 Jul 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1787 $, $Date: 2014-07-02 09:13:37 +0200 (Wed, 02 Jul 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT10 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public static final int VOID_ORDER = 0;
   public static final int TRANSPORT_ORDER = 2;
   public static final int FOLLOWUP_ORDER = 4;
   public static final int POSITIONING_ORDER = 5;
   public static final int DELETION_ORDER = 101;
-
   public static final int COMPLETION = 1;
   public static final int UNABLETODETERMINATEDESTINATION = 5;
   public static final int TRANSPORTNOTICE = 21;
@@ -35,7 +34,7 @@ public class TT10 extends NGKPTelegram {
   public static final int STORAGE_NOT_POSSIBLE_TPS_EMPTY = 118;
   public static final int RACK_LOCATION_OCCUPIED = 101;
   public static final int RACK_LOCATION_EMPTY = 102;
-
+  private static final long serialVersionUID = 1L;
   protected int mfsID;
   protected int sourceSystem;
   protected int sourceUnit;
@@ -282,15 +281,18 @@ public class TT10 extends NGKPTelegram {
   }
 
   public String getSourceLocationID() {
-    return getSourceSCS() + "/" + getSourceAisle() + "/" + getSourceX() + "/" + getSourceY() + "/" + getSourceZ();
+    return getSourceSCS() + "/" + getSourceAisle() + "/" + getSourceX() + "/" + getSourceY() + "/"
+           + getSourceZ();
   }
 
   public String getDestinationLocationID() {
-    return getDestinationSCS() + "/" + getDestinationAisle() + "/" + getDestinationX() + "/" + getDestinationY() + "/" + getDestinationZ();
+    return getDestinationSCS() + "/" + getDestinationAisle() + "/" + getDestinationX() + "/"
+           + getDestinationY() + "/" + getDestinationZ();
   }
 
   public String getLastNoticeLocationID() {
-    return getLastSCS() + "/" + getLastAisle() + "/" + getLastX() + "/" + getLastY() + "/" + getLastZ();
+    return getLastSCS() + "/" + getLastAisle() + "/" + getLastX() + "/" + getLastY() + "/"
+           + getLastZ();
   }
 
   public boolean isTransportOrder() {

@@ -1,5 +1,6 @@
-
 package com.eb.warehouse.io.pcx.message;
+
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -9,14 +10,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-import com.google.common.base.MoreObjects;
-
 /**
- * <p>
- * Java class for response-station complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for response-station complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="response-station">
  *   &lt;complexContent>
@@ -60,7 +57,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the scale property.
-   * 
+   *
    * @return possible object is {@link ResponseScale }
    */
   public ResponseScale getScale() {
@@ -69,7 +66,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the scale property.
-   * 
+   *
    * @param value allowed object is {@link ResponseScale }
    */
   public void setScale(ResponseScale value) {
@@ -78,7 +75,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the flags property.
-   * 
+   *
    * @return possible object is {@link ResponseFlags }
    */
   public ResponseFlags getFlags() {
@@ -87,7 +84,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the flags property.
-   * 
+   *
    * @param value allowed object is {@link ResponseFlags }
    */
   public void setFlags(ResponseFlags value) {
@@ -96,7 +93,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the box property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBox() {
@@ -105,7 +102,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the box property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBox(String value) {
@@ -114,7 +111,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the order property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getOrder() {
@@ -123,7 +120,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the order property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setOrder(String value) {
@@ -132,7 +129,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the from property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFrom() {
@@ -141,7 +138,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the from property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFrom(String value) {
@@ -150,7 +147,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the to property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getTo() {
@@ -159,7 +156,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the to property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setTo(String value) {
@@ -168,7 +165,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the at property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getAt() {
@@ -177,7 +174,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the at property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setAt(String value) {
@@ -186,7 +183,7 @@ public class ResponseStation implements Serializable {
 
   /**
    * Gets the value of the type property.
-   * 
+   *
    * @return possible object is {@link BigInteger }
    */
   public BigInteger getType() {
@@ -195,26 +192,28 @@ public class ResponseStation implements Serializable {
 
   /**
    * Sets the value of the type property.
-   * 
+   *
    * @param value allowed object is {@link BigInteger }
    */
   public void setType(BigInteger value) {
     type = value;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-                      .add("box", box)
-                      .add("from", from)
-                      .add("to", to)
-                      .add("at", at)
-                      .add("type", type)
-                      .add("order", order)
-                      .add("flags", flags)
-                      .add("scale", scale)
-                      .omitNullValues()
-                      .toString();
+        .add("box", box)
+        .add("from", from)
+        .add("to", to)
+        .add("at", at)
+        .add("type", type)
+        .add("order", order)
+        .add("flags", flags)
+        .add("scale", scale)
+        .omitNullValues()
+        .toString();
   }
 }

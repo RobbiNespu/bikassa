@@ -10,11 +10,13 @@ import java.io.Serializable;
 
 /**
  * Simple class to represent a stripe of the TT39 telegram.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1664 $, $Date: 2014-02-11 09:31:45 +0100 (Di, 11 Feb 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1664 $, $Date: 2014-02-11 09:31:45 +0100 (Di, 11 Feb 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT39Stripe implements Serializable {
+
   private static final long serialVersionUID = 1L;
   protected String functionPoint;
   protected boolean[] controlFlags;
@@ -121,7 +123,9 @@ public class TT39Stripe implements Serializable {
       s += " priority1[" + index + "]=" + priority1 + ",";
       s += " priority2[" + index + "]=" + priority2 + ",";
       s += " priority3[" + index + "]=" + priority3 + ",";
-      s += " overflowDirectionForDefault[" + index + "]=" + overflowDirectionForDefaultDirections + ",";
+      s +=
+          " overflowDirectionForDefault[" + index + "]=" + overflowDirectionForDefaultDirections
+          + ",";
       s += " reserve14[" + index + "]=" + reserve14 + ",";
       s += " time3[" + index + "]=" + time3 + ",";
       s += " time2[" + index + "]=" + time2 + ",";
@@ -147,7 +151,9 @@ public class TT39Stripe implements Serializable {
     s += " order[" + index + "]=" + order + ",";
     s += " orderExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions) + ",";
     s += " acknowledge[" + index + "]=" + acknowledge + ",";
-    s += " acknowledgeExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions) + ",";
+    s +=
+        " acknowledgeExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions)
+        + ",";
     s += " dataFieldIdentifier[" + index + "]=" + dataFieldIdentifier + ",";
     s += " telegramDetail[" + index + "]=" + telegramDetail + ",";
     return s;
@@ -222,7 +228,8 @@ public class TT39Stripe implements Serializable {
       priority1 = NGKPTelegram.extractIntFromHex(hex, byteoffset + 13, 1);
       priority2 = NGKPTelegram.extractIntFromHex(hex, byteoffset + 14, 1);
       priority3 = NGKPTelegram.extractIntFromHex(hex, byteoffset + 15, 1);
-      overflowDirectionForDefaultDirections = NGKPTelegram.extractIntFromHex(hex, byteoffset + 16, 1);
+      overflowDirectionForDefaultDirections =
+          NGKPTelegram.extractIntFromHex(hex, byteoffset + 16, 1);
       reserve14 = NGKPTelegram.extractIntFromHex(hex, byteoffset + 17, 1);
       time3 = NGKPTelegram.extractIntFromHex(hex, byteoffset + 18, 2);
       time2 = NGKPTelegram.extractIntFromHex(hex, byteoffset + 20, 2);

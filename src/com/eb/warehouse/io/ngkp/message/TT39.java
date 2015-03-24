@@ -8,12 +8,13 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT39 telegrams.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1565 $, $Date: 2013-11-14 14:41:26 +0100 (Do, 14 Nov 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1565 $, $Date: 2013-11-14 14:41:26 +0100 (Do, 14 Nov 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT39 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
+
   public static final int NOORDER = 0;
   public static final int PARAMETER_WRITE = 51;
   public static final int PARAMETER_READ = 151;
@@ -30,6 +31,7 @@ public class TT39 extends NGKPTelegram {
   public static final char STRIPE_END_OF_CHAIN = '-';
   public static final char STRIPE_NOTE_USED = ' ';
   public static final String BARCODE_EMPTY = "                    ";
+  private static final long serialVersionUID = 1L;
   protected TT39Stripe[] stripes;
   protected int byteoffset;
 

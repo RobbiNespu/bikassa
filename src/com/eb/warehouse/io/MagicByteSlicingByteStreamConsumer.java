@@ -1,10 +1,10 @@
 package com.eb.warehouse.io;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 public class MagicByteSlicingByteStreamConsumer extends ByteStreamBufferedByteConsumer {
 
@@ -14,13 +14,15 @@ public class MagicByteSlicingByteStreamConsumer extends ByteStreamBufferedByteCo
 
   @Inject
   public MagicByteSlicingByteStreamConsumer(@Named("bufferSize") int bufferSize, byte delimiter,
-      ByteMessageListener listener) {
+                                            ByteMessageListener listener) {
     super(bufferSize);
     this.delimiter = delimiter;
     this.listener = listener;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void consumeByte(byte b) {
     if (getPosition() >= getInitialBufferSize()) {

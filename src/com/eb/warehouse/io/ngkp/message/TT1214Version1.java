@@ -8,11 +8,11 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1843 $, $Date: 2014-09-08 14:10:31 +0200 (Mon, 08 Sep 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1843 $, $Date: 2014-09-08 14:10:31 +0200 (Mon, 08 Sep 2014) $, $Author:
+ *          dennis.chong $
  */
 
 public class TT1214Version1 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public static final int VOID_ORDER = 0;
   public static final int DELETE_TO = 12101;
@@ -39,7 +39,7 @@ public class TT1214Version1 extends NGKPTelegram {
   public static final int SEQUENCE_ABORT = 12403;
   public static final int WRONG_ORDERCODE = 12130;
   public static final int TOOKAWAY = 12023;
-
+  private static final long serialVersionUID = 1L;
   protected int movementOptions;
   protected int areaNumber;
   protected int source;
@@ -102,7 +102,18 @@ public class TT1214Version1 extends NGKPTelegram {
 
   @Override
   public String fieldsToString() {
-    return super.fieldsToString() + "movementOptions=" + movementOptions + ", number=" + areaNumber + ", source=" + source + ", destination=" + destination + ", lastNotice=" + lastNotice + ", order=" + order + ", orderExtensions1=" + bitsToString(orderExtensions1) + ", orderExtensions2=" + bitsToString(orderExtensions2) + ", acknowledge=" + acknowledge + ", ackExtensions1=" + bitsToString(ackExtensions1) + ", ackExtensions2=" + bitsToString(ackExtensions2) + ", expectedSequenceNumber=" + expectedSequenceNumber + ", passNumber1=" + inputLane1 + ", destinationNumber1=" + destinationNumber1 + ", itemNumber1=" + itemNumber1 + ", sequenceNumber=" + sequenceNumber + ", length=" + length + ", width=" + width + ", height=" + height + ", requestedAlignment=" + requestedAlignment + ", insertDepth=" + insertDepth + ", turnRequest=" + turnRequest + ", passNumber2=" + inputLane2 + ", destinationNumber2=" + destinationNumber2 + ", itemNumber2=" + itemNumber2 + ", tuId=" + tuId + "]";
+    return super.fieldsToString() + "movementOptions=" + movementOptions + ", number=" + areaNumber
+           + ", source=" + source + ", destination=" + destination + ", lastNotice=" + lastNotice
+           + ", order=" + order + ", orderExtensions1=" + bitsToString(orderExtensions1)
+           + ", orderExtensions2=" + bitsToString(orderExtensions2) + ", acknowledge=" + acknowledge
+           + ", ackExtensions1=" + bitsToString(ackExtensions1) + ", ackExtensions2="
+           + bitsToString(ackExtensions2) + ", expectedSequenceNumber=" + expectedSequenceNumber
+           + ", passNumber1=" + inputLane1 + ", destinationNumber1=" + destinationNumber1
+           + ", itemNumber1=" + itemNumber1 + ", sequenceNumber=" + sequenceNumber + ", length="
+           + length + ", width=" + width + ", height=" + height + ", requestedAlignment="
+           + requestedAlignment + ", insertDepth=" + insertDepth + ", turnRequest=" + turnRequest
+           + ", passNumber2=" + inputLane2 + ", destinationNumber2=" + destinationNumber2
+           + ", itemNumber2=" + itemNumber2 + ", tuId=" + tuId + "]";
   }
 
   public String getSequenceId1() {

@@ -8,11 +8,13 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the TT1510 telegram class.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT1510Subtype5 extends TT1510 {
+
   private static final long serialVersionUID = 1L;
   protected int tuExtra2;
 

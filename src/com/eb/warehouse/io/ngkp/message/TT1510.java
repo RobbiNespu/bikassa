@@ -8,12 +8,13 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Abstract extension of the telegram class to represent TT1510 telegrams.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1812 $, $Date: 2014-08-25 09:40:11 +0200 (Mon, 25 Aug 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1812 $, $Date: 2014-08-25 09:40:11 +0200 (Mon, 25 Aug 2014) $, $Author:
+ *          dennis.chong $
  */
 public abstract class TT1510 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
+
   public static final int TRANSPORT_ORDER = 15002;
   public static final int TRANSPORT_ORDER_LOW_PRIORITY = 15001;
   public static final int TRANSPORT_ORDER_HIGH_PRIORITY = 15003;
@@ -27,7 +28,7 @@ public abstract class TT1510 extends NGKPTelegram {
   public static final int TU_DELETED_MANUALLY = 15091;
   public static final int UNKOWN_ORDER = 15130;
   public static final int GENERAL_PLAUSIBILIYT_ERROR = 15160;
-
+  private static final long serialVersionUID = 1L;
   protected int sourceSystem;
   protected int sourceUnit;
   protected int sourcePlace;
@@ -86,10 +87,40 @@ public abstract class TT1510 extends NGKPTelegram {
     this.errorFlags2 = new boolean[8];
   }
 
+  public static TT1510 createTelegramBySubtype(int subtype) {
+    if (subtype == 1) {
+      return new TT1510Subtype1();
+    }
+    if (subtype == 3) {
+      return new TT1510Subtype3();
+    }
+    if (subtype == 5) {
+      return new TT1510Subtype5();
+    }
+    if (subtype == 7) {
+      return new TT1510Subtype7();
+    }
+    if (subtype == 11) {
+      return new TT1510Subtype11();
+    }
+    return null;
+  }
+
   @Override
   public String fieldsToString() {
-    return super.fieldsToString() + " sourceSystem=" + sourceSystem + "," + " sourceUnit=" + sourceUnit + "," + " sourcePlace=" + sourcePlace + "," + " destinationSystem=" + destinationSystem + "," + " destinationUnit=" + destinationUnit + "," + " destinationPlace=" + destinationPlace + "," + " lastSystem=" + lastSystem + "," + " lastUnit=" + lastUnit + "," + " lastPlace=" + lastPlace + "," + " order=" + order + "," + " orderExtensions1=" + bitsToString(orderExtensions1) + ", " + " orderExtensions2=" + bitsToString(orderExtensions2) + ", " + " acknowledge=" + acknowledge + "," + " ackExtensions1=" + bitsToString(ackExtensions1) + ", " + " ackExtensions2=" + bitsToString(ackExtensions2) + ", " + " tuType=" + tuType + "," + " tuFlags1=" + bitsToString(tuFlags1) + ", " + " tuFlags2=" + bitsToString(tuFlags2) + ", " + " length=" + length + "," + " width=" + width + "," + " height=" + height + "," + " weight=" + weight + "," + " errorFlags1=" + bitsToString(errorFlags1) + ", "
-        + " errorFlags2=" + bitsToString(errorFlags2) + ", " + " tuID=" + tuID + ",";
+    return super.fieldsToString() + " sourceSystem=" + sourceSystem + "," + " sourceUnit="
+           + sourceUnit + "," + " sourcePlace=" + sourcePlace + "," + " destinationSystem="
+           + destinationSystem + "," + " destinationUnit=" + destinationUnit + ","
+           + " destinationPlace=" + destinationPlace + "," + " lastSystem=" + lastSystem + ","
+           + " lastUnit=" + lastUnit + "," + " lastPlace=" + lastPlace + "," + " order=" + order
+           + "," + " orderExtensions1=" + bitsToString(orderExtensions1) + ", "
+           + " orderExtensions2=" + bitsToString(orderExtensions2) + ", " + " acknowledge="
+           + acknowledge + "," + " ackExtensions1=" + bitsToString(ackExtensions1) + ", "
+           + " ackExtensions2=" + bitsToString(ackExtensions2) + ", " + " tuType=" + tuType + ","
+           + " tuFlags1=" + bitsToString(tuFlags1) + ", " + " tuFlags2=" + bitsToString(tuFlags2)
+           + ", " + " length=" + length + "," + " width=" + width + "," + " height=" + height + ","
+           + " weight=" + weight + "," + " errorFlags1=" + bitsToString(errorFlags1) + ", "
+           + " errorFlags2=" + bitsToString(errorFlags2) + ", " + " tuID=" + tuID + ",";
   }
 
   @Override
@@ -170,7 +201,8 @@ public abstract class TT1510 extends NGKPTelegram {
   }
 
   public boolean isTransportOrder() {
-    return order == TRANSPORT_ORDER || order == TRANSPORT_ORDER_LOW_PRIORITY || order == TRANSPORT_ORDER_HIGH_PRIORITY || order == TRANSPORT_ORDER_UPDATE;
+    return order == TRANSPORT_ORDER || order == TRANSPORT_ORDER_LOW_PRIORITY
+           || order == TRANSPORT_ORDER_HIGH_PRIORITY || order == TRANSPORT_ORDER_UPDATE;
   }
 
   public String getSourceID() {
@@ -221,25 +253,6 @@ public abstract class TT1510 extends NGKPTelegram {
     if (extension == 2) {
       getAckExtensions2()[bit] = value;
     }
-  }
-
-  public static TT1510 createTelegramBySubtype(int subtype) {
-    if (subtype == 1) {
-      return new TT1510Subtype1();
-    }
-    if (subtype == 3) {
-      return new TT1510Subtype3();
-    }
-    if (subtype == 5) {
-      return new TT1510Subtype5();
-    }
-    if (subtype == 7) {
-      return new TT1510Subtype7();
-    }
-    if (subtype == 11) {
-      return new TT1510Subtype11();
-    }
-    return null;
   }
 
   public int getSourceSystem() {

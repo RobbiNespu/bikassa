@@ -8,12 +8,13 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT13 telegrams.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1689 $, $Date: 2014-03-18 10:06:29 +0100 (Di, 18 Mrz 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1689 $, $Date: 2014-03-18 10:06:29 +0100 (Di, 18 Mrz 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT13 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
+
   public static final int NOORDER = 0;
   public static final int DELETE_ORDER_BY_BC = 201;
   public static final int DELETE_ORDER_BY_FP = 203;
@@ -36,6 +37,7 @@ public class TT13 extends NGKPTelegram {
   public static final char STRIPE_CONTINUE = '+';
   public static final char STRIPE_END_OF_CHAIN = '-';
   public static final char STRIPE_NOTE_USED = ' ';
+  private static final long serialVersionUID = 1L;
   protected TT13Stripe[] stripes;
   protected int byteoffset;
 

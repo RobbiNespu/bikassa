@@ -1,14 +1,13 @@
-
 package com.eb.warehouse.util;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.InjectionListener;
 import com.google.inject.spi.TypeEncounter;
 import com.google.inject.spi.TypeListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class EventBusRegistrationListener implements TypeListener {
 

@@ -1,21 +1,24 @@
-
 package com.eb.warehouse.io.ngkp;
 
 import com.google.common.base.MoreObjects;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public class Ngkp2Header {
 
+  private int telegramLength;
+  private int destinationAddress;
+  private int telegramType;
+  private char telegramCounter;
+  private int protocolVersion = 2;
+
+  public Ngkp2Header() {
+  }
+
   /**
    * TODO JavaDoc according to WAMAS C conventions
-   *
-   * @param headerBytes
-   * @return
    */
   public static Ngkp2Header fromBytes(byte[] bytes) {
     Ngkp2Header header = new Ngkp2Header();
@@ -25,15 +28,6 @@ public class Ngkp2Header {
     header.telegramCounter = (char) bytes[4];
     header.protocolVersion = bytes[5];
     return header;
-  }
-
-  private int telegramLength;
-  private int destinationAddress;
-  private int telegramType;
-  private char telegramCounter;
-  private int protocolVersion = 2;
-
-  public Ngkp2Header() {
   }
 
   public int getTelegramLength() {
@@ -76,15 +70,17 @@ public class Ngkp2Header {
     this.protocolVersion = protocolVersion;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-                      .add("telegramLength", telegramLength)
-                      .add("dstAddress", destinationAddress)
-                      .add("telegramType", telegramType)
-                      .add("telegramCounter", telegramCounter)
-                      .add("protocolVers", protocolVersion)
-                      .toString();
+        .add("telegramLength", telegramLength)
+        .add("dstAddress", destinationAddress)
+        .add("telegramType", telegramType)
+        .add("telegramCounter", telegramCounter)
+        .add("protocolVers", protocolVersion)
+        .toString();
   }
 }

@@ -8,12 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7033 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1376 $, $Date: 2013-07-23 14:54:34 +0200 (Di, 23 Jul 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1376 $, $Date: 2013-07-23 14:54:34 +0200 (Di, 23 Jul 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT7033 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public final static int COMMAND_LIGHT = 11;
   public final static int COMMAND_STUB = 12;
@@ -31,14 +31,12 @@ public class TT7033 extends NGKPTelegram {
   public final static int COMMAND_POP_UP = 24;
   public final static int COMMAND_RESET_TRAY_COUNTER = 25;
   public final static int COMMAND_CONFIRMATION_BUTTON = 101;
-
   public final static int VALUE_OFF = 0;
   public final static int VALUE_ON = 1;
-
   public final static int LIGHT_MODE_ON = 1;
   public final static int LIGHT_MODE_AUTO_OFF = 2;
   public final static int LIGHT_MODE_WAMAS = 3;
-
+  private static final long serialVersionUID = 1L;
   protected int openingNo;
   protected int command;
   protected int value;

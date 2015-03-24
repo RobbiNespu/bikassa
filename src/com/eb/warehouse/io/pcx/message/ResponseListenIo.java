@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
@@ -11,11 +10,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>
- * Java class for response-listen-io complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for response-listen-io complex type. <p> The following schema fragment specifies
+ * the expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="response-listen-io">
  *   &lt;complexContent>
@@ -37,19 +34,15 @@ public class ResponseListenIo implements Serializable {
   protected List<ResponseInput> inputs;
 
   /**
-   * Gets the value of the inputs property.
-   * <p>
-   * This accessor method returns a reference to the live list, not a snapshot. Therefore any
-   * modification you make to the returned list will be present inside the JAXB object. This is why
-   * there is not a <CODE>set</CODE> method for the inputs property.
-   * <p>
-   * For example, to add a new item, do as follows:
-   * 
+   * Gets the value of the inputs property. <p> This accessor method returns a reference to the live
+   * list, not a snapshot. Therefore any modification you make to the returned list will be present
+   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the inputs
+   * property. <p> For example, to add a new item, do as follows:
+   *
    * <pre>
    * getInputs().add(newItem);
    * </pre>
-   * <p>
-   * Objects of the following type(s) are allowed in the list {@link ResponseInput }
+   * <p> Objects of the following type(s) are allowed in the list {@link ResponseInput }
    */
   public List<ResponseInput> getInputs() {
     if (inputs == null) {

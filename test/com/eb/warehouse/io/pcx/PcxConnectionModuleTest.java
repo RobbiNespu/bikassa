@@ -1,26 +1,28 @@
 
 package com.eb.warehouse.io.pcx;
 
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Key;
 
-import javax.xml.bind.Marshaller;
+import com.eb.warehouse.io.socket.ReconnectingSocketConnectionModuleTest;
 
 import org.assertj.core.util.Sets;
 import org.junit.Test;
 
-import com.eb.warehouse.io.socket.ReconnectingSocketConnectionModuleTest;
-import com.eb.warehouse.util.Service2;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import javax.xml.bind.Marshaller;
+
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 public class PcxConnectionModuleTest {
 
   @Test
   public void inject() {
     Injector injector =
-      Guice.createInjector(new PcxConnectionModule(1, 2, Sets.<String> newHashSet(), "b"),
+        Guice.createInjector(new PcxConnectionModule(1, 2, Sets.<String>newHashSet(), "b",
+                                                     Key.get(PcxConnection.class)),
                            new ReconnectingSocketConnectionModuleTest.TestModule(),
                            new AbstractModule() {
                              @Override
@@ -28,7 +30,7 @@ public class PcxConnectionModuleTest {
                                bind(Marshaller.class).toInstance(mock(Marshaller.class));
                              }
                            });
-    Service2 pcxConnection = injector.getInstance(Service2.class);
+    PcxConnection pcxConnection = injector.getInstance(PcxConnection.class);
     assertNotNull(pcxConnection);
   }
 }

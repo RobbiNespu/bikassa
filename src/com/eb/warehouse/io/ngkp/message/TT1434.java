@@ -4,13 +4,27 @@ import static com.eb.warehouse.io.ngkp.BytesToInt.shortFromBytes;
 
 /**
  * Abstract extension of the telegram class to represent TT1434 telegrams.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
  * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author:
  *          dennis.chong $
  */
 
 public abstract class TT1434 extends NGKPTelegram {
+
+  private static final long serialVersionUID = 1L;
+  protected int topic;
+  protected int statusRequestID;
+  protected String content;
+
+  public TT1434() {
+    super();
+    telegramType = 1434;
+    content = "";
+    for (int i = 0; i < getContentLength(); ++i) {
+      content += "00";
+    }
+  }
 
   public static TT1434 fromBytes(byte[] bytes, int offset) {
     int version = shortFromBytes(bytes[offset + 8], bytes[offset + 9]);
@@ -27,20 +41,6 @@ public abstract class TT1434 extends NGKPTelegram {
     msg.setVersion(version);
     msg.setTopic(shortFromBytes(bytes[offset + 10], bytes[offset + 11]));
     return msg;
-  }
-
-  private static final long serialVersionUID = 1L;
-  protected int topic;
-  protected int statusRequestID;
-  protected String content;
-
-  public TT1434() {
-    super();
-    telegramType = 1434;
-    content = "";
-    for (int i = 0; i < getContentLength(); ++i) {
-      content += "00";
-    }
   }
 
   public void setInt2Byte(int value, int byteIndex) {

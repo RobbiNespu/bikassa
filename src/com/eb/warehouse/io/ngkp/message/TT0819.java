@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.ngkp.message;
 
 public class TT0819 extends NGKPTelegram {

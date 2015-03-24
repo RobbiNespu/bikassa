@@ -1,24 +1,29 @@
 
 package com.eb.warehouse;
 
-import static org.junit.Assert.assertNotNull;
-
-import javax.inject.Named;
-
-import org.assertj.core.util.Sets;
-import org.junit.Test;
-
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Provides;
+
+import org.assertj.core.util.Sets;
+import org.junit.Test;
+
+import javax.inject.Named;
+
+import static org.junit.Assert.assertNotNull;
 
 public class RandomTargetSelectingPcxStationModuleTest {
 
   @Test
   public void inject() {
-    Injector injector = Guice.createInjector(new RandomTargetSelectingPcxStationModule("a", Sets.<String> newHashSet()), new AbstractModule() {
+    Injector
+        injector =
+        Guice.createInjector(
+            new RandomTargetSelectingPcxStationModule("a", Sets.<String>newHashSet(), Key
+                .get(PcxStation.class)), new AbstractModule() {
       @Override
       protected void configure() {
       }

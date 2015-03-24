@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.util;
 
 import java.util.Collection;
@@ -6,9 +5,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 public final class ServicesManager implements Service2 {
 
@@ -19,7 +16,9 @@ public final class ServicesManager implements Service2 {
     this.services = services;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void startAsync2() {
     for (Service2 service : services) {
@@ -27,7 +26,9 @@ public final class ServicesManager implements Service2 {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void stop2() {
     for (Service2 service : services) {

@@ -1,18 +1,24 @@
 package com.eb.warehouse.io.ngkp;
 
-import com.eb.warehouse.io.ngkp.message.TT1411;
-import com.eb.warehouse.io.ngkp.message.TT1434;
 import com.google.common.base.MoreObjects;
 
+import com.eb.warehouse.io.ngkp.message.TT1411;
+import com.eb.warehouse.io.ngkp.message.TT1434;
+
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public class Ngkp2Telegram {
 
-  public static Ngkp2Telegram fromHeaderAndBytes(Ngkp2Header header, byte[] payloadBytes, int offset) {
+  private Ngkp2Header header;
+  private Object content;
+
+  public Ngkp2Telegram() {
+  }
+
+  public static Ngkp2Telegram fromHeaderAndBytes(Ngkp2Header header, byte[] payloadBytes,
+                                                 int offset) {
     Ngkp2Telegram telegram = new Ngkp2Telegram();
     telegram.setHeader(header);
     if (header.getTelegramType() == 1411) {
@@ -23,11 +29,6 @@ public class Ngkp2Telegram {
     }
     return null;
   }
-
-  private Ngkp2Header header;
-  private Object content;
-
-  public Ngkp2Telegram() {}
 
   public Ngkp2Header getHeader() {
     return header;
@@ -45,7 +46,9 @@ public class Ngkp2Telegram {
     this.content = content;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("header", header).add("content", content)

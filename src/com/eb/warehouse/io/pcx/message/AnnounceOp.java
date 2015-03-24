@@ -1,8 +1,8 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -11,9 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for announce-op complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="announce-op">
  *   &lt;complexContent>
@@ -34,327 +34,252 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "announce-op")
 public class AnnounceOp
-    implements Serializable
-{
+    implements Serializable {
 
-    private final static long serialVersionUID = 1L;
-    @XmlAttribute(name = "name")
-    protected String name;
-    @XmlAttribute(name = "pickorder")
-    protected BigInteger pickorder;
-    @XmlAttribute(name = "noof")
-    protected BigInteger noof;
-    @XmlAttribute(name = "destlocation")
-    protected String destlocation;
-    @XmlAttribute(name = "desttote")
-    protected String desttote;
-    @XmlAttribute(name = "desttub")
-    protected String desttub;
-    @XmlAttribute(name = "bulk")
-    protected String bulk;
-    @XmlAttribute(name = "wmsid")
-    protected String wmsid;
-    @XmlAttribute(name = "disable-lc")
-    protected String disableLc;
-    @XmlAttribute(name = "destcomp")
-    protected BigInteger destcomp;
-    @XmlAttribute(name = "desttype")
-    protected BigInteger desttype;
-    @XmlAttribute(name = "contains")
-    protected BigInteger contains;
+  private final static long serialVersionUID = 1L;
+  @XmlAttribute(name = "name")
+  protected String name;
+  @XmlAttribute(name = "pickorder")
+  protected BigInteger pickorder;
+  @XmlAttribute(name = "noof")
+  protected BigInteger noof;
+  @XmlAttribute(name = "destlocation")
+  protected String destlocation;
+  @XmlAttribute(name = "desttote")
+  protected String desttote;
+  @XmlAttribute(name = "desttub")
+  protected String desttub;
+  @XmlAttribute(name = "bulk")
+  protected String bulk;
+  @XmlAttribute(name = "wmsid")
+  protected String wmsid;
+  @XmlAttribute(name = "disable-lc")
+  protected String disableLc;
+  @XmlAttribute(name = "destcomp")
+  protected BigInteger destcomp;
+  @XmlAttribute(name = "desttype")
+  protected BigInteger desttype;
+  @XmlAttribute(name = "contains")
+  protected BigInteger contains;
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
+  /**
+   * Gets the value of the name property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setName(String value) {
-        name = value;
-    }
+  /**
+   * Sets the value of the name property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setName(String value) {
+    name = value;
+  }
 
-    /**
-     * Gets the value of the pickorder property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getPickorder() {
-        return pickorder;
-    }
+  /**
+   * Gets the value of the pickorder property.
+   *
+   * @return possible object is {@link BigInteger }
+   */
+  public BigInteger getPickorder() {
+    return pickorder;
+  }
 
-    /**
-     * Sets the value of the pickorder property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setPickorder(BigInteger value) {
-        pickorder = value;
-    }
+  /**
+   * Sets the value of the pickorder property.
+   *
+   * @param value allowed object is {@link BigInteger }
+   */
+  public void setPickorder(BigInteger value) {
+    pickorder = value;
+  }
 
-    /**
-     * Gets the value of the noof property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getNoof() {
-        return noof;
-    }
+  /**
+   * Gets the value of the noof property.
+   *
+   * @return possible object is {@link BigInteger }
+   */
+  public BigInteger getNoof() {
+    return noof;
+  }
 
-    /**
-     * Sets the value of the noof property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setNoof(BigInteger value) {
-        noof = value;
-    }
+  /**
+   * Sets the value of the noof property.
+   *
+   * @param value allowed object is {@link BigInteger }
+   */
+  public void setNoof(BigInteger value) {
+    noof = value;
+  }
 
-    /**
-     * Gets the value of the destlocation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDestlocation() {
-        return destlocation;
-    }
+  /**
+   * Gets the value of the destlocation property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getDestlocation() {
+    return destlocation;
+  }
 
-    /**
-     * Sets the value of the destlocation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDestlocation(String value) {
-        destlocation = value;
-    }
+  /**
+   * Sets the value of the destlocation property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setDestlocation(String value) {
+    destlocation = value;
+  }
 
-    /**
-     * Gets the value of the desttote property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDesttote() {
-        return desttote;
-    }
+  /**
+   * Gets the value of the desttote property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getDesttote() {
+    return desttote;
+  }
 
-    /**
-     * Sets the value of the desttote property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDesttote(String value) {
-        desttote = value;
-    }
+  /**
+   * Sets the value of the desttote property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setDesttote(String value) {
+    desttote = value;
+  }
 
-    /**
-     * Gets the value of the desttub property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDesttub() {
-        return desttub;
-    }
+  /**
+   * Gets the value of the desttub property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getDesttub() {
+    return desttub;
+  }
 
-    /**
-     * Sets the value of the desttub property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDesttub(String value) {
-        desttub = value;
-    }
+  /**
+   * Sets the value of the desttub property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setDesttub(String value) {
+    desttub = value;
+  }
 
-    /**
-     * Gets the value of the bulk property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getBulk() {
-        return bulk;
-    }
+  /**
+   * Gets the value of the bulk property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getBulk() {
+    return bulk;
+  }
 
-    /**
-     * Sets the value of the bulk property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setBulk(String value) {
-        bulk = value;
-    }
+  /**
+   * Sets the value of the bulk property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setBulk(String value) {
+    bulk = value;
+  }
 
-    /**
-     * Gets the value of the wmsid property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getWmsid() {
-        return wmsid;
-    }
+  /**
+   * Gets the value of the wmsid property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getWmsid() {
+    return wmsid;
+  }
 
-    /**
-     * Sets the value of the wmsid property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setWmsid(String value) {
-        wmsid = value;
-    }
+  /**
+   * Sets the value of the wmsid property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setWmsid(String value) {
+    wmsid = value;
+  }
 
-    /**
-     * Gets the value of the disableLc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDisableLc() {
-        return disableLc;
-    }
+  /**
+   * Gets the value of the disableLc property.
+   *
+   * @return possible object is {@link String }
+   */
+  public String getDisableLc() {
+    return disableLc;
+  }
 
-    /**
-     * Sets the value of the disableLc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDisableLc(String value) {
-        disableLc = value;
-    }
+  /**
+   * Sets the value of the disableLc property.
+   *
+   * @param value allowed object is {@link String }
+   */
+  public void setDisableLc(String value) {
+    disableLc = value;
+  }
 
-    /**
-     * Gets the value of the destcomp property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getDestcomp() {
-        return destcomp;
-    }
+  /**
+   * Gets the value of the destcomp property.
+   *
+   * @return possible object is {@link BigInteger }
+   */
+  public BigInteger getDestcomp() {
+    return destcomp;
+  }
 
-    /**
-     * Sets the value of the destcomp property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setDestcomp(BigInteger value) {
-        destcomp = value;
-    }
+  /**
+   * Sets the value of the destcomp property.
+   *
+   * @param value allowed object is {@link BigInteger }
+   */
+  public void setDestcomp(BigInteger value) {
+    destcomp = value;
+  }
 
-    /**
-     * Gets the value of the desttype property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getDesttype() {
-        return desttype;
-    }
+  /**
+   * Gets the value of the desttype property.
+   *
+   * @return possible object is {@link BigInteger }
+   */
+  public BigInteger getDesttype() {
+    return desttype;
+  }
 
-    /**
-     * Sets the value of the desttype property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setDesttype(BigInteger value) {
-        desttype = value;
-    }
+  /**
+   * Sets the value of the desttype property.
+   *
+   * @param value allowed object is {@link BigInteger }
+   */
+  public void setDesttype(BigInteger value) {
+    desttype = value;
+  }
 
-    /**
-     * Gets the value of the contains property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getContains() {
-        return contains;
-    }
+  /**
+   * Gets the value of the contains property.
+   *
+   * @return possible object is {@link BigInteger }
+   */
+  public BigInteger getContains() {
+    return contains;
+  }
 
-    /**
-     * Sets the value of the contains property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setContains(BigInteger value) {
-        contains = value;
-    }
+  /**
+   * Sets the value of the contains property.
+   *
+   * @param value allowed object is {@link BigInteger }
+   */
+  public void setContains(BigInteger value) {
+    contains = value;
+  }
 
 }

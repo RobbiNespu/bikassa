@@ -1,5 +1,6 @@
-
 package com.eb.warehouse.io.pcx.message;
+
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -9,14 +10,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-import com.google.common.base.MoreObjects;
-
 /**
- * <p>
- * Java class for response-query complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for response-query complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="response-query">
  *   &lt;complexContent>
@@ -55,7 +52,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Gets the value of the ptt property.
-   * 
+   *
    * @return possible object is {@link ResponsePttQuery }
    */
   public ResponsePttQuery getPtt() {
@@ -64,7 +61,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Sets the value of the ptt property.
-   * 
+   *
    * @param value allowed object is {@link ResponsePttQuery }
    */
   public void setPtt(ResponsePttQuery value) {
@@ -73,7 +70,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Gets the value of the box property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBox() {
@@ -82,7 +79,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Sets the value of the box property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBox(String value) {
@@ -91,7 +88,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Gets the value of the order property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getOrder() {
@@ -100,7 +97,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Sets the value of the order property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setOrder(String value) {
@@ -109,7 +106,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Gets the value of the at property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getAt() {
@@ -118,7 +115,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Sets the value of the at property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setAt(String value) {
@@ -127,7 +124,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Gets the value of the from property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFrom() {
@@ -136,7 +133,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Sets the value of the from property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFrom(String value) {
@@ -145,7 +142,7 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Gets the value of the type property.
-   * 
+   *
    * @return possible object is {@link BigInteger }
    */
   public BigInteger getType() {
@@ -154,25 +151,27 @@ public class ResponseQuery implements Serializable {
 
   /**
    * Sets the value of the type property.
-   * 
+   *
    * @param value allowed object is {@link BigInteger }
    */
   public void setType(BigInteger value) {
     type = value;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-                      .add("from", from)
-                      .add("at", at)
-                      .add("box", box)
-                      .add("order", order)
-                      .add("type", type)
-                      .add("ptt", ptt)
-                      .omitNullValues()
-                      .toString();
+        .add("from", from)
+        .add("at", at)
+        .add("box", box)
+        .add("order", order)
+        .add("type", type)
+        .add("ptt", ptt)
+        .omitNullValues()
+        .toString();
   }
 
 }

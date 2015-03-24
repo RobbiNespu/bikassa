@@ -8,12 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7010 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1613 $, $Date: 2014-01-09 11:01:11 +0100 (Do, 09 Jan 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1613 $, $Date: 2014-01-09 11:01:11 +0100 (Do, 09 Jan 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT7010 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public final static int ORDER_CODE_TRANSPORT_REQUEST = 11;
   public final static int ORDER_CODE_FOLLOWUP_REQUEST = 12;
@@ -26,7 +26,7 @@ public class TT7010 extends NGKPTelegram {
   public final static int TILT_ON = 1;
   public final static int TURBO = 0;
   public final static int CHECK_WEIGHT = 1;
-
+  private static final long serialVersionUID = 1L;
   protected int trayNo;
   protected byte openingNo;
   protected byte rackSide;
@@ -278,19 +278,19 @@ public class TT7010 extends NGKPTelegram {
     this.expectedWeight = expectedWeight;
   }
 
-  public void setTurbo(boolean turbo) {
-    extensions[TURBO] = turbo;
-  }
-
   public boolean getTurbo() {
     return extensions[TURBO];
   }
 
-  public void setCheckWeight(boolean checkWeight) {
-    extensions[CHECK_WEIGHT] = checkWeight;
+  public void setTurbo(boolean turbo) {
+    extensions[TURBO] = turbo;
   }
 
   public boolean getCheckWeight() {
     return extensions[CHECK_WEIGHT];
+  }
+
+  public void setCheckWeight(boolean checkWeight) {
+    extensions[CHECK_WEIGHT] = checkWeight;
   }
 }

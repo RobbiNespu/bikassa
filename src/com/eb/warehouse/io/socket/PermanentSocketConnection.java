@@ -1,10 +1,18 @@
 package com.eb.warehouse.io.socket;
 
-import static com.google.common.base.Preconditions.checkState;
+import com.google.common.eventbus.EventBus;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+
+import com.eb.warehouse.io.SocketConnection;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -12,60 +20,16 @@ import java.util.concurrent.ExecutionException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.eb.warehouse.io.SocketConnection;
-import com.google.common.eventbus.EventBus;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
- * <p>
- * Socket connection that tries to be connected to the socket as long as the connection is running.
- * Reconnect is triggered either if {@link #writeToSocket(byte[])} throws an exception or a previous
- * connect to the socket failed.
- * </p>
+ * <p> Socket connection that tries to be connected to the socket as long as the connection is
+ * running. Reconnect is triggered either if {@link #writeToSocket(byte[])} throws an exception or a
+ * previous connect to the socket failed. </p>
  */
 final class PermanentSocketConnection implements SocketConnection {
 
-  final class ConnectSocketCallback implements FutureCallback<Socket> {
-    @Override
-    public void onSuccess(Socket connected) {
-      socket = connected;
-      try {
-        os = socket.getOutputStream();
-        Callable<Void> readTask =
-            readSocketTaskFactory.createReadSocketInputStreamTask(connected.getInputStream());
-        readFuture = connectAndReadRunner.submit(readTask);
-        Futures.addCallback(readFuture, readCallback);
-        socketConnectEvents.post(new InetSocketAddress(socket.getInetAddress(), socket.getPort()));
-      } catch (IOException e) {
-        closeOldSocketAndReconnectAsync();
-      }
-    }
-
-    @Override
-    public void onFailure(Throwable t) {
-      // Fails only if task is interrupted and/or underyling socket gets closed.
-    }
-  }
-
-  final class ReadSocketCallback implements FutureCallback<Void> {
-    @Override
-    public void onSuccess(Void none) {
-      // Comes here only if remote host closes socket.
-      closeOldSocketAndReconnectAsync();
-    }
-
-    @Override
-    public void onFailure(Throwable t) {
-      closeOldSocketAndReconnectAsync();
-    }
-  }
-
+  static final String CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING = "connectAndRead";
   private static final Logger L = LoggerFactory.getLogger(PermanentSocketConnection.class);
   private final ConnectSocketTask connectSocketTask;
   private final ReadSocketTaskFactory readSocketTaskFactory;
@@ -76,14 +40,15 @@ final class PermanentSocketConnection implements SocketConnection {
   // private ConnectionStatsCounter statsCounter;
   private volatile boolean running;
   private volatile Socket socket;
-  private OutputStream os;
   private ListenableFuture<Socket> connectFuture;
   private ListenableFuture<Void> readFuture;
 
   @Inject
-  public PermanentSocketConnection(ListeningExecutorService connectAndReadRunner,
-      ConnectSocketTask connectSocketTask, ReadSocketTaskFactory readSocketTaskFactory,
-      @Named("internal") EventBus socketConnectEvents) {
+  PermanentSocketConnection(
+      @Named(CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING) ListeningExecutorService connectAndReadRunner,
+      ConnectSocketTask connectSocketTask,
+      ReadSocketTaskFactory readSocketTaskFactory,
+      @Named("socketEvents") EventBus socketConnectEvents) {
     this.connectAndReadRunner = connectAndReadRunner;
     this.connectSocketTask = connectSocketTask;
     this.readSocketTaskFactory = readSocketTaskFactory;
@@ -93,9 +58,11 @@ final class PermanentSocketConnection implements SocketConnection {
   }
 
   PermanentSocketConnection(ListeningExecutorService connectAndReadRunner,
-      ConnectSocketTask connectSocketTask, ReadSocketTaskFactory readSocketTaskFactory,
-      @Named("internal") EventBus socketConnectEvents, FutureCallback<Socket> connectCallback,
-      FutureCallback<Void> readCallback) {
+                            ConnectSocketTask connectSocketTask,
+                            ReadSocketTaskFactory readSocketTaskFactory,
+                            EventBus socketConnectEvents,
+                            FutureCallback<Socket> connectCallback,
+                            FutureCallback<Void> readCallback) {
     this.connectAndReadRunner = connectAndReadRunner;
     this.connectSocketTask = connectSocketTask;
     this.readSocketTaskFactory = readSocketTaskFactory;
@@ -104,11 +71,13 @@ final class PermanentSocketConnection implements SocketConnection {
     this.readCallback = readCallback;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void startAsync2() {
     checkState(!running,
-        "Connection is already started. Call 'stop2()' before starting the connection again!");
+               "Connection is already started. Call 'stop2()' before starting the connection again!");
     running = true;
     connectAsync();
   }
@@ -119,11 +88,15 @@ final class PermanentSocketConnection implements SocketConnection {
   }
 
   private void closeOldSocketAndReconnectAsync() {
-    Sockets.closeQuietly(socket);
-    connectAsync();
+    if (connectFuture.isCancelled() || connectFuture.isDone()) {
+      Sockets.closeQuietly(socket);
+      connectAsync();
+    }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void stop2() {
     if (connectFuture != null) {
@@ -140,22 +113,26 @@ final class PermanentSocketConnection implements SocketConnection {
     running = false;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void writeToSocket(byte[] bytes) throws IOException {
-    L.trace("Try writing bytes={} to socket={} on output stream={}.", bytes, socket, os);
-    if (os == null) {
-      // is connecting to socket. Still throw IOException
+    L.trace("Try writing bytes={} to socket={} output stream.", bytes, socket);
+    if (socket == null) {
       throw new IOException(
-          "Cannot write to socket. Either not called 'startAsync2()' or still connecting to it.");
+          "Cannot write to socket. Called 'startAsync2()'.");
+    }
+    if (!connectFuture.isDone()) {
+      throw new IOException(
+          "Cannot write to socket. Still connecting to it.");
     }
 
     try {
-      os.write(bytes);
+      socket.getOutputStream().write(bytes);
       // statsCounter.incrementSentBytes(bytes.length);
       L.trace("Wrote bytes successfully to socket output stream.");
     } catch (IOException e) {
-      // L.error("Not sent bytes={} to socket={}. IOException occurred.", bytes, socket);
       closeOldSocketAndReconnectAsync();
       throw e;
     }
@@ -181,7 +158,7 @@ final class PermanentSocketConnection implements SocketConnection {
    * Set the socket's output stream. Only use for testing!
    */
   void setOutputStream(OutputStream os) {
-    this.os = os;
+//    this.os = os;
   }
 
   /**
@@ -190,5 +167,41 @@ final class PermanentSocketConnection implements SocketConnection {
    */
   void setConnecting(ListenableFuture<Socket> connectFuture) {
     this.connectFuture = connectFuture;
+  }
+
+  final class ConnectSocketCallback implements FutureCallback<Socket> {
+
+    @Override
+    public void onSuccess(Socket connected) {
+      socket = connected;
+      try {
+        Callable<Void> readTask =
+            readSocketTaskFactory.createReadSocketInputStreamTask(connected.getInputStream());
+        readFuture = connectAndReadRunner.submit(readTask);
+        Futures.addCallback(readFuture, readCallback);
+        socketConnectEvents.post(new SocketConnectedEvent());
+      } catch (IOException e) {
+        closeOldSocketAndReconnectAsync();
+      }
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+      // Fails only if task is interrupted and/or underyling socket gets closed.
+    }
+  }
+
+  final class ReadSocketCallback implements FutureCallback<Void> {
+
+    @Override
+    public void onSuccess(Void none) {
+      // Comes here only if remote host closes socket.
+//      closeOldSocketAndReconnectAsync();
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+      closeOldSocketAndReconnectAsync();
+    }
   }
 }

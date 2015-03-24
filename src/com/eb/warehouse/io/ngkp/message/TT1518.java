@@ -7,6 +7,7 @@
 package com.eb.warehouse.io.ngkp.message;
 
 public abstract class TT1518 extends NGKPTelegram {
+
   private static final long serialVersionUID = 1L;
   protected int topic;
 

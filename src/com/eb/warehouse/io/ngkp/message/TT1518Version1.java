@@ -8,10 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 719 $, $Date: 2012-09-06 18:04:47 +0200 (Do, 06 Sep 2012) $, $Author: dennis.chong $
+ * @version $Revision: 719 $, $Date: 2012-09-06 18:04:47 +0200 (Do, 06 Sep 2012) $, $Author:
+ *          dennis.chong $
  */
 
 public class TT1518Version1 extends TT1518 {
+
   private static final long serialVersionUID = 1L;
   private static final int DATA_LENGTH = 190;
   // topic 1

@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
@@ -12,11 +11,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>
- * Java class for response-ptt complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for response-ptt complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="response-ptt">
  *   &lt;complexContent>
@@ -25,7 +22,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="pickstart" type="{}response-pickstart" minOccurs="0"/>
  *         &lt;element name="completion" type="{}response-completion" minOccurs="0"/>
  *         &lt;element name="timing" type="{}response-timing" minOccurs="0"/>
- *         &lt;element name="exception" type="{}response-exception" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="exception" type="{}response-exception" maxOccurs="unbounded"
+ * minOccurs="0"/>
  *       &lt;/choice>
  *       &lt;attribute name="from" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
@@ -47,19 +45,15 @@ public class ResponsePtt implements Serializable {
   protected String from;
 
   /**
-   * Gets the value of the exceptions property.
-   * <p>
-   * This accessor method returns a reference to the live list, not a snapshot. Therefore any
-   * modification you make to the returned list will be present inside the JAXB object. This is why
-   * there is not a <CODE>set</CODE> method for the exceptions property.
-   * <p>
-   * For example, to add a new item, do as follows:
-   * 
+   * Gets the value of the exceptions property. <p> This accessor method returns a reference to the
+   * live list, not a snapshot. Therefore any modification you make to the returned list will be
+   * present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the
+   * exceptions property. <p> For example, to add a new item, do as follows:
+   *
    * <pre>
    * getExceptions().add(newItem);
    * </pre>
-   * <p>
-   * Objects of the following type(s) are allowed in the list {@link ResponseException }
+   * <p> Objects of the following type(s) are allowed in the list {@link ResponseException }
    */
   public List<ResponseException> getExceptions() {
     if (exceptions == null) {
@@ -70,7 +64,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Gets the value of the timing property.
-   * 
+   *
    * @return possible object is {@link ResponseTiming }
    */
   public ResponseTiming getTiming() {
@@ -79,7 +73,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Sets the value of the timing property.
-   * 
+   *
    * @param value allowed object is {@link ResponseTiming }
    */
   public void setTiming(ResponseTiming value) {
@@ -88,7 +82,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Gets the value of the completion property.
-   * 
+   *
    * @return possible object is {@link ResponseCompletion }
    */
   public ResponseCompletion getCompletion() {
@@ -97,7 +91,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Sets the value of the completion property.
-   * 
+   *
    * @param value allowed object is {@link ResponseCompletion }
    */
   public void setCompletion(ResponseCompletion value) {
@@ -106,7 +100,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Gets the value of the pickstart property.
-   * 
+   *
    * @return possible object is {@link ResponsePickstart }
    */
   public ResponsePickstart getPickstart() {
@@ -115,7 +109,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Sets the value of the pickstart property.
-   * 
+   *
    * @param value allowed object is {@link ResponsePickstart }
    */
   public void setPickstart(ResponsePickstart value) {
@@ -124,7 +118,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Gets the value of the from property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFrom() {
@@ -133,7 +127,7 @@ public class ResponsePtt implements Serializable {
 
   /**
    * Sets the value of the from property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFrom(String value) {

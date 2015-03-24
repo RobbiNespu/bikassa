@@ -8,12 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7034 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1576 $, $Date: 2013-11-29 13:17:05 +0100 (Fr, 29 Nov 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1576 $, $Date: 2013-11-29 13:17:05 +0100 (Fr, 29 Nov 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT7034 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   protected final static int STATUS_BIT_AUTO_ON = 0;
   protected final static int STATUS_BIT_ERROR = 1;
@@ -24,7 +24,7 @@ public class TT7034 extends NGKPTelegram {
   protected final static int HIGH_BIT_SAFE = 2;
   protected final static int LOW_BIT_LIGHT = 0;
   protected final static int LOW_BIT_TILT = 1;
-
+  private static final long serialVersionUID = 1L;
   protected int activeOrderID;
   protected int bufferedOrderID;
   protected boolean[] status;
@@ -337,164 +337,164 @@ public class TT7034 extends NGKPTelegram {
     this.opening4Tray2 = opening4Tray2;
   }
 
-  public void setOpening1Block(boolean block) {
-    this.opening1StatusHigh[HIGH_BIT_BLOCK] = block;
-  }
-
   public boolean getOpening1Block() {
     return this.opening1StatusHigh[HIGH_BIT_BLOCK];
   }
 
-  public void setOpening1Stub(boolean stub) {
-    this.opening1StatusHigh[HIGH_BIT_STUB] = stub;
+  public void setOpening1Block(boolean block) {
+    this.opening1StatusHigh[HIGH_BIT_BLOCK] = block;
   }
 
   public boolean getOpening1Stub() {
     return this.opening1StatusHigh[HIGH_BIT_STUB];
   }
 
-  public void setOpening1Safe(boolean safe) {
-    this.opening1StatusHigh[HIGH_BIT_SAFE] = safe;
+  public void setOpening1Stub(boolean stub) {
+    this.opening1StatusHigh[HIGH_BIT_STUB] = stub;
   }
 
   public boolean getOpening1Safe() {
     return this.opening1StatusHigh[HIGH_BIT_SAFE];
   }
 
-  public void setOpening1Light(boolean light) {
-    this.opening1StatusLow[LOW_BIT_LIGHT] = light;
+  public void setOpening1Safe(boolean safe) {
+    this.opening1StatusHigh[HIGH_BIT_SAFE] = safe;
   }
 
   public boolean getOpening1Light() {
     return this.opening1StatusLow[LOW_BIT_LIGHT];
   }
 
-  public void setOpening1Tilt(boolean tilt) {
-    this.opening1StatusLow[LOW_BIT_TILT] = tilt;
+  public void setOpening1Light(boolean light) {
+    this.opening1StatusLow[LOW_BIT_LIGHT] = light;
   }
 
   public boolean getOpening1Tilt() {
     return this.opening1StatusLow[LOW_BIT_TILT];
   }
 
-  public void setOpening2Block(boolean block) {
-    this.opening2StatusHigh[HIGH_BIT_BLOCK] = block;
+  public void setOpening1Tilt(boolean tilt) {
+    this.opening1StatusLow[LOW_BIT_TILT] = tilt;
   }
 
   public boolean getOpening2Block() {
     return this.opening2StatusHigh[HIGH_BIT_BLOCK];
   }
 
-  public void setOpening2Stub(boolean stub) {
-    this.opening2StatusHigh[HIGH_BIT_STUB] = stub;
+  public void setOpening2Block(boolean block) {
+    this.opening2StatusHigh[HIGH_BIT_BLOCK] = block;
   }
 
   public boolean getOpening2Stub() {
     return this.opening2StatusHigh[HIGH_BIT_STUB];
   }
 
-  public void setOpening2Safe(boolean safe) {
-    this.opening2StatusHigh[HIGH_BIT_SAFE] = safe;
+  public void setOpening2Stub(boolean stub) {
+    this.opening2StatusHigh[HIGH_BIT_STUB] = stub;
   }
 
   public boolean getOpening2Safe() {
     return this.opening2StatusHigh[HIGH_BIT_SAFE];
   }
 
-  public void setOpening2Light(boolean light) {
-    this.opening2StatusLow[LOW_BIT_LIGHT] = light;
+  public void setOpening2Safe(boolean safe) {
+    this.opening2StatusHigh[HIGH_BIT_SAFE] = safe;
   }
 
   public boolean getOpening2Light() {
     return this.opening2StatusLow[LOW_BIT_LIGHT];
   }
 
-  public void setOpening2Tilt(boolean tilt) {
-    this.opening2StatusLow[LOW_BIT_TILT] = tilt;
+  public void setOpening2Light(boolean light) {
+    this.opening2StatusLow[LOW_BIT_LIGHT] = light;
   }
 
   public boolean getOpening2Tilt() {
     return this.opening2StatusLow[LOW_BIT_TILT];
   }
 
-  public void setOpening3Block(boolean block) {
-    this.opening3StatusHigh[HIGH_BIT_BLOCK] = block;
+  public void setOpening2Tilt(boolean tilt) {
+    this.opening2StatusLow[LOW_BIT_TILT] = tilt;
   }
 
   public boolean getOpening3Block() {
     return this.opening3StatusHigh[HIGH_BIT_BLOCK];
   }
 
-  public void setOpening3Stub(boolean stub) {
-    this.opening3StatusHigh[HIGH_BIT_STUB] = stub;
+  public void setOpening3Block(boolean block) {
+    this.opening3StatusHigh[HIGH_BIT_BLOCK] = block;
   }
 
   public boolean getOpening3Stub() {
     return this.opening3StatusHigh[HIGH_BIT_STUB];
   }
 
-  public void setOpening3Safe(boolean safe) {
-    this.opening3StatusHigh[HIGH_BIT_SAFE] = safe;
+  public void setOpening3Stub(boolean stub) {
+    this.opening3StatusHigh[HIGH_BIT_STUB] = stub;
   }
 
   public boolean getOpening3Safe() {
     return this.opening3StatusHigh[HIGH_BIT_SAFE];
   }
 
-  public void setOpening3Light(boolean light) {
-    this.opening3StatusLow[LOW_BIT_LIGHT] = light;
+  public void setOpening3Safe(boolean safe) {
+    this.opening3StatusHigh[HIGH_BIT_SAFE] = safe;
   }
 
   public boolean getOpening3Light() {
     return this.opening3StatusLow[LOW_BIT_LIGHT];
   }
 
-  public void setOpening3Tilt(boolean tilt) {
-    this.opening3StatusLow[LOW_BIT_TILT] = tilt;
+  public void setOpening3Light(boolean light) {
+    this.opening3StatusLow[LOW_BIT_LIGHT] = light;
   }
 
   public boolean getOpening3Tilt() {
     return this.opening3StatusLow[LOW_BIT_TILT];
   }
 
-  public void setOpening4Block(boolean block) {
-    this.opening4StatusHigh[HIGH_BIT_BLOCK] = block;
+  public void setOpening3Tilt(boolean tilt) {
+    this.opening3StatusLow[LOW_BIT_TILT] = tilt;
   }
 
   public boolean getOpening4Block() {
     return this.opening4StatusHigh[HIGH_BIT_BLOCK];
   }
 
-  public void setOpening4Stub(boolean stub) {
-    this.opening4StatusHigh[HIGH_BIT_STUB] = stub;
+  public void setOpening4Block(boolean block) {
+    this.opening4StatusHigh[HIGH_BIT_BLOCK] = block;
   }
 
   public boolean getOpening4Stub() {
     return this.opening4StatusHigh[HIGH_BIT_STUB];
   }
 
-  public void setOpening4Safe(boolean safe) {
-    this.opening4StatusHigh[HIGH_BIT_SAFE] = safe;
+  public void setOpening4Stub(boolean stub) {
+    this.opening4StatusHigh[HIGH_BIT_STUB] = stub;
   }
 
   public boolean getOpening4Safe() {
     return this.opening4StatusHigh[HIGH_BIT_SAFE];
   }
 
-  public void setOpening4Light(boolean light) {
-    this.opening4StatusLow[LOW_BIT_LIGHT] = light;
+  public void setOpening4Safe(boolean safe) {
+    this.opening4StatusHigh[HIGH_BIT_SAFE] = safe;
   }
 
   public boolean getOpening4Light() {
     return this.opening4StatusLow[LOW_BIT_LIGHT];
   }
 
-  public void setOpening4Tilt(boolean tilt) {
-    this.opening4StatusLow[LOW_BIT_TILT] = tilt;
+  public void setOpening4Light(boolean light) {
+    this.opening4StatusLow[LOW_BIT_LIGHT] = light;
   }
 
   public boolean getOpening4Tilt() {
     return this.opening4StatusLow[LOW_BIT_TILT];
+  }
+
+  public void setOpening4Tilt(boolean tilt) {
+    this.opening4StatusLow[LOW_BIT_TILT] = tilt;
   }
 
   public void setAutoON(boolean status) {

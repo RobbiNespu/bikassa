@@ -10,11 +10,13 @@ import java.io.Serializable;
 
 /**
  * Simple class to represent a stripe of the TT13 telegram.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1548 $, $Date: 2013-10-31 13:56:14 +0100 (Do, 31 Okt 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1548 $, $Date: 2013-10-31 13:56:14 +0100 (Do, 31 Okt 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT13Stripe implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   protected String functionPoint;
@@ -147,8 +149,10 @@ public class TT13Stripe implements Serializable {
       s += " reserve15[" + index + "]=" + reserve15 + ",";
       s += " reserve16[" + index + "]=" + reserve16 + ",";
       s += " reserve17[" + index + "]=" + reserve17 + ",";
-      s += " specialInfoFlags1[" + index + "]=" + NGKPTelegram.bitsToString(specialInfoFlags1) + ",";
-      s += " specialInfoFlags2[" + index + "]=" + NGKPTelegram.bitsToString(specialInfoFlags2) + ",";
+      s +=
+          " specialInfoFlags1[" + index + "]=" + NGKPTelegram.bitsToString(specialInfoFlags1) + ",";
+      s +=
+          " specialInfoFlags2[" + index + "]=" + NGKPTelegram.bitsToString(specialInfoFlags2) + ",";
       s += " tuTyoeID[" + index + "]=" + tuTypeID + ",";
     } else if (dataFieldIdentifier == TT13.PARAMETER_SET_A) {
       for (int i = 0; i < alternative.length; ++i) {
@@ -164,7 +168,9 @@ public class TT13Stripe implements Serializable {
     s += " order[" + index + "]=" + order + ",";
     s += " orderExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions) + ",";
     s += " acknowledge[" + index + "]=" + acknowledge + ",";
-    s += " acknowledgeExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions) + ",";
+    s +=
+        " acknowledgeExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions)
+        + ",";
     s += " dataFieldIdentifier[" + index + "]=" + dataFieldIdentifier + ",";
     s += " telegramDetail[" + index + "]=" + telegramDetail + ",";
     return s;

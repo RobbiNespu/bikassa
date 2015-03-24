@@ -1,16 +1,15 @@
-
 package com.eb.warehouse.io.ngkp;
 
-import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.ReconnectingSocketConnectionModule;
+import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
+import com.google.inject.Key;
 import com.google.inject.PrivateModule;
-import com.google.inject.name.Names;
+
+import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.io.socket.PermanentSocketConnectionModule;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public class Ngkp2ConnectionModule extends AbstractModule {
@@ -21,18 +20,17 @@ public class Ngkp2ConnectionModule extends AbstractModule {
     this.port = port;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void configure() {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new ReconnectingSocketConnectionModule(port) {
-          @Override
-          protected void configureBinding(Class<SocketConnection> def, Class<? extends SocketConnection> impl) {
-            bind(def).annotatedWith(Names.named("ngkp-test")).to(impl);
-          }
-        });
+        install(new PermanentSocketConnectionModule(port, new EventBus(),
+                                                    Key.get(SocketConnection.class),
+                                                    Void.class));
         expose(SocketConnection.class);
       }
     });

@@ -1,14 +1,11 @@
-
 package com.eb.warehouse.io.socket;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 import com.google.common.base.Stopwatch;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 final class ConnectionStatsCollector implements ConnectionStatsCounter {
@@ -22,31 +19,41 @@ final class ConnectionStatsCollector implements ConnectionStatsCounter {
   private final Stopwatch connectedStopwatch = Stopwatch.createUnstarted();
   private final AtomicLong connectionAvailability = new AtomicLong();
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void incrementReceivedBytes() {
     incrementReceivedBytes(1L);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void incrementReceivedBytes(long bytes) {
     receivedBytes.addAndGet(bytes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void incrementSentBytes() {
     sentBytes.incrementAndGet();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void incrementSentBytes(long bytes) {
     sentBytes.addAndGet(bytes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void incrementSocketConnectAttempts() {
     connectAttempts.incrementAndGet();
@@ -55,14 +62,18 @@ final class ConnectionStatsCollector implements ConnectionStatsCounter {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void incrementSuccessfulSocketConnects() {
     successfulConnects.incrementAndGet();
     connectedStopwatch.start();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void incrementFailedSocketConnects() {
     failedConnects.incrementAndGet();

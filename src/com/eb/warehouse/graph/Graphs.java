@@ -1,12 +1,4 @@
-
 package com.eb.warehouse.graph;
-
-import static com.google.common.base.Preconditions.checkArgument;
-
-import java.util.Map;
-import java.util.Set;
-
-import org.assertj.core.util.Maps;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.HashMultimap;
@@ -14,28 +6,35 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 
+import org.assertj.core.util.Maps;
+
+import java.util.Map;
+import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public class Graphs {
+
+  /**
+   * TODO JavaDoc according to WAMAS C conventions
+   */
+  public static <T> GraphBuilder<T> newGraph(T graphId) {
+    return new Builder<T>(graphId);
+  }
 
   public static interface GraphBuilder<T> {
 
     /**
      * TODO JavaDoc according to WAMAS C conventions
-     *
-     * @param string
-     * @return
      */
     GraphNodeBuilder<T> withNode(T nodeId);
 
     /**
      * TODO JavaDoc according to WAMAS C conventions
-     *
-     * @return
      */
     Graph<T> build();
 
@@ -45,17 +44,11 @@ public class Graphs {
 
     /**
      * TODO JavaDoc according to WAMAS C conventions
-     * 
-     * @param weight
-     * @param string
-     * @return
      */
     GraphNodeBuilder<T> withEdge(T edgeId, int weight);
 
     /**
      * TODO JavaDoc according to WAMAS C conventions
-     *
-     * @return
      */
     @Override
     Graph<T> build();
@@ -72,14 +65,14 @@ public class Graphs {
 
     /**
      * TODO JavaDoc according to WAMAS C conventions
-     *
-     * @param graphId
      */
     public Builder(T graphId) {
       this.graphId = graphId;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GraphNodeBuilder<T> withNode(T nodeId) {
       checkArgument(!nodeIds.contains(nodeId), "Already defined node '" + nodeId + "'.");
@@ -88,7 +81,9 @@ public class Graphs {
       return this;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GraphNodeBuilder<T> withEdge(T edgeId, int weight) {
       connections.put(currentNodeId, edgeId);
@@ -96,7 +91,9 @@ public class Graphs {
       return this;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Graph<T> build() {
       return new SetMultimapGraph<T>(graphId, connections);
@@ -114,38 +111,38 @@ public class Graphs {
       this.nodeEdges = ImmutableSetMultimap.copyOf(nodeEdges);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T getId() {
       return graphId;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<T> getNodeEdges(T nodeId) {
       return nodeEdges.get(nodeId);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<T> getNodes() {
       return nodeEdges.keySet();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
-      return MoreObjects.toStringHelper(this).add("id", graphId).add("nodeEdges", nodeEdges).toString();
+      return MoreObjects.toStringHelper(this).add("id", graphId).add("nodeEdges", nodeEdges)
+          .toString();
     }
-  }
-
-  /**
-   * TODO JavaDoc according to WAMAS C conventions
-   *
-   * @return
-   */
-  public static <T> GraphBuilder<T> newGraph(T graphId) {
-    return new Builder<T>(graphId);
   }
 
 }

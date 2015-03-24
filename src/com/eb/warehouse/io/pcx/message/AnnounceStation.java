@@ -1,5 +1,6 @@
-
 package com.eb.warehouse.io.pcx.message;
+
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,14 +12,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.google.common.base.MoreObjects;
-
 /**
- * <p>
- * Java class for announce-station complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for announce-station complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="announce-station">
  *   &lt;complexContent>
@@ -52,19 +49,15 @@ public class AnnounceStation implements Serializable {
   protected String type;
 
   /**
-   * Gets the value of the targets property.
-   * <p>
-   * This accessor method returns a reference to the live list, not a snapshot. Therefore any
-   * modification you make to the returned list will be present inside the JAXB object. This is why
-   * there is not a <CODE>set</CODE> method for the targets property.
-   * <p>
-   * For example, to add a new item, do as follows:
-   * 
+   * Gets the value of the targets property. <p> This accessor method returns a reference to the
+   * live list, not a snapshot. Therefore any modification you make to the returned list will be
+   * present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the
+   * targets property. <p> For example, to add a new item, do as follows:
+   *
    * <pre>
    * getTargets().add(newItem);
    * </pre>
-   * <p>
-   * Objects of the following type(s) are allowed in the list {@link AnnounceTarget }
+   * <p> Objects of the following type(s) are allowed in the list {@link AnnounceTarget }
    */
   public List<AnnounceTarget> getTargets() {
     if (targets == null) {
@@ -75,7 +68,7 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Gets the value of the box property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBox() {
@@ -84,7 +77,7 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Sets the value of the box property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBox(String value) {
@@ -93,7 +86,7 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Gets the value of the order property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getOrder() {
@@ -102,7 +95,7 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Sets the value of the order property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setOrder(String value) {
@@ -111,7 +104,7 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Gets the value of the from property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFrom() {
@@ -120,7 +113,7 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Sets the value of the from property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFrom(String value) {
@@ -129,7 +122,7 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Gets the value of the type property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getType() {
@@ -138,23 +131,25 @@ public class AnnounceStation implements Serializable {
 
   /**
    * Sets the value of the type property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setType(String value) {
     type = value;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-                      .add("targets", targets)
-                      .add("from", from)
-                      .add("type", type)
-                      .add("order", order)
-                      .add("box", box)
-                      .omitNullValues()
-                      .toString();
+        .add("targets", targets)
+        .add("from", from)
+        .add("type", type)
+        .add("order", order)
+        .add("box", box)
+        .omitNullValues()
+        .toString();
   }
 }

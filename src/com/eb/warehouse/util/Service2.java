@@ -3,12 +3,8 @@ package com.eb.warehouse.util;
 import com.google.common.util.concurrent.Service;
 
 /**
- * <p>
- * Service that is simpler than Guava's {@link Service}.
- * </p>
- * <p>
- * It provides only two methods to start and stop the service.
- * </p>
+ * <p> Service that is simpler than Guava's {@link Service}. </p> <p> It provides only two methods
+ * to start and stop the service. </p>
  */
 
 public interface Service2 {

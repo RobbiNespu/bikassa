@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
@@ -9,11 +8,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>
- * Java class for announce-ptt complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for announce-ptt complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="announce-ptt">
  *   &lt;complexContent>
@@ -40,7 +37,7 @@ public class AnnouncePtt implements Serializable {
 
   /**
    * Gets the value of the order property.
-   * 
+   *
    * @return possible object is {@link AnnounceOrder }
    */
   public AnnounceOrder getOrder() {
@@ -49,7 +46,7 @@ public class AnnouncePtt implements Serializable {
 
   /**
    * Sets the value of the order property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceOrder }
    */
   public void setOrder(AnnounceOrder value) {
@@ -58,7 +55,7 @@ public class AnnouncePtt implements Serializable {
 
   /**
    * Gets the value of the command property.
-   * 
+   *
    * @return possible object is {@link AnnounceCommand }
    */
   public AnnounceCommand getCommand() {
@@ -67,7 +64,7 @@ public class AnnouncePtt implements Serializable {
 
   /**
    * Sets the value of the command property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceCommand }
    */
   public void setCommand(AnnounceCommand value) {
@@ -76,7 +73,7 @@ public class AnnouncePtt implements Serializable {
 
   /**
    * Gets the value of the from property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFrom() {
@@ -85,7 +82,7 @@ public class AnnouncePtt implements Serializable {
 
   /**
    * Sets the value of the from property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFrom(String value) {

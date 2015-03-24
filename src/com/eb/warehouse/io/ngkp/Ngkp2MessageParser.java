@@ -1,15 +1,14 @@
 package com.eb.warehouse.io.ngkp;
 
+import com.google.common.eventbus.EventBus;
+
+import com.eb.warehouse.io.ByteMessageListener;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.eb.warehouse.io.ByteMessageListener;
-import com.google.common.eventbus.EventBus;
-
 /**
- * <p>
- * TODO
- * </p>
+ * <p> TODO </p>
  */
 
 class Ngkp2MessageParser implements ByteMessageListener {
@@ -21,7 +20,9 @@ class Ngkp2MessageParser implements ByteMessageListener {
     this.incomingEventBus = incomingEventBus;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void consumeMessage(byte[] buffer) {
     Ngkp2Header header = Ngkp2Header.fromBytes(buffer);

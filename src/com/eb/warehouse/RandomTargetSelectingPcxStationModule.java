@@ -1,21 +1,23 @@
-
 package com.eb.warehouse;
+
+import com.google.inject.Key;
 
 import java.util.Set;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public class RandomTargetSelectingPcxStationModule extends AbstractPcxStationImplModule {
 
-  public RandomTargetSelectingPcxStationModule(String stationId, Set<String> targets) {
-    super(stationId, targets);
+  public RandomTargetSelectingPcxStationModule(String stationId, Set<String> targets,
+                                               Key<PcxStation> pcxStationBindingKey) {
+    super(stationId, targets, pcxStationBindingKey);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void configure() {
     super.configure();

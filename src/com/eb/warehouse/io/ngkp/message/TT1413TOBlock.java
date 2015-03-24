@@ -8,10 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1484 $, $Date: 2013-09-12 16:40:43 +0200 (Do, 12 Sep 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1484 $, $Date: 2013-09-12 16:40:43 +0200 (Do, 12 Sep 2013) $, $Author:
+ *          dennis.chong $
  */
 
 public class TT1413TOBlock extends TT141xTOBlock {
+
   private static final long serialVersionUID = 1L;
 
   protected int fingerActivation;
@@ -37,7 +39,20 @@ public class TT1413TOBlock extends TT141xTOBlock {
 
   @Override
   public String fieldsToString(int index) {
-    String s = " order[" + index + "]=" + order + "," + " acknowledge[" + index + "]=" + acknowledge + "," + " tuAmount[" + index + "]=" + tuAmount + "," + " orderExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions1) + "," + " orderExtensions2[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions2) + "," + " acknowledgeExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions1) + "," + " acknowledgeExtensions2[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions2) + "," + " aisle[" + index + "]=" + aisle + "," + " x[" + index + "]=" + x + "," + " y[" + index + "]=" + y + "," + " side[" + index + "]=" + side + "," + " depth[" + index + "]=" + depth + "," + " srm[" + index + "]=" + srm + "," + " lsd[" + index + "]=" + lsd + "," + " place[" + index + "]=" + place + "," + " fingerActivation[" + index + "]=" + fingerActivation + " reserve[" + index + "]=" + reserve + ",";
+    String
+        s =
+        " order[" + index + "]=" + order + "," + " acknowledge[" + index + "]=" + acknowledge + ","
+        + " tuAmount[" + index + "]=" + tuAmount + "," + " orderExtensions1[" + index + "]="
+        + NGKPTelegram.bitsToString(orderExtensions1) + "," + " orderExtensions2[" + index + "]="
+        + NGKPTelegram.bitsToString(orderExtensions2) + "," + " acknowledgeExtensions1[" + index
+        + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions1) + ","
+        + " acknowledgeExtensions2[" + index + "]=" + NGKPTelegram
+            .bitsToString(acknowledgeExtensions2) + "," + " aisle[" + index + "]=" + aisle + ","
+        + " x[" + index + "]=" + x + "," + " y[" + index + "]=" + y + "," + " side[" + index + "]="
+        + side + "," + " depth[" + index + "]=" + depth + "," + " srm[" + index + "]=" + srm + ","
+        + " lsd[" + index + "]=" + lsd + "," + " place[" + index + "]=" + place + ","
+        + " fingerActivation[" + index + "]=" + fingerActivation + " reserve[" + index + "]="
+        + reserve + ",";
     for (int i = 0; i < tuBlocks.length; ++i) {
       s += tuBlocks[i].fieldsToString(index, i + 1);
     }

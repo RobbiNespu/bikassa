@@ -1,5 +1,6 @@
-
 package com.eb.warehouse.io.pcx.message;
+
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -9,14 +10,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-import com.google.common.base.MoreObjects;
-
 /**
- * <p>
- * Java class for announce-target complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for announce-target complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="announce-target">
  *   &lt;complexContent>
@@ -40,12 +37,11 @@ import com.google.common.base.MoreObjects;
 })
 public class AnnounceTarget implements Serializable {
 
-  private final static long serialVersionUID = 1L;
   public static final String MODE_OVER = "OVER";
   public static final String MODE_STOP = "STOP";
   public static final String MODE_NEXT = "NEXT";
   public static final String MODE_TIMEOUT = "TIMEOUT";
-
+  private final static long serialVersionUID = 1L;
   protected AnnounceScale scale;
   protected AnnounceFlags flags;
   @XmlAttribute(name = "to")
@@ -59,7 +55,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Gets the value of the scale property.
-   * 
+   *
    * @return possible object is {@link AnnounceScale }
    */
   public AnnounceScale getScale() {
@@ -68,7 +64,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Sets the value of the scale property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceScale }
    */
   public void setScale(AnnounceScale value) {
@@ -77,7 +73,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Gets the value of the flags property.
-   * 
+   *
    * @return possible object is {@link AnnounceFlags }
    */
   public AnnounceFlags getFlags() {
@@ -86,7 +82,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Sets the value of the flags property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceFlags }
    */
   public void setFlags(AnnounceFlags value) {
@@ -95,7 +91,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Gets the value of the to property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getTo() {
@@ -104,7 +100,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Sets the value of the to property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setTo(String value) {
@@ -113,7 +109,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Gets the value of the prio property.
-   * 
+   *
    * @return possible object is {@link BigInteger }
    */
   public BigInteger getPrio() {
@@ -122,7 +118,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Sets the value of the prio property.
-   * 
+   *
    * @param value allowed object is {@link BigInteger }
    */
   public void setPrio(BigInteger value) {
@@ -131,7 +127,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Gets the value of the timeout property.
-   * 
+   *
    * @return possible object is {@link BigInteger }
    */
   public BigInteger getTimeout() {
@@ -140,7 +136,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Sets the value of the timeout property.
-   * 
+   *
    * @param value allowed object is {@link BigInteger }
    */
   public void setTimeout(BigInteger value) {
@@ -149,7 +145,7 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Gets the value of the mode property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getMode() {
@@ -158,24 +154,26 @@ public class AnnounceTarget implements Serializable {
 
   /**
    * Sets the value of the mode property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setMode(String value) {
     mode = value;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-                      .add("scale", scale)
-                      .add("flags", flags)
-                      .add("to", to)
-                      .add("prio", prio)
-                      .add("timeout", timeout)
-                      .add("mode", mode)
-                      .omitNullValues()
-                      .toString();
+        .add("scale", scale)
+        .add("flags", flags)
+        .add("to", to)
+        .add("prio", prio)
+        .add("timeout", timeout)
+        .add("mode", mode)
+        .omitNullValues()
+        .toString();
   }
 }

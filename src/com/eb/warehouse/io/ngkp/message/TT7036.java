@@ -8,18 +8,18 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7036 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1613 $, $Date: 2014-01-09 11:01:11 +0100 (Do, 09 Jan 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1613 $, $Date: 2014-01-09 11:01:11 +0100 (Do, 09 Jan 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT7036 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   protected final static byte STATUS_BIT_CONNECTABLE = 0;
   protected final static byte STATUS_BIT_BROKEN = 1;
   protected final static byte STATUS_BIT_BLOCKED = 2;
   protected final static byte STATUS_BIT_TURBO_USE = 3;
-
+  private static final long serialVersionUID = 1L;
   protected int totalSupports;
   protected int currentSupport;
   protected byte openingNo;
@@ -149,35 +149,35 @@ public class TT7036 extends NGKPTelegram {
     this.absolutePosition = absolutePosition;
   }
 
-  public void setConnectable(boolean connectable) {
-    this.status[STATUS_BIT_CONNECTABLE] = connectable;
-  }
-
   public boolean getConnectable() {
     return this.status[STATUS_BIT_CONNECTABLE];
   }
 
-  public void setBroken(boolean broken) {
-    this.status[STATUS_BIT_BROKEN] = broken;
+  public void setConnectable(boolean connectable) {
+    this.status[STATUS_BIT_CONNECTABLE] = connectable;
   }
 
   public boolean getBroken() {
     return this.status[STATUS_BIT_BROKEN];
   }
 
-  public void setBlocked(boolean blocked) {
-    this.status[STATUS_BIT_BLOCKED] = blocked;
+  public void setBroken(boolean broken) {
+    this.status[STATUS_BIT_BROKEN] = broken;
   }
 
   public boolean getBlocked() {
     return this.status[STATUS_BIT_BLOCKED];
   }
 
-  public void setTurboUse(boolean turbo) {
-    this.status[STATUS_BIT_TURBO_USE] = turbo;
+  public void setBlocked(boolean blocked) {
+    this.status[STATUS_BIT_BLOCKED] = blocked;
   }
 
   public boolean getTurboUse() {
     return this.status[STATUS_BIT_TURBO_USE];
+  }
+
+  public void setTurboUse(boolean turbo) {
+    this.status[STATUS_BIT_TURBO_USE] = turbo;
   }
 }

@@ -1,5 +1,13 @@
-
 package com.eb.warehouse.io.socket;
+
+import com.google.common.util.concurrent.ForwardingListenableFuture;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+
+import com.eb.warehouse.util.ThreadDelegator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,14 +17,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.eb.warehouse.util.ThreadDelegator;
-import com.google.common.util.concurrent.ForwardingListenableFuture;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
 
 final class RecurringConnectSocketTask implements ConnectSocketTask {
 
@@ -30,7 +30,8 @@ final class RecurringConnectSocketTask implements ConnectSocketTask {
   private Socket socket;
 
   @Inject
-  RecurringConnectSocketTask(Provider<Socket> socketProvider, InetSocketAddress address, @Named("reconnectDelay") int reconnectDelay,
+  RecurringConnectSocketTask(Provider<Socket> socketProvider, InetSocketAddress address,
+                             @Named("reconnectDelay") int reconnectDelay,
                              @Named("reconnectDelayTimeUnit") TimeUnit reconnectDelayTimeUnit) {
     this.socketProvider = socketProvider;
     this.address = address;
@@ -39,7 +40,8 @@ final class RecurringConnectSocketTask implements ConnectSocketTask {
     thread = ThreadDelegator.REAL;
   }
 
-  RecurringConnectSocketTask(Provider<Socket> socketProvider, InetSocketAddress address, ThreadDelegator thread) {
+  RecurringConnectSocketTask(Provider<Socket> socketProvider, InetSocketAddress address,
+                             ThreadDelegator thread) {
     this.socketProvider = socketProvider;
     this.address = address;
     reconnectDelay = 0;
@@ -47,14 +49,17 @@ final class RecurringConnectSocketTask implements ConnectSocketTask {
     this.thread = thread;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Socket call() throws Exception {
     do {
       try {
         if (socket != null) {
           // Sleep before trying to connect again and again.
-          L.debug("Failed connecting socket to address={}. Try reconnecting after {} {}.", address, reconnectDelay, reconnectDelayUnit.toString().toLowerCase());
+          L.debug("Try reconnect socket after {} {}.", reconnectDelay,
+                  reconnectDelayUnit.toString().toLowerCase());
           thread.sleepCurrentThread(reconnectDelay, reconnectDelayUnit);
         }
 
@@ -65,6 +70,7 @@ final class RecurringConnectSocketTask implements ConnectSocketTask {
         L.info("Connected socket={}.", socket);
         return socket;
       } catch (IOException e) {
+        L.debug("Failed connect socket to address={}.", address);
         Sockets.closeQuietly(socket);
         //        statsCounter.incrementFailedSocketConnects();
         if (thread.isCurrentThreadInterrupted(true)) {
@@ -76,28 +82,24 @@ final class RecurringConnectSocketTask implements ConnectSocketTask {
 
   /**
    * TODO JavaDoc according to WAMAS C conventions
-   *
-   * @param runner
-   * @return
    */
   @Override
-  public ListenableFuture<Socket> submitTo(ListeningExecutorService runner) {
-    final ListenableFuture<Socket> f = runner.submit(this);
-    return new ForwardingListenableFuture<Socket>() {
-      @Override
-      protected ListenableFuture<Socket> delegate() {
-        return f;
-      }
+  public ListenableFuture<Socket> submitTo(final ListeningExecutorService runner) {
+    final ListenableFuture<Socket> wrapped = runner.submit(this);
+    ForwardingListenableFuture<Socket>
+        future =
+        new ForwardingListenableFuture<Socket>() {
+          @Override
+          protected ListenableFuture<Socket> delegate() {
+            return wrapped;
+          }
 
-      @Override
-      public boolean cancel(boolean mayInterruptIfRunning) {
-        Sockets.closeQuietly(socket);
-        return super.cancel(mayInterruptIfRunning);
-      }
-    };
+          @Override
+          public boolean cancel(boolean mayInterruptIfRunning) {
+            Sockets.closeQuietly(socket);
+            return super.cancel(mayInterruptIfRunning);
+          }
+        };
+    return future;
   }
 }
-
-//---------------------------- Revision History ----------------------------
-//$Log$
-//

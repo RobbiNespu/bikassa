@@ -1,7 +1,7 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,9 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for request complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="request">
  *   &lt;complexContent>
@@ -26,8 +26,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "request", propOrder = {
@@ -35,60 +33,47 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "request")
 public class Request
-    implements Serializable
-{
+    implements Serializable {
 
-    private final static long serialVersionUID = 1L;
-    protected Status status;
-    @XmlElement(name = "listen-io")
-    protected RequestListenIo listenIo;
+  private final static long serialVersionUID = 1L;
+  protected Status status;
+  @XmlElement(name = "listen-io")
+  protected RequestListenIo listenIo;
 
-    /**
-     * Gets the value of the status property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Status }
-     *     
-     */
-    public Status getStatus() {
-        return status;
-    }
+  /**
+   * Gets the value of the status property.
+   *
+   * @return possible object is {@link Status }
+   */
+  public Status getStatus() {
+    return status;
+  }
 
-    /**
-     * Sets the value of the status property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Status }
-     *     
-     */
-    public void setStatus(Status value) {
-        this.status = value;
-    }
+  /**
+   * Sets the value of the status property.
+   *
+   * @param value allowed object is {@link Status }
+   */
+  public void setStatus(Status value) {
+    this.status = value;
+  }
 
-    /**
-     * Gets the value of the listenIo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RequestListenIo }
-     *     
-     */
-    public RequestListenIo getListenIo() {
-        return listenIo;
-    }
+  /**
+   * Gets the value of the listenIo property.
+   *
+   * @return possible object is {@link RequestListenIo }
+   */
+  public RequestListenIo getListenIo() {
+    return listenIo;
+  }
 
-    /**
-     * Sets the value of the listenIo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RequestListenIo }
-     *     
-     */
-    public void setListenIo(RequestListenIo value) {
-        this.listenIo = value;
-    }
+  /**
+   * Sets the value of the listenIo property.
+   *
+   * @param value allowed object is {@link RequestListenIo }
+   */
+  public void setListenIo(RequestListenIo value) {
+    this.listenIo = value;
+  }
 
 }

@@ -8,11 +8,13 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7032 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1376 $, $Date: 2013-07-23 14:54:34 +0200 (Di, 23 Jul 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1376 $, $Date: 2013-07-23 14:54:34 +0200 (Di, 23 Jul 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT7032 extends NGKPTelegram {
+
   private static final long serialVersionUID = 1L;
 
   protected int openingNo;

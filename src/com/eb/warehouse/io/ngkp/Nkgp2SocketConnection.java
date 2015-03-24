@@ -1,37 +1,38 @@
 package com.eb.warehouse.io.ngkp;
 
-import java.io.IOException;
+import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.io.socket.AliveSocketConnection.SendLifeCallback;
+import com.eb.warehouse.io.socket.ForwardingSocketConnection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.ForwardingSocketConnection;
-import com.eb.warehouse.io.socket.AliveSocketConnection.SendLifeCallback;
-
 /**
- * <p>
- * TODO
- * </p>
+ * <p> TODO </p>
  */
 final class Nkgp2SocketConnection extends ForwardingSocketConnection implements SendLifeCallback {
 
   private static final Logger L = LoggerFactory.getLogger(Nkgp2SocketConnection.class);
   private final SocketConnection wrapped;
-  private 
+  //private
 
   public Nkgp2SocketConnection(SocketConnection wrapped) {
     this.wrapped = wrapped;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected SocketConnection delegate() {
     return wrapped;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void onSendLife() {}
+  public void onSendLife() {
+  }
 
 }

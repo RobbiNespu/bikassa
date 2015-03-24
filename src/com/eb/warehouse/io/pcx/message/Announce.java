@@ -1,5 +1,6 @@
-
 package com.eb.warehouse.io.pcx.message;
+
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 
@@ -8,14 +9,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.google.common.base.MoreObjects;
-
 /**
- * <p>
- * Java class for announce complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for announce complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="announce">
  *   &lt;complexContent>
@@ -46,7 +43,7 @@ public class Announce implements Serializable {
 
   /**
    * Gets the value of the compare property.
-   * 
+   *
    * @return possible object is {@link AnnounceCompare }
    */
   public AnnounceCompare getCompare() {
@@ -55,7 +52,7 @@ public class Announce implements Serializable {
 
   /**
    * Sets the value of the compare property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceCompare }
    */
   public void setCompare(AnnounceCompare value) {
@@ -64,7 +61,7 @@ public class Announce implements Serializable {
 
   /**
    * Gets the value of the ptt property.
-   * 
+   *
    * @return possible object is {@link AnnouncePtt }
    */
   public AnnouncePtt getPtt() {
@@ -73,7 +70,7 @@ public class Announce implements Serializable {
 
   /**
    * Sets the value of the ptt property.
-   * 
+   *
    * @param value allowed object is {@link AnnouncePtt }
    */
   public void setPtt(AnnouncePtt value) {
@@ -82,7 +79,7 @@ public class Announce implements Serializable {
 
   /**
    * Gets the value of the bb property.
-   * 
+   *
    * @return possible object is {@link AnnounceBb }
    */
   public AnnounceBb getBb() {
@@ -91,7 +88,7 @@ public class Announce implements Serializable {
 
   /**
    * Sets the value of the bb property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceBb }
    */
   public void setBb(AnnounceBb value) {
@@ -100,7 +97,7 @@ public class Announce implements Serializable {
 
   /**
    * Gets the value of the labeling property.
-   * 
+   *
    * @return possible object is {@link AnnounceLabeling }
    */
   public AnnounceLabeling getLabeling() {
@@ -109,7 +106,7 @@ public class Announce implements Serializable {
 
   /**
    * Sets the value of the labeling property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceLabeling }
    */
   public void setLabeling(AnnounceLabeling value) {
@@ -118,7 +115,7 @@ public class Announce implements Serializable {
 
   /**
    * Gets the value of the station property.
-   * 
+   *
    * @return possible object is {@link AnnounceStation }
    */
   public AnnounceStation getStation() {
@@ -127,23 +124,25 @@ public class Announce implements Serializable {
 
   /**
    * Sets the value of the station property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceStation }
    */
   public void setStation(AnnounceStation value) {
     station = value;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-                      .add("station", station)
-                      .add("labeling", labeling)
-                      .add("bb", bb)
-                      .add("ptt", ptt)
-                      .add("compare", compare)
-                      .omitNullValues()
-                      .toString();
+        .add("station", station)
+        .add("labeling", labeling)
+        .add("bb", bb)
+        .add("ptt", ptt)
+        .add("compare", compare)
+        .omitNullValues()
+        .toString();
   }
 }

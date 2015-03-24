@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
@@ -9,11 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>
- * Java class for life complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for life complex type. <p> The following schema fragment specifies the expected
+ * content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="life">
  *   &lt;complexContent>
@@ -30,7 +27,9 @@ public class Life implements Serializable {
 
   private final static long serialVersionUID = 1L;
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return Life.class.getSimpleName();

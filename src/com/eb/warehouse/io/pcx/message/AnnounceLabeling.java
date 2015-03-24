@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
@@ -12,11 +11,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>
- * Java class for announce-labeling complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for announce-labeling complex type. <p> The following schema fragment specifies
+ * the expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="announce-labeling">
  *   &lt;complexContent>
@@ -58,19 +55,15 @@ public class AnnounceLabeling implements Serializable {
   protected String name;
 
   /**
-   * Gets the value of the values property.
-   * <p>
-   * This accessor method returns a reference to the live list, not a snapshot. Therefore any
-   * modification you make to the returned list will be present inside the JAXB object. This is why
-   * there is not a <CODE>set</CODE> method for the values property.
-   * <p>
-   * For example, to add a new item, do as follows:
-   * 
+   * Gets the value of the values property. <p> This accessor method returns a reference to the live
+   * list, not a snapshot. Therefore any modification you make to the returned list will be present
+   * inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the values
+   * property. <p> For example, to add a new item, do as follows:
+   *
    * <pre>
    * getValues().add(newItem);
    * </pre>
-   * <p>
-   * Objects of the following type(s) are allowed in the list {@link AnnounceValue }
+   * <p> Objects of the following type(s) are allowed in the list {@link AnnounceValue }
    */
   public List<AnnounceValue> getValues() {
     if (values == null) {
@@ -81,7 +74,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Gets the value of the flags property.
-   * 
+   *
    * @return possible object is {@link AnnounceFlags }
    */
   public AnnounceFlags getFlags() {
@@ -90,7 +83,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Sets the value of the flags property.
-   * 
+   *
    * @param value allowed object is {@link AnnounceFlags }
    */
   public void setFlags(AnnounceFlags value) {
@@ -99,7 +92,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Gets the value of the barcode property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBarcode() {
@@ -108,7 +101,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Sets the value of the barcode property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBarcode(String value) {
@@ -117,7 +110,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Gets the value of the box property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBox() {
@@ -126,7 +119,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Sets the value of the box property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBox(String value) {
@@ -135,7 +128,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Gets the value of the from property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFrom() {
@@ -144,7 +137,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Sets the value of the from property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFrom(String value) {
@@ -153,7 +146,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Gets the value of the order property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getOrder() {
@@ -162,7 +155,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Sets the value of the order property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setOrder(String value) {
@@ -171,7 +164,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Gets the value of the layout property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getLayout() {
@@ -180,7 +173,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Sets the value of the layout property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setLayout(String value) {
@@ -189,7 +182,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Gets the value of the name property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getName() {
@@ -198,7 +191,7 @@ public class AnnounceLabeling implements Serializable {
 
   /**
    * Sets the value of the name property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setName(String value) {

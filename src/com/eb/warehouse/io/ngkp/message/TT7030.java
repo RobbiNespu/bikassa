@@ -8,17 +8,18 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7030 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1376 $, $Date: 2013-07-23 14:54:34 +0200 (Di, 23 Jul 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1376 $, $Date: 2013-07-23 14:54:34 +0200 (Di, 23 Jul 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT7030 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public final static byte REQUEST_STATUS = 1;
   public final static byte REQUEST_STOCK_IMAGE = 2;
   public final static byte REQUEST_RACK_IMAGE = 3;
   public final static byte REQUEST_ERRORS = 4;
+  private static final long serialVersionUID = 1L;
   protected byte requestType;
 
   public TT7030() {

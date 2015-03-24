@@ -1,17 +1,14 @@
-
 package com.eb.warehouse.util;
+
+import com.google.common.base.MoreObjects;
 
 import java.util.concurrent.ThreadFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.google.common.base.MoreObjects;
-
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public final class NamedThreadFactory implements ThreadFactory {
@@ -23,13 +20,17 @@ public final class NamedThreadFactory implements ThreadFactory {
     this.name = name;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Thread newThread(Runnable r) {
     return new Thread(r, name);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("name", name).toString();

@@ -5,6 +5,7 @@
 package com.eb.warehouse.io.ngkp.message;
 
 public class TT0751 extends NGKPTopicTelegram {
+
   private static final long serialVersionUID = 1L;
 
   public TT0751() {

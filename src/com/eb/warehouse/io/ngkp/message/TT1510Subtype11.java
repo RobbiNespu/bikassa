@@ -8,11 +8,13 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the TT1510 telegram class.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT1510Subtype11 extends TT1510 {
+
   private static final long serialVersionUID = 1L;
   protected int tuExtra1Detail1;
   protected int tuExtra1Detail2;
@@ -34,7 +36,10 @@ public class TT1510Subtype11 extends TT1510 {
 
   @Override
   public String fieldsToString() {
-    return super.fieldsToString() + " tuExtra1Detail1=" + tuExtra1Detail1 + "," + " tuExtra1Detail2=" + tuExtra1Detail2 + "," + " tuExtra3Detail1=" + tuExtra3Detail1 + "," + " tuExtra3Detail2=" + tuExtra3Detail2 + "," + " tuExtra3Detail3=" + tuExtra3Detail3 + "," + " tuExtra3Detail4=" + tuExtra3Detail4 + ",";
+    return super.fieldsToString() + " tuExtra1Detail1=" + tuExtra1Detail1 + ","
+           + " tuExtra1Detail2=" + tuExtra1Detail2 + "," + " tuExtra3Detail1=" + tuExtra3Detail1
+           + "," + " tuExtra3Detail2=" + tuExtra3Detail2 + "," + " tuExtra3Detail3="
+           + tuExtra3Detail3 + "," + " tuExtra3Detail4=" + tuExtra3Detail4 + ",";
   }
 
   @Override

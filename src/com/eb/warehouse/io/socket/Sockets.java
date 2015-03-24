@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.socket;
 
 import java.io.IOException;
@@ -7,9 +6,7 @@ import java.net.Socket;
 import javax.annotation.Nullable;
 
 /**
- * <p>
- * Utility methods pertaining {@link Socket} instances.
- * </p>
+ * <p> Utility methods pertaining {@link Socket} instances. </p>
  */
 
 final class Sockets {

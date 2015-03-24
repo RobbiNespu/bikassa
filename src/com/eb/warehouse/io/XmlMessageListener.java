@@ -1,47 +1,47 @@
-
 package com.eb.warehouse.io;
 
-import java.io.ByteArrayInputStream;
+import com.google.common.base.Charsets;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import com.eb.warehouse.util.EventConsumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Charsets;
-import com.google.common.eventbus.EventBus;
+import java.io.ByteArrayInputStream;
+
+import javax.inject.Inject;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 public final class XmlMessageListener implements ByteMessageListener {
 
   private static final Logger L = LoggerFactory.getLogger(XmlMessageListener.class);
   private final Unmarshaller unmarshaller;
-  private final EventBus incomingEventBus;
+  private final EventConsumer eventConsumer;
 
   @Inject
-  public XmlMessageListener(Unmarshaller unmarshaller, @Named("incoming") EventBus incomingEventBus) {
+  public XmlMessageListener(Unmarshaller unmarshaller,
+                            EventConsumer eventConsumer) {
     this.unmarshaller = unmarshaller;
-    this.incomingEventBus = incomingEventBus;
+    this.eventConsumer = eventConsumer;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void consumeMessage(byte[] buffer) {
     ByteArrayInputStream is = new ByteArrayInputStream(buffer);
     try {
       L.debug("Try unmarshalling XML string={} into object.", new String(buffer, Charsets.UTF_8));
       Object msg = unmarshaller.unmarshal(is);
-      L.debug("Post incoming event={} to eventBusId={}.", msg, incomingEventBus.hashCode());
-      incomingEventBus.post(msg);
+      eventConsumer.onEvent(msg);
     } catch (JAXBException e) {
+      L.debug("Not unmarshalled XML string into object.", e);
     }
   }
 }

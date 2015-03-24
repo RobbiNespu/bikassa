@@ -8,17 +8,17 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1835 $, $Date: 2014-09-08 11:40:40 +0200 (Mon, 08 Sep 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1835 $, $Date: 2014-09-08 11:40:40 +0200 (Mon, 08 Sep 2014) $, $Author:
+ *          dennis.chong $
  */
 
 public class TT0839 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public static final int TOPIC_PARAMETER_REQUEST = 4;
   public static final int STATUS_REQUEST = 8302;
   public static final int PARAMETER_WRITE = 8350;
   public static final int PARAMETER_REQUEST = 8351;
-
+  private static final long serialVersionUID = 1L;
   protected int topic;
   protected int order;
   protected int acknowledge;

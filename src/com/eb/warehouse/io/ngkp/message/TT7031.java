@@ -8,12 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7031 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1576 $, $Date: 2013-11-29 13:17:05 +0100 (Fr, 29 Nov 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1576 $, $Date: 2013-11-29 13:17:05 +0100 (Fr, 29 Nov 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT7031 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public final static int ACK_NOT_USED = 0;
   public final static int ACK_OK = 1;
@@ -22,7 +22,7 @@ public class TT7031 extends NGKPTelegram {
   public final static int ACK_INVALID_OPENING = 4;
   public final static int ACK_LOCATION_OCCUPIED = 5;
   public final static int ACK_ACTIVE_ORDER_TOWARDS_OPENING = 6;
-
+  private static final long serialVersionUID = 1L;
   protected int trayNo;
   protected String trayBarcode;
   protected byte openingNo;

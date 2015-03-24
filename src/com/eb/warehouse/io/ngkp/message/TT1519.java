@@ -8,12 +8,14 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Abstract extension of the telegram class to represent TT1519 telegrams.
- * 
+ *
  * @author <a href="mailto:moos@ssi-schaefer-noell.com">moos</a>
- * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1634 $, $Date: 2014-01-20 15:40:17 +0100 (Mo, 20 Jan 2014) $, $Author:
+ *          dennis.chong $
  */
 
 public abstract class TT1519 extends NGKPTelegram {
+
   private static final long serialVersionUID = 1L;
   protected int topic;
   protected String content;

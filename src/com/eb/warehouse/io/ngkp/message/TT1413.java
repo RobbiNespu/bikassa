@@ -8,10 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1484 $, $Date: 2013-09-12 16:40:43 +0200 (Do, 12 Sep 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1484 $, $Date: 2013-09-12 16:40:43 +0200 (Do, 12 Sep 2013) $, $Author:
+ *          dennis.chong $
  */
 
 public abstract class TT1413 extends TT141x {
+
   private static final long serialVersionUID = 1L;
 
   protected int movementOptions1;
@@ -30,6 +32,16 @@ public abstract class TT1413 extends TT141x {
     for (int i = 0; i < toBlocks.length; ++i) {
       toBlocks[i] = new TT1413TOBlock(this);
     }
+  }
+
+  public static TT1413 createTelegramBySubtype(int subtype) {
+    if (subtype == 1020) {
+      return new TT1413Subtype1020();
+    }
+    if (subtype == 2020) {
+      return new TT1413Subtype2020();
+    }
+    return null;
   }
 
   @Override
@@ -78,16 +90,6 @@ public abstract class TT1413 extends TT141x {
     for (int i = 0; i < toBlocks.length; ++i) {
       byteoffset = toBlocks[i].fromHex(hex, byteoffset);
     }
-  }
-
-  public static TT1413 createTelegramBySubtype(int subtype) {
-    if (subtype == 1020) {
-      return new TT1413Subtype1020();
-    }
-    if (subtype == 2020) {
-      return new TT1413Subtype2020();
-    }
-    return null;
   }
 
   public int getMovementOptions1() {

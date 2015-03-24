@@ -1,10 +1,7 @@
-
 package com.eb.warehouse.io.socket;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 interface ConnectionStatsCounter {
@@ -17,8 +14,6 @@ interface ConnectionStatsCounter {
 
   /**
    * TODO JavaDoc according to WAMAS C conventions
-   *
-   * @param length
    */
   void incrementSentBytes(long bytes);
 

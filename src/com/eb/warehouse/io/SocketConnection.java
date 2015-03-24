@@ -1,18 +1,16 @@
 package com.eb.warehouse.io;
 
+import com.eb.warehouse.util.Service2;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
 import javax.annotation.Nonnull;
 
-import com.eb.warehouse.util.Service2;
-
 /**
- * <p>
- * Connection using a socket that manages the whole life-cycle of the underlying {@link Socket}
- * instance.
- * </p>
+ * <p> Connection using a socket that manages the whole life-cycle of the underlying {@link Socket}
+ * instance. </p>
  */
 public interface SocketConnection extends Service2 {
 
@@ -23,11 +21,8 @@ public interface SocketConnection extends Service2 {
   public void startAsync2();
 
   /**
-   * Stop the connection.
-   * <p>
-   * All resources are reclaimed. This method returns when the connection has been closed and all
-   * resources have been reclaimed.
-   * </p>
+   * Stop the connection. <p> All resources are reclaimed. This method returns when the connection
+   * has been closed and all resources have been reclaimed. </p>
    */
   @Override
   public void stop2();

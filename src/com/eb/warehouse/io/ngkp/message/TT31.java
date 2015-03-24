@@ -8,9 +8,11 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 719 $, $Date: 2012-09-06 18:04:47 +0200 (Do, 06 Sep 2012) $, $Author: dennis.chong $
+ * @version $Revision: 719 $, $Date: 2012-09-06 18:04:47 +0200 (Do, 06 Sep 2012) $, $Author:
+ *          dennis.chong $
  */
 public class TT31 extends NGKPTelegram {
+
   private static final long serialVersionUID = 1L;
   protected int reserve;
   protected int area;
@@ -33,6 +35,14 @@ public class TT31 extends NGKPTelegram {
       content += "00";
     }
     this.normalize = false;
+  }
+
+  public static int getContentOffset() {
+    return 8;
+  }
+
+  public static int getContentLength() {
+    return 32;
   }
 
   @Override
@@ -76,14 +86,6 @@ public class TT31 extends NGKPTelegram {
     int start = getContentOffset() * 2;
     int stop = (getContentOffset() + getContentLength()) * 2;
     content = hex.substring(start, stop);
-  }
-
-  public static int getContentOffset() {
-    return 8;
-  }
-
-  public static int getContentLength() {
-    return 32;
   }
 
   public void setInt2Byte(int value, int byteIndex) {

@@ -10,11 +10,13 @@ import java.io.Serializable;
 
 /**
  * Simple class to represent a transport order block of the TT1611 telegram.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1548 $, $Date: 2013-10-31 13:56:14 +0100 (Do, 31 Okt 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1548 $, $Date: 2013-10-31 13:56:14 +0100 (Do, 31 Okt 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT1611TOBlock implements Serializable {
+
   private static final long serialVersionUID = 1L;
   protected int sourceEMS;
   protected int sourceArea;
@@ -93,33 +95,37 @@ public class TT1611TOBlock implements Serializable {
 
   public String fieldsToString(int index) {
     String s = " sourceEMS[" + index + "]=" + sourceEMS + "," + //
-        " sourceArea[" + index + "]=" + sourceArea + "," + //
-        " sourceLocation[" + index + "]=" + sourceLocation + "," + //
-        " sourcePlace[" + index + "]=" + sourcePlace + "," + //
-        " sourceVehicle[" + index + "]=" + sourceVehicle + "," + //
-        " sourceVehicleLSD[" + index + "]=" + sourceVehicleLSD + "," + //
-        " sourceVehiclePlace[" + index + "]=" + sourceVehiclePlace + "," + //
-        " destinationEMS[" + index + "]=" + destinationEMS + "," + //
-        " destinationArea[" + index + "]=" + destinationArea + "," + //
-        " destinationLocation[" + index + "]=" + destinationLocation + "," + //
-        " destinationPlace[" + index + "]=" + destinationPlace + "," + //
-        " destinationVehicle[" + index + "]=" + destinationVehicle + "," + //
-        " destinationVehicleLSD[" + index + "]=" + destinationVehicleLSD + "," + //
-        " destinationVehiclePlace[" + index + "]=" + destinationVehiclePlace + "," + //
-        " lastEMS[" + index + "]=" + lastEMS + "," + //
-        " lastArea[" + index + "]=" + lastArea + "," + //
-        " lastLocation[" + index + "]=" + lastLocation + "," + //
-        " lastPlace[" + index + "]=" + lastPlace + "," + //
-        " lastVehicle[" + index + "]=" + lastVehicle + "," + //
-        " lastVehicleLSD[" + index + "]=" + lastVehicleLSD + "," + //
-        " lastVehiclePlace[" + index + "]=" + lastVehiclePlace + "," + //
-        " order[" + index + "]=" + order + "," + //
-        " acknowledge[" + index + "]=" + acknowledge + "," + //
-        " tuAmount[" + index + "]=" + tuAmount + "," + //
-        " orderExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions1) + "," + //
-        " orderExtensions2[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions2) + "," + //
-        " acknowledgeExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions1) + "," + //
-        " acknowledgeExtensions2[" + index + "]=" + NGKPTelegram.bitsToString(acknowledgeExtensions2) + ",";
+               " sourceArea[" + index + "]=" + sourceArea + "," + //
+               " sourceLocation[" + index + "]=" + sourceLocation + "," + //
+               " sourcePlace[" + index + "]=" + sourcePlace + "," + //
+               " sourceVehicle[" + index + "]=" + sourceVehicle + "," + //
+               " sourceVehicleLSD[" + index + "]=" + sourceVehicleLSD + "," + //
+               " sourceVehiclePlace[" + index + "]=" + sourceVehiclePlace + "," + //
+               " destinationEMS[" + index + "]=" + destinationEMS + "," + //
+               " destinationArea[" + index + "]=" + destinationArea + "," + //
+               " destinationLocation[" + index + "]=" + destinationLocation + "," + //
+               " destinationPlace[" + index + "]=" + destinationPlace + "," + //
+               " destinationVehicle[" + index + "]=" + destinationVehicle + "," + //
+               " destinationVehicleLSD[" + index + "]=" + destinationVehicleLSD + "," + //
+               " destinationVehiclePlace[" + index + "]=" + destinationVehiclePlace + "," + //
+               " lastEMS[" + index + "]=" + lastEMS + "," + //
+               " lastArea[" + index + "]=" + lastArea + "," + //
+               " lastLocation[" + index + "]=" + lastLocation + "," + //
+               " lastPlace[" + index + "]=" + lastPlace + "," + //
+               " lastVehicle[" + index + "]=" + lastVehicle + "," + //
+               " lastVehicleLSD[" + index + "]=" + lastVehicleLSD + "," + //
+               " lastVehiclePlace[" + index + "]=" + lastVehiclePlace + "," + //
+               " order[" + index + "]=" + order + "," + //
+               " acknowledge[" + index + "]=" + acknowledge + "," + //
+               " tuAmount[" + index + "]=" + tuAmount + "," + //
+               " orderExtensions1[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions1)
+               + "," + //
+               " orderExtensions2[" + index + "]=" + NGKPTelegram.bitsToString(orderExtensions2)
+               + "," + //
+               " acknowledgeExtensions1[" + index + "]=" + NGKPTelegram
+                   .bitsToString(acknowledgeExtensions1) + "," + //
+               " acknowledgeExtensions2[" + index + "]=" + NGKPTelegram
+                   .bitsToString(acknowledgeExtensions2) + ",";
     for (int i = 0; i < tuBlocks.length; ++i) {
       s += tuBlocks[i].fieldsToString(index, i + 1);
     }
@@ -199,7 +205,8 @@ public class TT1611TOBlock implements Serializable {
   }
 
   public boolean isTransportOrder() {
-    return order == TT1611.TRANSPORT_ORDER || order == TT1611.TRANSPORT_ORDER_LOW_PRIORITY || order == TT1611.TRANSPORT_ORDER_HIGH_PRIORITY;
+    return order == TT1611.TRANSPORT_ORDER || order == TT1611.TRANSPORT_ORDER_LOW_PRIORITY
+           || order == TT1611.TRANSPORT_ORDER_HIGH_PRIORITY;
   }
 
   public boolean isTransportUpdate() {

@@ -1,4 +1,3 @@
-
 package com.eb.warehouse.io.pcx.message;
 
 import java.io.Serializable;
@@ -10,11 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>
- * Java class for announce-job complex type.
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p> Java class for announce-job complex type. <p> The following schema fragment specifies the
+ * expected content contained within this class.
+ *
  * <pre>
  * &lt;complexType name="announce-job">
  *   &lt;complexContent>
@@ -47,7 +44,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Gets the value of the mode property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getMode() {
@@ -56,7 +53,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Sets the value of the mode property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setMode(String value) {
@@ -65,7 +62,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Gets the value of the type property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getType() {
@@ -74,7 +71,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Sets the value of the type property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setType(String value) {
@@ -83,7 +80,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Gets the value of the barcode property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getBarcode() {
@@ -92,7 +89,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Sets the value of the barcode property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setBarcode(String value) {
@@ -101,7 +98,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Gets the value of the file property.
-   * 
+   *
    * @return possible object is {@link String }
    */
   public String getFile() {
@@ -110,7 +107,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Sets the value of the file property.
-   * 
+   *
    * @param value allowed object is {@link String }
    */
   public void setFile(String value) {
@@ -119,7 +116,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Gets the value of the sheets property.
-   * 
+   *
    * @return possible object is {@link BigInteger }
    */
   public BigInteger getSheets() {
@@ -128,7 +125,7 @@ public class AnnounceJob implements Serializable {
 
   /**
    * Sets the value of the sheets property.
-   * 
+   *
    * @param value allowed object is {@link BigInteger }
    */
   public void setSheets(BigInteger value) {

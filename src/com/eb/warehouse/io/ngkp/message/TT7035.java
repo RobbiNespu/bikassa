@@ -8,12 +8,12 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7035 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1613 $, $Date: 2014-01-09 11:01:11 +0100 (Do, 09 Jan 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1613 $, $Date: 2014-01-09 11:01:11 +0100 (Do, 09 Jan 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT7035 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public final static byte CLASS_OFF = 0;
   public final static byte CLASS_A = 1;
@@ -21,7 +21,7 @@ public class TT7035 extends NGKPTelegram {
   public final static byte CLASS_C = 3;
   public final static byte STATUS_BIT_BROKEN = 0;
   public final static byte STATUS_BIT_BLOCKED = 1;
-
+  private static final long serialVersionUID = 1L;
   protected int totalTrays;
   protected int currentTray;
   protected int trayNo;
@@ -211,20 +211,20 @@ public class TT7035 extends NGKPTelegram {
     this.trayNo = trayNo;
   }
 
-  public void setBroken(boolean broken) {
-    this.status[STATUS_BIT_BROKEN] = broken;
-  }
-
   public boolean getBroken() {
     return this.status[STATUS_BIT_BROKEN];
   }
 
-  public void setBlocked(boolean blocked) {
-    this.status[STATUS_BIT_BLOCKED] = blocked;
+  public void setBroken(boolean broken) {
+    this.status[STATUS_BIT_BROKEN] = broken;
   }
 
   public boolean getBlocked() {
     return this.status[STATUS_BIT_BLOCKED];
+  }
+
+  public void setBlocked(boolean blocked) {
+    this.status[STATUS_BIT_BLOCKED] = blocked;
   }
 
   public int getTrayLoad() {
@@ -272,8 +272,9 @@ public class TT7035 extends NGKPTelegram {
   }
 
   public void setTrayID(String trayID) {
-    if (trayID == null || trayID.length() != 11)
+    if (trayID == null || trayID.length() != 11) {
       throw new RuntimeException("Invalid tray ID: " + trayID);
+    }
     this.trayID = trayID;
   }
 

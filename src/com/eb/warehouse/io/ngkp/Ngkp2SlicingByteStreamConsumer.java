@@ -1,15 +1,13 @@
 package com.eb.warehouse.io.ngkp;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamBufferedByteConsumer;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 final class Ngkp2SlicingByteStreamConsumer extends ByteStreamBufferedByteConsumer {
@@ -19,12 +17,14 @@ final class Ngkp2SlicingByteStreamConsumer extends ByteStreamBufferedByteConsume
 
   @Inject
   public Ngkp2SlicingByteStreamConsumer(@Named("bufferSize") int initialBufferSize,
-      ByteMessageListener listener) {
+                                        ByteMessageListener listener) {
     super(initialBufferSize);
     this.listener = listener;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void consumeByte(byte b) {
     super.consumeByte(b);

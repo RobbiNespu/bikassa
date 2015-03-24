@@ -8,9 +8,10 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the TT1430 telegram class.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1687 $, $Date: 2014-03-14 15:35:59 +0100 (Fr, 14 Mrz 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1687 $, $Date: 2014-03-14 15:35:59 +0100 (Fr, 14 Mrz 2014) $, $Author:
+ *          dennis.chong $
  */
 public class TT1430Version2 extends TT1430 {
 

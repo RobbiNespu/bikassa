@@ -1,12 +1,9 @@
-
 package com.eb.warehouse.io.ngkp;
 
 import com.eb.warehouse.io.ByteStreamBufferedByteConsumer;
 
 /**
- * <p>
- * Usage: TODO add some usage examples.
- * </p>
+ * <p> Usage: TODO add some usage examples. </p>
  */
 
 final class NgkpSlicingByteStreamConsumer extends ByteStreamBufferedByteConsumer {
@@ -17,7 +14,9 @@ final class NgkpSlicingByteStreamConsumer extends ByteStreamBufferedByteConsumer
     super(initialBufferSize);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void consumeByte(byte b) {
     super.consumeByte(b);
@@ -26,7 +25,9 @@ final class NgkpSlicingByteStreamConsumer extends ByteStreamBufferedByteConsumer
       if (getPosition() > currentProcessedHeader.getTelegramLength()) {
         // We finished parsing the NGKPv2 payload
         byte[] payloadBytes = getBuffer();
-        Ngkp2Telegram telegram = Ngkp2Telegram.fromHeaderAndBytes(currentProcessedHeader, payloadBytes);
+        Ngkp2Telegram
+            telegram =
+            Ngkp2Telegram.fromHeaderAndBytes(currentProcessedHeader, payloadBytes, 0);
         System.out.println("NGKP arrived!! " + telegram);
         currentProcessedHeader = null;
         resetPosition();

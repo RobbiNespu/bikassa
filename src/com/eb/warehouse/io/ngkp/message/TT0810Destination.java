@@ -1,9 +1,9 @@
-
 package com.eb.warehouse.io.ngkp.message;
 
 import java.io.Serializable;
 
 public class TT0810Destination implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   private int destinationSystem;

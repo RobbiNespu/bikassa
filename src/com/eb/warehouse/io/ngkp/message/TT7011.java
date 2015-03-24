@@ -8,40 +8,35 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Concrete extension of the telegram class to represent TT7011 telegrams.
- * 
+ *
  * @author <a href="mailto:fluture.cristian@ssi-schaefer.ro">fluture.cristian</a>
- * @version $Revision: 1576 $, $Date: 2013-11-29 13:17:05 +0100 (Fr, 29 Nov 2013) $, $Author: dennis.chong $
+ * @version $Revision: 1576 $, $Date: 2013-11-29 13:17:05 +0100 (Fr, 29 Nov 2013) $, $Author:
+ *          dennis.chong $
  */
 public class TT7011 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
 
   public final static byte RACK_ELEVATOR = 3;
   public final static byte RACK_FRONT = 1;
   public final static byte RACK_BACK = 2;
-
   public final static byte ACK_OK = 1;
   public final static byte ACK_ACTIVE = 2;
-
   public final static byte ACK_INVALID_TRAY = 11;
   public final static byte ACK_INVALID_DESTINATION = 12;
   public final static byte ACK_INVALID_OPENING = 13;
-
   public final static byte ACK_ORDER_DELETED = 31;
   public final static byte ACK_ORDER_NOT_DELETED = 32;
   public final static byte ACK_DUPLICATE_ORDER = 33;
   public final static byte ACK_ORDER_BUFFER_FULL = 34;
-
   public final static byte ACK_FULL_HEIGHT = 51;
   public final static byte ACK_FULL_WEIGHT = 52;
   public final static byte ACK_DESTINATON_OCCUPIED = 53;
   public final static byte ACK_NOT_ENOUGH_SPACE_DESTINATION = 54;
   public final static byte ACK_SOURCE_EMPTY = 55;
-
   public final static byte ACK_HEIGHT_CHANGED = 101;
   public final static byte ACK_MAXIMUM_HEIGHT_EXCEEDED = 102;
   public final static byte ACK_MAXIMUM_WEIGHT_EXCEEDED = 103;
   public final static byte ACK_GOOD_OVERHANG = 104;
-
+  private static final long serialVersionUID = 1L;
   protected int trayNo;
   protected byte openingNo;
   protected byte rackSide;

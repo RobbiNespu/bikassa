@@ -1,31 +1,48 @@
 package com.eb.warehouse.io.ngkp;
 
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Named;
-
-import org.junit.Test;
-
-import com.eb.warehouse.io.ByteMessageListener;
-import com.eb.warehouse.io.ByteStreamConsumer;
-import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.ReconnectingSocketConnectionModule;
 import com.google.common.eventbus.EventBus;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Key;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
 
+import com.eb.warehouse.io.ByteMessageListener;
+import com.eb.warehouse.io.ByteStreamConsumer;
+import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.io.socket.PermanentSocketConnectionModule;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Named;
+
 /**
- * <p>
- * TODO
- * </p>
+ * <p> TODO </p>
  */
 public class Ngkp2TelegramIntegrationTest {
 
+  @Test
+  @Ignore
+  public void test2() {
+    Injector injector =
+        Guice.createInjector(new PermanentSocketConnectionModule(2302,
+                                                                 new EventBus(), Key.get(
+                                 SocketConnection.class),
+                                                                 Void.class),
+                             new TestModule());
+    SocketConnection connectionService =
+        injector.getInstance(SocketConnection.class);
+    connectionService.startAsync2();
+    Uninterruptibles.sleepUninterruptibly(100, TimeUnit.SECONDS);
+  }
+
   private static class TestModule extends AbstractModule {
+
     @Override
     protected void configure() {
       bind(Integer.class).annotatedWith(Names.named("bufferSize")).toInstance(300);
@@ -46,15 +63,5 @@ public class Ngkp2TelegramIntegrationTest {
     EventBus createIncomingEventBus() {
       return new EventBus();
     }
-  }
-
-  @Test
-  public void test2() {
-    Injector injector =
-        Guice.createInjector(new ReconnectingSocketConnectionModule(2302), new TestModule());
-    SocketConnection connectionService =
-        injector.getInstance(SocketConnection.class);
-    connectionService.startAsync2();
-    Uninterruptibles.sleepUninterruptibly(100, TimeUnit.SECONDS);
   }
 }

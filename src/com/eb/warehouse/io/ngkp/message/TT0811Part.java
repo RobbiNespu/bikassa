@@ -10,10 +10,12 @@ import java.io.Serializable;
 
 /**
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 1834 $, $Date: 2014-09-05 17:31:59 +0200 (Fri, 05 Sep 2014) $, $Author: dennis.chong $
+ * @version $Revision: 1834 $, $Date: 2014-09-05 17:31:59 +0200 (Fri, 05 Sep 2014) $, $Author:
+ *          dennis.chong $
  */
 
 public class TT0811Part implements Serializable {
+
   private static final long serialVersionUID = 1L;
 
   protected int requestId;
@@ -220,6 +222,10 @@ public class TT0811Part implements Serializable {
     return orderExtensions1;
   }
 
+  public void setOrderExtensions1(boolean[] orderExtensions1) {
+    this.orderExtensions1 = orderExtensions1;
+  }
+
   public boolean getOrderExtensionBit(int extension, int bit) {
     if (extension == 1) {
       return getOrderExtensions1()[bit];
@@ -228,10 +234,6 @@ public class TT0811Part implements Serializable {
       return getOrderExtensions2()[bit];
     }
     return false;
-  }
-
-  public void setOrderExtensions1(boolean[] orderExtensions1) {
-    this.orderExtensions1 = orderExtensions1;
   }
 
   public boolean[] getOrderExtensions2() {

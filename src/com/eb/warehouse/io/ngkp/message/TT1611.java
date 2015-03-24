@@ -8,12 +8,13 @@ package com.eb.warehouse.io.ngkp.message;
 
 /**
  * Abstract extension of the telegram class to represent TT1611 telegrams.
- * 
+ *
  * @author <a href="mailto:dennis.chong@ssi-schaefer-noell.com">dennis.chong</a>
- * @version $Revision: 719 $, $Date: 2012-09-06 18:04:47 +0200 (Do, 06 Sep 2012) $, $Author: dennis.chong $
+ * @version $Revision: 719 $, $Date: 2012-09-06 18:04:47 +0200 (Do, 06 Sep 2012) $, $Author:
+ *          dennis.chong $
  */
 public abstract class TT1611 extends NGKPTelegram {
-  private static final long serialVersionUID = 1L;
+
   public static final int TRANSPORT_ORDER = 16002;
   public static final int TRANSPORT_ORDER_LOW_PRIORITY = 16001;
   public static final int TRANSPORT_ORDER_HIGH_PRIORITY = 16003;
@@ -26,7 +27,7 @@ public abstract class TT1611 extends NGKPTelegram {
   public static final int TRANSPORT_ORDER_ALREADY_PENDING = 16201;
   public static final int FORK_EMPTY = 16271;
   public static final int SOURCE_OR_DESTINATION_MISUSED = 16171;
-
+  private static final long serialVersionUID = 1L;
   protected int movementOptions;
   protected TT1611TOBlock[] toBlocks;
   protected int bitoffset;

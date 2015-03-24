@@ -1,11 +1,10 @@
-
 package com.eb.warehouse.io;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import com.google.common.base.MoreObjects;
 
 import java.io.ByteArrayOutputStream;
 
-import com.google.common.base.MoreObjects;
+import static com.google.common.base.Preconditions.checkArgument;
 
 public abstract class ByteStreamBufferedByteConsumer implements ByteStreamConsumer {
 
@@ -19,7 +18,9 @@ public abstract class ByteStreamBufferedByteConsumer implements ByteStreamConsum
     buffer = new ByteArrayOutputStream(initialBufferSize);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void consumeByte(byte b) {
     buffer.write(b);
@@ -36,13 +37,9 @@ public abstract class ByteStreamBufferedByteConsumer implements ByteStreamConsum
   }
 
   /**
-   * Get the current position of the internal byte array buffer.
-   * <p>
-   * If the buffer is full already and {@link #consumeByte(byte)} is called again then the position
-   * is reset to <code>0</code>.
+   * Get the current position of the internal byte array buffer. <p> If the buffer is full already
+   * and {@link #consumeByte(byte)} is called again then the position is reset to <code>0</code>.
    * </p>
-   *
-   * @return
    */
   public final int getPosition() {
     return pos;
@@ -57,7 +54,8 @@ public abstract class ByteStreamBufferedByteConsumer implements ByteStreamConsum
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("initialBufferSize", initialBufferSize).add("buffer", buffer).add("position", pos).toString();
+    return MoreObjects.toStringHelper(this).add("initialBufferSize", initialBufferSize)
+        .add("buffer", buffer).add("position", pos).toString();
   }
 }
 
