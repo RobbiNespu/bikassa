@@ -15,22 +15,16 @@ import com.eb.warehouse.util.SubclassesOf;
  */
 public class PcxSocketConnectionModule extends AbstractModule {
 
-  private final int port;
-  private final String sendLifeMessageThreadName;
   private final Key<SocketConnection> socketConnectionBindingKey;
   private final EventBus socketEventBus = new EventBus();
 
-  public PcxSocketConnectionModule(int port, String sendLifeMessageThreadName,
-                                   Key<SocketConnection> socketConnectionBindingKey) {
-    this.port = port;
-    this.sendLifeMessageThreadName = sendLifeMessageThreadName;
+  public PcxSocketConnectionModule(Key<SocketConnection> socketConnectionBindingKey) {
     this.socketConnectionBindingKey = socketConnectionBindingKey;
   }
 
   @Override
   protected void configure() {
-    install(
-        new AutoLifeSendSocketConnectionModule(port, sendLifeMessageThreadName, socketEventBus));
+    install(new AutoLifeSendSocketConnectionModule(socketEventBus));
     bind(socketConnectionBindingKey).to(PcxSocketConnection.class);
     bind(EventBus.class).annotatedWith(SocketEventBusBinding.class).toInstance(socketEventBus);
     bindListener(new SubclassesOf(PcxSocketConnection.class),

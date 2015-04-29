@@ -5,10 +5,16 @@ import com.eb.warehouse.io.SocketConnection;
 import java.io.IOException;
 
 /**
- * <p> TODO </p>
+ * <p>Socket connection that delegates all method calls to another {@link
+ * com.eb.warehouse.io.SocketConnection}.</p>
  */
 public abstract class ForwardingSocketConnection implements SocketConnection {
 
+  /**
+   * Get the delegate to which method calls should be forwarded to.
+   *
+   * @return wrapped socket connection instance. Never NULL.
+   */
   protected abstract SocketConnection delegate();
 
   /**

@@ -17,22 +17,20 @@ import com.eb.warehouse.util.ThreadNameBinding;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import javax.inject.Named;
+
 /**
  * Created by ebe on 24.03.2015.
  */
 public class AutoLifeSendSocketConnectionModule extends AbstractModule {
 
+  public static final String LIFE_SEND_THREAD_NAME_BINDING = "life-send-thread-name";
   private static final Key<ListeningScheduledExecutorService>
       LIFE_SENDER_KEY =
       Key.get(ListeningScheduledExecutorService.class, LifeSendExecServiceBinding.class);
-  private final int port;
-  private final String sendLifeMessageThreadName;
   private final EventBus socketEventBus;
 
-  public AutoLifeSendSocketConnectionModule(int port, String sendLifeMessageThreadName,
-                                            EventBus socketEventBus) {
-    this.port = port;
-    this.sendLifeMessageThreadName = sendLifeMessageThreadName;
+  public AutoLifeSendSocketConnectionModule(EventBus socketEventBus) {
     this.socketEventBus = socketEventBus;
   }
 
@@ -41,24 +39,25 @@ public class AutoLifeSendSocketConnectionModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        bind(String.class).annotatedWith(ThreadNameBinding.class).toInstance(
-            sendLifeMessageThreadName);
         install(new NamedThreadFactoryModule());
         expose(LIFE_SENDER_KEY);
       }
 
       @Provides
       @LifeSendExecServiceBinding
-      ListeningScheduledExecutorService createLifeMessageSendService(ThreadFactory threadFactory) {
-        return MoreExecutors.listeningDecorator(Executors
-                                                    .newSingleThreadScheduledExecutor(
-                                                        threadFactory));
+      ListeningScheduledExecutorService provideLifeSendExecService(ThreadFactory threadFactory) {
+        return MoreExecutors.listeningDecorator(Executors.newSingleThreadScheduledExecutor(
+            threadFactory));
+      }
+
+      @Provides
+      @ThreadNameBinding
+      String provideLifeSendThreadName(@Named(LIFE_SEND_THREAD_NAME_BINDING) String threadName) {
+        return threadName;
       }
     });
 
-    install(
-        new AutoConnectSocketConnectionModule(port, Key.get(SocketConnection.class,
-                                                            AutoConnectSocketConnectionBinding.class)));
+    install(new AutoConnectSocketConnectionModule());
     bind(SocketConnection.class)
         .annotatedWith(AutoLifeSendSocketConnectionBinding.class)
         .to(AutoLifeSendSocketConnection.class);

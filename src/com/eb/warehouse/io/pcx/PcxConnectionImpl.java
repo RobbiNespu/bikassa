@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Set;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
@@ -35,8 +34,8 @@ public final class PcxConnectionImpl implements PcxConnection {
   private ListenableScheduledFuture<?> sendLifeFuture;
 
   @Inject
-  public PcxConnectionImpl(@Named("command") SocketConnection command,
-                           @Named("status") SocketConnection status,
+  public PcxConnectionImpl(@PcxCommandConnectionBinding SocketConnection command,
+                           @PcxStatusConnectionBinding SocketConnection status,
                            Marshaller marshaller,
                            Set<String> associatedStationIds, byte delimiter) {
     this.command = command;

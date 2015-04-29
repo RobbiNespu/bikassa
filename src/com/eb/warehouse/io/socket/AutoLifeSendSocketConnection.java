@@ -50,7 +50,7 @@ public final class AutoLifeSendSocketConnection extends ForwardingSocketConnecti
         @Override
         public void run() {
           L.trace("Trigger send life message.");
-          lifeEventBus.post(new LifeSendEvent());
+          lifeEventBus.post(new SendLifeEvent());
         }
       }, 5, 5, TimeUnit.SECONDS);
     }

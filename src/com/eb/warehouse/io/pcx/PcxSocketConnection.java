@@ -7,7 +7,7 @@ import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.pcx.message.Life;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionBinding;
 import com.eb.warehouse.io.socket.ForwardingSocketConnection;
-import com.eb.warehouse.io.socket.LifeSendEvent;
+import com.eb.warehouse.io.socket.SendLifeEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +20,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 /**
- * <p> TODO </p>
+ * <p>PCX socket connection that represents either a "command" or "status" connection.</p>
+ * <p>Instances of this class must register for {@link com.eb.warehouse.io.socket.SendLifeEvent}
+ * events so that PCX {@link com.eb.warehouse.io.pcx.message.Life} message can be periodically
+ * sent.</p>
  */
-
 final class PcxSocketConnection extends ForwardingSocketConnection {
 
   private static final Logger L = LoggerFactory.getLogger(PcxSocketConnection.class);
@@ -47,11 +49,13 @@ final class PcxSocketConnection extends ForwardingSocketConnection {
   }
 
   /**
-   * {@inheritDoc}
+   * Write PCX {@link com.eb.warehouse.io.pcx.message.Life} message to underlying socket. <p>This
+   * method doesn't throw any {@link java.io.IOException}s when writing the life message fails. It's
+   * only logged.</p>
    */
   @Subscribe
-  public void sendLifeMessage(LifeSendEvent e) {
-    ByteArrayOutputStream os = new ByteArrayOutputStream();
+  public void writeLifeMessage(SendLifeEvent e) {
+    ByteArrayOutputStream os = new ByteArrayOutputStream(128);
     try {
       L.trace("Try marshalling PCX life message={} to XML string.", LIFE_MESSAGE);
       marshaller.marshal(LIFE_MESSAGE, os);
@@ -63,7 +67,6 @@ final class PcxSocketConnection extends ForwardingSocketConnection {
     } catch (JAXBException ex) {
       throw new AssertionError("Failed marshalling PCX life message=" + LIFE_MESSAGE
                                + " to XML string.", ex);
-
     } catch (IOException ex) {
       L.error("Not sent PCX life message. Connection broken.");
     }

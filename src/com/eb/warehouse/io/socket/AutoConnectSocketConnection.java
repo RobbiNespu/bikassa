@@ -23,18 +23,17 @@ import static com.google.common.base.Preconditions.checkState;
 /**
  * <p> Socket connection that tries to be connected to the socket as long as the connection is
  * running. Reconnect is triggered either if {@link #writeToSocket(byte[])} throws an exception or a
- * previous connect to the socket failed. </p>
+ * previous connect to the socket failed.</p>
  */
 final class AutoConnectSocketConnection implements SocketConnection {
 
-  static final String CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING = "connectAndRead";
   private static final Logger L = LoggerFactory.getLogger(AutoConnectSocketConnection.class);
   private final ConnectSocketTask connectSocketTask;
   private final ReadSocketTaskFactory readSocketTaskFactory;
   private final EventBus socketConnectEvents;
   private final FutureCallback<Socket> connectCallback;
   private final FutureCallback<Void> readCallback;
-  private final ListeningExecutorService connectAndReadRunner;
+  private final ListeningExecutorService connectAndReadExecService;
   // private ConnectionStatsCounter statsCounter;
   private volatile boolean running;
   private volatile Socket socket;
@@ -43,11 +42,11 @@ final class AutoConnectSocketConnection implements SocketConnection {
 
   @Inject
   AutoConnectSocketConnection(
-      @ConnectAndReadSocketExecServiceBinding ListeningExecutorService connectAndReadRunner,
+      @ConnectAndReadSocketExecServiceBinding ListeningExecutorService connectAndReadExecService,
       ConnectSocketTask connectSocketTask,
       ReadSocketTaskFactory readSocketTaskFactory,
       @SocketEventBusBinding EventBus socketConnectEvents) {
-    this.connectAndReadRunner = connectAndReadRunner;
+    this.connectAndReadExecService = connectAndReadExecService;
     this.connectSocketTask = connectSocketTask;
     this.readSocketTaskFactory = readSocketTaskFactory;
     this.socketConnectEvents = socketConnectEvents;
@@ -55,13 +54,13 @@ final class AutoConnectSocketConnection implements SocketConnection {
     readCallback = new ReadSocketCallback();
   }
 
-  AutoConnectSocketConnection(ListeningExecutorService connectAndReadRunner,
+  AutoConnectSocketConnection(ListeningExecutorService connectAndReadExecService,
                               ConnectSocketTask connectSocketTask,
                               ReadSocketTaskFactory readSocketTaskFactory,
                               EventBus socketConnectEvents,
                               FutureCallback<Socket> connectCallback,
                               FutureCallback<Void> readCallback) {
-    this.connectAndReadRunner = connectAndReadRunner;
+    this.connectAndReadExecService = connectAndReadExecService;
     this.connectSocketTask = connectSocketTask;
     this.readSocketTaskFactory = readSocketTaskFactory;
     this.socketConnectEvents = socketConnectEvents;
@@ -81,7 +80,7 @@ final class AutoConnectSocketConnection implements SocketConnection {
   }
 
   private void connectAsync() {
-    connectFuture = connectSocketTask.submitTo(connectAndReadRunner);
+    connectFuture = connectSocketTask.submitTo(connectAndReadExecService);
     Futures.addCallback(connectFuture, connectCallback);
   }
 
@@ -152,7 +151,7 @@ final class AutoConnectSocketConnection implements SocketConnection {
       try {
         Callable<Void> readTask =
             readSocketTaskFactory.createReadSocketInputStreamTask(connected.getInputStream());
-        readFuture = connectAndReadRunner.submit(readTask);
+        readFuture = connectAndReadExecService.submit(readTask);
         Futures.addCallback(readFuture, readCallback);
         socketConnectEvents.post(new SocketConnectedEvent());
       } catch (IOException e) {

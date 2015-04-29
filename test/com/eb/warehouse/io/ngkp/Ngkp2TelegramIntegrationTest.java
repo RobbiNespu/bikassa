@@ -5,7 +5,6 @@ import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
 
@@ -30,8 +29,7 @@ public class Ngkp2TelegramIntegrationTest {
   @Ignore
   public void test2() {
     Injector injector =
-        Guice.createInjector(new AutoConnectSocketConnectionModule(2302, Key.get(
-                                 SocketConnection.class)),
+        Guice.createInjector(new AutoConnectSocketConnectionModule(),
                              new TestModule());
     SocketConnection connectionService =
         injector.getInstance(SocketConnection.class);

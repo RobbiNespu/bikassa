@@ -25,27 +25,22 @@ import javax.inject.Named;
 /**
  * <p> Usage: TODO add some usage examples. </p>
  */
-
 public class AutoConnectSocketConnectionModule extends AbstractModule {
 
+  public static final String
+      CONNECT_READ_SOCKET_THREAD_NAME_BINDING =
+      "connect-read-socket-thread-name";
   private static final Key<ListeningExecutorService>
       CONNECT_AND_READ_SOCKET_KEY =
       Key.get(ListeningExecutorService.class, ConnectAndReadSocketExecServiceBinding.class);
-  private final int port;
-  private final Key<SocketConnection> socketConnectionBindingKey;
-
-  public AutoConnectSocketConnectionModule(int port,
-                                           Key<SocketConnection> socketConnectionBindingKey) {
-    this.port = port;
-    this.socketConnectionBindingKey = socketConnectionBindingKey;
-  }
 
   /**
    * {@inheritDoc}
    */
   @Override
   protected void configure() {
-    bind(socketConnectionBindingKey).to(AutoConnectSocketConnection.class);
+    bind(SocketConnection.class).annotatedWith(AutoConnectSocketConnectionBinding.class).to(
+        AutoConnectSocketConnection.class);
     bind(ConnectSocketTask.class).to(ConnectSocketTaskImpl.class);
     install(new FactoryModuleBuilder().implement(new TypeLiteral<Callable<Void>>() {
                                                  },
@@ -61,26 +56,26 @@ public class AutoConnectSocketConnectionModule extends AbstractModule {
 
       @Provides
       @ThreadNameBinding
-      String createReaderThreadName(@Named("hostname") String hostname, @Named("port") int port) {
-        return hostname + ":" + port + "-reader";
+      String provideReaderThreadName(
+          @Named(CONNECT_READ_SOCKET_THREAD_NAME_BINDING) String threadName) {
+        return threadName;
       }
 
       @Provides
       @ConnectAndReadSocketExecServiceBinding
-      ListeningExecutorService createConnectAndReadRunner(ThreadFactory threadFactory) {
+      ListeningExecutorService provideConnectAndExecService(ThreadFactory threadFactory) {
         return MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor(threadFactory));
       }
     });
 
-    bind(Integer.class).annotatedWith(Names.named("port")).toInstance(port);
     bind(Integer.class).annotatedWith(Names.named("reconnectDelay")).toInstance(7);
     bind(TimeUnit.class).annotatedWith(Names.named("reconnectDelayTimeUnit")).toInstance(
         TimeUnit.SECONDS);
   }
 
   @Provides
-  InetSocketAddress createSocketAddress(@Named("hostname") String hostname,
-                                        @Named("port") int port) {
+  InetSocketAddress provideSocketAddress(@HostnameBinding String hostname,
+                                         @PortBinding int port) {
     return new InetSocketAddress(hostname, port);
   }
 }

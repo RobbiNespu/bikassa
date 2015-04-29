@@ -4,7 +4,6 @@ import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
 
@@ -24,9 +23,7 @@ public class ReconnectingSocketConnectionModuleTest {
 
   @Test
   public void inject() {
-    Injector injector = Guice.createInjector(new AutoConnectSocketConnectionModule(2,
-                                                                                 Key.get(
-                                                                                     SocketConnection.class)),
+    Injector injector = Guice.createInjector(new AutoConnectSocketConnectionModule(),
                                              new TestModule2());
     SocketConnection communication = injector.getInstance(SocketConnection.class);
     assertNotNull(communication);

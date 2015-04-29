@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 /**
  * <p> Usage: TODO add some usage examples. </p>
  */
-
 public class Ngkp2Header implements ByteMessage {
 
   private int telegramLength;

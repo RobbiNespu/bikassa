@@ -33,7 +33,7 @@ final class Ngkp2ReceiverSocketConnection extends ForwardingSocketConnection {
   }
 
   @Subscribe
-  public void sendAckMessage(Ngkp2Header header) {
+  public void writeAckMessage(Ngkp2Header header) {
     L.trace("Try send ack telegram for received NGKP2 header={}.", header);
     Ngkp2Header copy = new Ngkp2Header(header);
     copy.setTelegramType(ACK_TELEGRAM_TYPE);

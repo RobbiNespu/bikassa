@@ -3,16 +3,18 @@ package com.eb.warehouse.io.pcx;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
-import com.google.inject.TypeLiteral;
-import com.google.inject.name.Names;
+import com.google.inject.Provides;
 
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamConsumer;
 import com.eb.warehouse.io.MagicByteSlicingByteStreamConsumer;
 import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.XmlMessageListener;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
+import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
+import com.eb.warehouse.io.socket.PortBinding;
 
-import java.util.Set;
+import javax.inject.Named;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -20,25 +22,18 @@ import java.util.Set;
 
 public class PcxConnectionModule extends AbstractModule {
 
+  public static final String COMMAND_PORT_BINDING = "command-port";
+  public static final String STATUS_PORT_BINDING = "status-port";
+  public static final String CONNECTION_NAME_BINDING = "connection-name";
   private static final Key<SocketConnection>
       COMMAND_CONNECTION_KEY =
-      Key.get(SocketConnection.class, Names.named("command"));
+      Key.get(SocketConnection.class, PcxCommandConnectionBinding.class);
   private static final Key<SocketConnection>
       STATUS_CONNECTION_KEY =
-      Key.get(SocketConnection.class, Names.named("status"));
-  private final int commandPort;
-  private final int statusPort;
-  private final Set<String> stationIds;
-  private final String connectionName;
+      Key.get(SocketConnection.class, PcxStatusConnectionBinding.class);
   private final Key<PcxConnection> pcxConnectionBindingKey;
 
-  public PcxConnectionModule(int commandPort, int statusPort, Set<String> stationIds,
-                             String connectionName,
-                             Key<PcxConnection> pcxConnectionBindingKey) {
-    this.commandPort = commandPort;
-    this.statusPort = statusPort;
-    this.stationIds = stationIds;
-    this.connectionName = connectionName;
+  public PcxConnectionModule(Key<PcxConnection> pcxConnectionBindingKey) {
     this.pcxConnectionBindingKey = pcxConnectionBindingKey;
   }
 
@@ -53,23 +48,54 @@ public class PcxConnectionModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new PcxSocketConnectionModule(commandPort, connectionName + "-cmd-life",
-                                              COMMAND_CONNECTION_KEY));
+        install(new PcxSocketConnectionModule(COMMAND_CONNECTION_KEY));
         expose(COMMAND_CONNECTION_KEY);
+      }
+
+      @Provides
+      @PortBinding
+      int providePort(@Named(COMMAND_PORT_BINDING) int port) {
+        return port;
+      }
+
+      @Provides
+      @Named(AutoLifeSendSocketConnectionModule.LIFE_SEND_THREAD_NAME_BINDING)
+      String provideLifeSendThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+        return connectionName + "-cmd-life";
+      }
+
+      @Provides
+      @Named(AutoConnectSocketConnectionModule.CONNECT_READ_SOCKET_THREAD_NAME_BINDING)
+      String provideConnectReadThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+        return connectionName + "-cmd-reader";
       }
     });
 
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new PcxSocketConnectionModule(statusPort, connectionName + "-status-life",
-                                              STATUS_CONNECTION_KEY));
+        install(new PcxSocketConnectionModule(STATUS_CONNECTION_KEY));
         expose(STATUS_CONNECTION_KEY);
       }
-    });
 
-    bind(new TypeLiteral<Set<String>>() {
-    }).toInstance(stationIds);
+      @Provides
+      @PortBinding
+      int providePort(@Named(STATUS_PORT_BINDING) int port) {
+        return port;
+      }
+
+      @Provides
+      @Named(AutoLifeSendSocketConnectionModule.LIFE_SEND_THREAD_NAME_BINDING)
+      String provideLifeSendThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+        return connectionName + "-status-life";
+      }
+
+      @Provides
+      @Named(AutoConnectSocketConnectionModule.CONNECT_READ_SOCKET_THREAD_NAME_BINDING)
+      String provideConnectReadThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+        return connectionName + "-status-reader";
+      }
+    });
 
     bind(pcxConnectionBindingKey).to(PcxConnectionImpl.class);
   }

@@ -5,7 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionBinding;
 import com.eb.warehouse.io.socket.ForwardingSocketConnection;
-import com.eb.warehouse.io.socket.LifeSendEvent;
+import com.eb.warehouse.io.socket.SendLifeEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +75,7 @@ final class Ngkp2SenderSocketConnection extends ForwardingSocketConnection {
    * {@inheritDoc}
    */
   @Subscribe
-  public void sendLifeMessage(LifeSendEvent e) {
+  public void sendLifeMessage(SendLifeEvent e) {
     Ngkp2Header header = new Ngkp2Header();
     header.setDestinationAddress(115);
     header.setTelegramLength(10);

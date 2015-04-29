@@ -9,12 +9,13 @@ import com.google.inject.name.Names;
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamConsumer;
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.AutoConnectSocketConnectionBinding;
 import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
+import com.eb.warehouse.io.socket.PortBinding;
 import com.eb.warehouse.io.socket.SocketEventBusBinding;
 import com.eb.warehouse.util.EventBusRegistrationListener;
 import com.eb.warehouse.util.SubclassesOf;
+import com.eb.warehouse.util.ThreadNameBinding;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -61,9 +62,11 @@ public class Ngkp2ConnectionModule extends AbstractModule {
 
         bind(ByteMessageListener.class).to(Ngkp2MessageParser.class);
         bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
+        bind(Integer.class).annotatedWith(PortBinding.class).toInstance(senderPort);
+        bind(String.class).annotatedWith(ThreadNameBinding.class).toInstance("life-sender");
 
         bind(SENDER_CONN_KEY).to(Ngkp2SenderSocketConnection.class);
-        install(new AutoLifeSendSocketConnectionModule(senderPort, "life-sender", socketEvents));
+        install(new AutoLifeSendSocketConnectionModule(socketEvents));
         expose(SENDER_CONN_KEY);
       }
     });
@@ -80,10 +83,10 @@ public class Ngkp2ConnectionModule extends AbstractModule {
 
         bind(ByteMessageListener.class).to(Ngkp2MessageParser.class);
         bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
+        bind(Integer.class).annotatedWith(PortBinding.class).toInstance(receiverPort);
 
         bind(RECEIVER_CONN_KEY).to(Ngkp2ReceiverSocketConnection.class);
-        install(new AutoConnectSocketConnectionModule(receiverPort, Key.get(SocketConnection.class,
-                                                                            AutoConnectSocketConnectionBinding.class)));
+        install(new AutoConnectSocketConnectionModule());
         expose(RECEIVER_CONN_KEY);
       }
     });
