@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -27,10 +26,10 @@ import static com.google.common.base.Preconditions.checkState;
  * running. Reconnect is triggered either if {@link #writeToSocket(byte[])} throws an exception or a
  * previous connect to the socket failed. </p>
  */
-final class PermanentSocketConnection implements SocketConnection {
+final class AutoConnectSocketConnection implements SocketConnection {
 
   static final String CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING = "connectAndRead";
-  private static final Logger L = LoggerFactory.getLogger(PermanentSocketConnection.class);
+  private static final Logger L = LoggerFactory.getLogger(AutoConnectSocketConnection.class);
   private final ConnectSocketTask connectSocketTask;
   private final ReadSocketTaskFactory readSocketTaskFactory;
   private final EventBus socketConnectEvents;
@@ -44,11 +43,11 @@ final class PermanentSocketConnection implements SocketConnection {
   private ListenableFuture<Void> readFuture;
 
   @Inject
-  PermanentSocketConnection(
+  AutoConnectSocketConnection(
       @Named(CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING) ListeningExecutorService connectAndReadRunner,
       ConnectSocketTask connectSocketTask,
       ReadSocketTaskFactory readSocketTaskFactory,
-      @Named("socketEvents") EventBus socketConnectEvents) {
+      @Named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME) EventBus socketConnectEvents) {
     this.connectAndReadRunner = connectAndReadRunner;
     this.connectSocketTask = connectSocketTask;
     this.readSocketTaskFactory = readSocketTaskFactory;
@@ -57,12 +56,12 @@ final class PermanentSocketConnection implements SocketConnection {
     readCallback = new ReadSocketCallback();
   }
 
-  PermanentSocketConnection(ListeningExecutorService connectAndReadRunner,
-                            ConnectSocketTask connectSocketTask,
-                            ReadSocketTaskFactory readSocketTaskFactory,
-                            EventBus socketConnectEvents,
-                            FutureCallback<Socket> connectCallback,
-                            FutureCallback<Void> readCallback) {
+  AutoConnectSocketConnection(ListeningExecutorService connectAndReadRunner,
+                              ConnectSocketTask connectSocketTask,
+                              ReadSocketTaskFactory readSocketTaskFactory,
+                              EventBus socketConnectEvents,
+                              FutureCallback<Socket> connectCallback,
+                              FutureCallback<Void> readCallback) {
     this.connectAndReadRunner = connectAndReadRunner;
     this.connectSocketTask = connectSocketTask;
     this.readSocketTaskFactory = readSocketTaskFactory;
@@ -139,33 +138,10 @@ final class PermanentSocketConnection implements SocketConnection {
   }
 
   /**
-   * Set the socket instance and the listenable future that is used to abort the task that is
-   * connecting to a socket. Only use for testing!
+   * Inject a socket and ListenableFuture for testing. The future is the handle to the in-progress process of connecting the socket.
    */
   void setSocketAndConnecting(Socket socket, ListenableFuture<Socket> connectFuture) {
     this.socket = socket;
-    this.connectFuture = connectFuture;
-  }
-
-  /**
-   * Set the socket instance. Only use for testing!
-   */
-  void setSocket(Socket socket) {
-    this.socket = socket;
-  }
-
-  /**
-   * Set the socket's output stream. Only use for testing!
-   */
-  void setOutputStream(OutputStream os) {
-//    this.os = os;
-  }
-
-  /**
-   * Set the listenable future that is used to abort the task that is connecting to a socket. Only
-   * use for testing!
-   */
-  void setConnecting(ListenableFuture<Socket> connectFuture) {
     this.connectFuture = connectFuture;
   }
 
@@ -195,12 +171,13 @@ final class PermanentSocketConnection implements SocketConnection {
 
     @Override
     public void onSuccess(Void none) {
-      // Comes here only if remote host closes socket.
-//      closeOldSocketAndReconnectAsync();
+      // Executes if remote host closes socket --> EOF reached at input stream.
+      closeOldSocketAndReconnectAsync();
     }
 
     @Override
     public void onFailure(Throwable t) {
+      // May only execute if it's an IOException
       closeOldSocketAndReconnectAsync();
     }
   }

@@ -1,12 +1,11 @@
 package com.eb.warehouse.io.ngkp;
 
 /**
- * <p> Usage: TODO add some usage examples. </p>
+ * <p>Utility methods for converting bytes to other types and vice versa.</p>
  */
+public final class Bytes2 {
 
-public final class BytesToInt {
-
-  private BytesToInt() {
+  private Bytes2() {
   }
 
   public static int shortFromBytes(byte msb, byte lsb) {

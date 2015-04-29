@@ -1,6 +1,22 @@
 
 package com.eb.warehouse.io.socket;
 
+import com.google.common.util.concurrent.MoreExecutors;
+
+import com.eb.warehouse.util.ThreadDelegator;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.stubbing.Stubber;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Provider;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -14,29 +30,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Provider;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.stubbing.Stubber;
-
-import com.eb.warehouse.io.socket.RecurringConnectSocketTask;
-import com.eb.warehouse.util.ThreadDelegator;
-import com.google.common.util.concurrent.MoreExecutors;
-
 public class RecurringConnectSocketTaskTest {
 
   private Socket fakeSocket;
   private Provider<Socket> socketProvider;
   private ThreadDelegator mockThread;
   private InetSocketAddress anyAddress;
-  private RecurringConnectSocketTask task;
+  private ConnectSocketTaskImpl task;
 
   @SuppressWarnings("unchecked")
   @Before
@@ -46,7 +46,7 @@ public class RecurringConnectSocketTaskTest {
     when(socketProvider.get()).thenReturn(fakeSocket);
     mockThread = mock(ThreadDelegator.class);
     anyAddress = new InetSocketAddress(0);
-    task = new RecurringConnectSocketTask(socketProvider, anyAddress, mockThread);
+    task = new ConnectSocketTaskImpl(socketProvider, anyAddress, mockThread);
   }
 
   @Test

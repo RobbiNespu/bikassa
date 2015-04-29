@@ -79,7 +79,7 @@ public final class PcxConnectionImpl implements PcxConnection {
     try {
       L.trace("Try marshalling PCX message={} to XML string.", message);
       marshaller.marshal(message, os);
-      L.debug("Marshalled PCX message={} to XML string={} and send to hardware.", message,
+      L.trace("Marshalled PCX message={} to XML string={} and send to hardware.", message,
               new String(os.toByteArray(), Charsets.UTF_8));
       os.write(delimiter);
       comm.writeToSocket(os.toByteArray());

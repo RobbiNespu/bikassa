@@ -4,7 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.google.inject.AbstractModule;
 
-import com.eb.warehouse.io.pcx.DemoWarehousePcxConnectionsModule;
+import com.eb.warehouse.io.DemoWarehousePcxNetworkCommModule;
 
 import org.slf4j.LoggerFactory;
 
@@ -15,9 +15,6 @@ import java.util.logging.SimpleFormatter;
 
 public class DemoWarehouseModule extends AbstractModule {
 
-//  private final EventBus outgoingEventBus = new EventBus("outgoing");
-//  private final EventBus incomingEventBus = new EventBus("incoming");
-
   /**
    * {@inheritDoc}
    */
@@ -25,16 +22,9 @@ public class DemoWarehouseModule extends AbstractModule {
   protected void configure() {
     setUpLogging();
     bind(ServerApplication.class).to(WarehouseApplication.class);
-    install(new DemoWarehousePcxConnectionsModule());
+//    install(new DemoWarehouseNgkp2NetworkCommModule());
+    install(new DemoWarehousePcxNetworkCommModule());
     install(new DemoWarehousePcxStationsModule());
-
-//    bind(EventBus.class).annotatedWith(Names.named("outgoing")).toInstance(outgoingEventBus);
-//    bind(EventBus.class).annotatedWith(Names.named("incoming")).toInstance(incomingEventBus);
-
-//    bindListener(new SubclassesOf(PcxStationImpl.class),
-//                 new EventBusRegistrationListener(incomingEventBus));
-//    bindListener(new SubclassesOf(PcxConnectionImpl.class),
-//                 new EventBusRegistrationListener(outgoingEventBus));
   }
 
   private void setUpLogging() {

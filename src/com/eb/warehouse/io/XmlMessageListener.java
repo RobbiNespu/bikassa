@@ -37,7 +37,7 @@ public final class XmlMessageListener implements ByteMessageListener {
   public void consumeMessage(byte[] buffer) {
     ByteArrayInputStream is = new ByteArrayInputStream(buffer);
     try {
-      L.debug("Try unmarshalling XML string={} into object.", new String(buffer, Charsets.UTF_8));
+      L.trace("Try unmarshalling XML string={} into object.", new String(buffer, Charsets.UTF_8));
       Object msg = unmarshaller.unmarshal(is);
       eventConsumer.onEvent(msg);
     } catch (JAXBException e) {

@@ -12,7 +12,7 @@ import com.google.inject.name.Names;
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamConsumer;
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.PermanentSocketConnectionModule;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,10 +30,8 @@ public class Ngkp2TelegramIntegrationTest {
   @Ignore
   public void test2() {
     Injector injector =
-        Guice.createInjector(new PermanentSocketConnectionModule(2302,
-                                                                 new EventBus(), Key.get(
-                                 SocketConnection.class),
-                                                                 Void.class),
+        Guice.createInjector(new AutoConnectSocketConnectionModule(2302, Key.get(
+                                 SocketConnection.class)),
                              new TestModule());
     SocketConnection connectionService =
         injector.getInstance(SocketConnection.class);

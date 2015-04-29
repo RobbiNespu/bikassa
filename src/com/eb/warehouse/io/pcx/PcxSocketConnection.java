@@ -5,6 +5,7 @@ import com.google.common.eventbus.Subscribe;
 
 import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.pcx.message.Life;
+import com.eb.warehouse.io.socket.AutoLifeSendSocketConnection;
 import com.eb.warehouse.io.socket.ForwardingSocketConnection;
 import com.eb.warehouse.io.socket.LifeSendEvent;
 
@@ -32,7 +33,9 @@ final class PcxSocketConnection extends ForwardingSocketConnection {
   private final byte delimiter;
 
   @Inject
-  public PcxSocketConnection(@Named("aliveSender") SocketConnection wrapped, Marshaller marshaller,
+  public PcxSocketConnection(
+      @Named(AutoLifeSendSocketConnection.BINDING_NAME) SocketConnection wrapped,
+      Marshaller marshaller,
                              byte delimiter) {
     this.wrapped = wrapped;
     this.marshaller = marshaller;
@@ -53,7 +56,7 @@ final class PcxSocketConnection extends ForwardingSocketConnection {
     try {
       L.trace("Try marshalling PCX life message={} to XML string.", LIFE_MESSAGE);
       marshaller.marshal(LIFE_MESSAGE, os);
-      L.debug("Marshalled PCX life message to XML string={} and send to hardware.",
+      L.trace("Marshalled PCX life message to XML string={} and send to hardware.",
               new String(os.toByteArray(), Charsets.UTF_8));
       os.write(delimiter);
       writeToSocket(os.toByteArray());

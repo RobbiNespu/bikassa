@@ -20,19 +20,21 @@ import javax.inject.Named;
  * <p> Socket connection that provides periodic life-message-sending functionality and delegates
  * those to another socket connection. </p>
  */
-public final class AliveSocketConnection extends ForwardingSocketConnection {
+public final class AutoLifeSendSocketConnection extends ForwardingSocketConnection {
 
+  public static final String BINDING_NAME = "lifeTrigger";
   static final String SEND_LIFE_SCHEDULED_EXECUTOR_SERVICE_BINDING_NAME = "sendLife";
-  private static final Logger L = LoggerFactory.getLogger(AliveSocketConnection.class);
+  private static final Logger L = LoggerFactory.getLogger(AutoLifeSendSocketConnection.class);
   private final SocketConnection wrapped;
   private final ListeningScheduledExecutorService lifeSendTrigger;
   private final EventBus lifeEventBus;
   private ListenableScheduledFuture<?> sendLifeFuture;
 
   @Inject
-  public AliveSocketConnection(@Named("immediateSender") SocketConnection wrapped,
-                               @Named(SEND_LIFE_SCHEDULED_EXECUTOR_SERVICE_BINDING_NAME) ListeningScheduledExecutorService lifeSendTrigger,
-                               @Named("socketEvents") EventBus lifeEventBus) {
+  public AutoLifeSendSocketConnection(
+      @Named(AutoConnectSocketConnectionModule.AUTO_CONNECT_SOCKET_CONN_BINDING_NAME) SocketConnection wrapped,
+      @Named(SEND_LIFE_SCHEDULED_EXECUTOR_SERVICE_BINDING_NAME) ListeningScheduledExecutorService lifeSendTrigger,
+      @Named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME) EventBus lifeEventBus) {
     this.wrapped = wrapped;
     this.lifeSendTrigger = lifeSendTrigger;
     this.lifeEventBus = lifeEventBus;
@@ -44,8 +46,7 @@ public final class AliveSocketConnection extends ForwardingSocketConnection {
   }
 
   @Subscribe
-  public final void startSendingLifeMessagesIfNotAlreadySending(
-      SocketConnectedEvent e) {
+  public final void startLifeMessageSenderThread(SocketConnectedEvent e) {
     if (sendLifeFuture == null || sendLifeFuture.isDone()) {
       // Send life messages if not started yet or previous task was cancelled.
       L.trace("Start life-message-sender thread.");
@@ -65,7 +66,7 @@ public final class AliveSocketConnection extends ForwardingSocketConnection {
   @Override
   public final void writeToSocket(byte[] bytes) throws IOException {
     try {
-      wrapped.writeToSocket(bytes);
+      super.writeToSocket(bytes);
     } catch (IOException e) {
       if (sendLifeFuture != null) {
         // Stop sending life messages
@@ -75,17 +76,4 @@ public final class AliveSocketConnection extends ForwardingSocketConnection {
       throw e;
     }
   }
-
-  /**
-   * <p> Callback interface for life messages. </p>
-   */
-  public static interface SendLifeCallback {
-
-    /**
-     * Invoked when a life message should be sent. Periodically called on a "life-message-sending"
-     * thread.
-     */
-    void onSendLife();
-  }
-
 }

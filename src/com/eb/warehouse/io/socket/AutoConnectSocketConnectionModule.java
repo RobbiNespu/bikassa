@@ -1,6 +1,5 @@
 package com.eb.warehouse.io.socket;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.inject.AbstractModule;
@@ -12,6 +11,7 @@ import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.util.NamedThreadFactory;
 import com.eb.warehouse.util.NamedThreadFactoryModule;
 
 import java.net.InetSocketAddress;
@@ -26,25 +26,21 @@ import javax.inject.Named;
  * <p> Usage: TODO add some usage examples. </p>
  */
 
-public class PermanentSocketConnectionModule extends AbstractModule {
+public class AutoConnectSocketConnectionModule extends AbstractModule {
 
+  public static final String SOCKET_EVENTS_BINDING_NAME = "socketEvents";
+  public static final String AUTO_CONNECT_SOCKET_CONN_BINDING_NAME = "autoConnect";
   private static final Key<ListeningExecutorService>
       CONNECT_AND_READ_SOCKET_KEY =
       Key.get(ListeningExecutorService.class, Names
-          .named(PermanentSocketConnection.CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING));
+          .named(AutoConnectSocketConnection.CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING));
   private final int port;
-  private final EventBus socketEventBus;
   private final Key<SocketConnection> socketConnectionBindingKey;
-  private final Class<?> socketConnectListenerType;
 
-  public PermanentSocketConnectionModule(int port,
-                                         EventBus socketEventBus,
-                                         Key<SocketConnection> socketConnectionBindingKey,
-                                         Class<?> socketConnectListenerType) {
+  public AutoConnectSocketConnectionModule(int port,
+                                           Key<SocketConnection> socketConnectionBindingKey) {
     this.port = port;
-    this.socketEventBus = socketEventBus;
     this.socketConnectionBindingKey = socketConnectionBindingKey;
-    this.socketConnectListenerType = socketConnectListenerType;
   }
 
   /**
@@ -52,8 +48,8 @@ public class PermanentSocketConnectionModule extends AbstractModule {
    */
   @Override
   protected void configure() {
-    bind(socketConnectionBindingKey).to(PermanentSocketConnection.class);
-    bind(ConnectSocketTask.class).to(RecurringConnectSocketTask.class);
+    bind(socketConnectionBindingKey).to(AutoConnectSocketConnection.class);
+    bind(ConnectSocketTask.class).to(ConnectSocketTaskImpl.class);
     install(new FactoryModuleBuilder().implement(new TypeLiteral<Callable<Void>>() {
                                                  },
                                                  ReadSocketTask.class)
@@ -67,13 +63,13 @@ public class PermanentSocketConnectionModule extends AbstractModule {
       }
 
       @Provides
-      @Named("threadName")
+      @Named(NamedThreadFactory.THREAD_NAME_BINDING_NAME)
       String createReaderThreadName(@Named("hostname") String hostname, @Named("port") int port) {
         return hostname + ":" + port + "-reader";
       }
 
       @Provides
-      @Named(PermanentSocketConnection.CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING)
+      @Named(AutoConnectSocketConnection.CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING)
       ListeningExecutorService createConnectAndReadRunner(ThreadFactory threadFactory) {
         return MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor(threadFactory));
       }

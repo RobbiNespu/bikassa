@@ -5,6 +5,9 @@ import com.google.inject.assistedinject.Assisted;
 
 import com.eb.warehouse.io.ByteStreamConsumer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -22,6 +25,7 @@ import javax.inject.Inject;
  */
 final class ReadSocketTask implements Callable<Void> {
 
+  private static final Logger L = LoggerFactory.getLogger(ReadSocketTask.class);
   private final InputStream socketInputStream;
   private final ByteStreamConsumer byteFromSocketConsumer;
 
@@ -43,7 +47,12 @@ final class ReadSocketTask implements Callable<Void> {
     byte b;
     while ((b = (byte) socketInputStream.read()) != -1) {
       //      statsCounter.incrementReceivedBytes();
-      byteFromSocketConsumer.consumeByte(b);
+      try {
+        byteFromSocketConsumer.consumeByte(b);
+      } catch (Exception e) {
+        // Only catch and log to avoid dieing of thread.
+        L.error("Catched unhandled exception={} in ByteStreamConsumer.consumeByte().", e);
+      }
     }
     return null;
   }

@@ -1,7 +1,7 @@
 package com.eb.warehouse.io.ngkp.message;
 
-import static com.eb.warehouse.io.ngkp.BytesToInt.intFromBytes;
-import static com.eb.warehouse.io.ngkp.BytesToInt.shortFromBytes;
+import static com.eb.warehouse.io.ngkp.Bytes2.intFromBytes;
+import static com.eb.warehouse.io.ngkp.Bytes2.shortFromBytes;
 
 /**
  * Abstract extension of the telegram class to represent TT1411 telegrams.

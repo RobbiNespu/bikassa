@@ -1,9 +1,19 @@
 package com.eb.warehouse.io.socket;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.*;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+import com.google.common.net.InetAddresses;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
+
+import com.eb.warehouse.io.socket.AutoConnectSocketConnection.ConnectSocketCallback;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnection.ReadSocketCallback;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,25 +25,23 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import com.eb.warehouse.io.socket.PermanentSocketConnection.ConnectSocketCallback;
-import com.eb.warehouse.io.socket.PermanentSocketConnection.ReadSocketCallback;
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
-import com.google.common.net.InetAddresses;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 
 public class PermanentSocketConnectionTest {
 
-  private PermanentSocketConnection connection;
+  private AutoConnectSocketConnection connection;
   private ListeningExecutorService connectAndReadRunner;
   private ConnectSocketTask connectSocketTask;
   private ReadSocketTaskFactory readSocketTaskFactory;
@@ -54,7 +62,7 @@ public class PermanentSocketConnectionTest {
     readSocketCallback = mock(FutureCallback.class);
     socketConnectEvents = new EventBus();
     connection =
-        new PermanentSocketConnection(connectAndReadRunner, connectSocketTask,
+        new AutoConnectSocketConnection(connectAndReadRunner, connectSocketTask,
             readSocketTaskFactory, socketConnectEvents, connectSocketCallback, readSocketCallback);
 
     socket = mock(Socket.class);
@@ -170,7 +178,7 @@ public class PermanentSocketConnectionTest {
     ListenableFuture<Socket> future = Futures.immediateFuture(anotherSocket);
     when(connectSocketTask.submitTo(any(ListeningExecutorService.class))).thenReturn(future);
 
-    connection.setSocket(socket);
+    connection.setSocketAndConnecting(socket, null);
     ReadSocketCallback callback = connection.new ReadSocketCallback();
     callback.onSuccess(null);
     verify(socket).close();
@@ -187,8 +195,7 @@ public class PermanentSocketConnectionTest {
     OutputStream os = mock(OutputStream.class);
     IOException writeException = new IOException();
     doThrow(writeException).when(os).write(any(byte[].class));
-    connection.setSocket(socket);
-    connection.setOutputStream(os);
+    connection.setSocketAndConnecting(socket, null);
 
     byte[] bytes = new byte[0];
     try {

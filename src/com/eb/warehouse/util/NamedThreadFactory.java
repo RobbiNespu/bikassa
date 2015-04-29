@@ -13,10 +13,11 @@ import javax.inject.Named;
 
 public final class NamedThreadFactory implements ThreadFactory {
 
+  public static final String THREAD_NAME_BINDING_NAME = "threadName";
   private final String name;
 
   @Inject
-  public NamedThreadFactory(@Named("threadName") String name) {
+  public NamedThreadFactory(@Named(THREAD_NAME_BINDING_NAME) String name) {
     this.name = name;
   }
 

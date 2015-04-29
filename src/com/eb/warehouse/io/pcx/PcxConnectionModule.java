@@ -33,12 +33,12 @@ public class PcxConnectionModule extends AbstractModule {
   private final Key<PcxConnection> pcxConnectionBindingKey;
 
   public PcxConnectionModule(int commandPort, int statusPort, Set<String> stationIds,
-                             String sendLifeMessageThreadName,
+                             String connectionName,
                              Key<PcxConnection> pcxConnectionBindingKey) {
     this.commandPort = commandPort;
     this.statusPort = statusPort;
     this.stationIds = stationIds;
-    this.connectionName = sendLifeMessageThreadName;
+    this.connectionName = connectionName;
     this.pcxConnectionBindingKey = pcxConnectionBindingKey;
   }
 

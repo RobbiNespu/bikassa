@@ -2,11 +2,15 @@ package com.eb.warehouse;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
+import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.multibindings.Multibinder;
 import com.google.inject.name.Names;
+
+import java.util.Set;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -61,6 +65,21 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
       STATION_JPP12_KEY =
       Key.get(PcxStation.class, Names.named(STATION_JPP12));
 
+  private static void bindStationId(Binder binder, String stationId) {
+    binder.bind(String.class).annotatedWith(Names.named("stationId")).toInstance(stationId);
+  }
+
+  private static void bindTargets(Binder binder, Set<String> targets) {
+    binder.bind(new TypeLiteral<Set<String>>() {
+    }).toInstance(targets);
+  }
+
+  private static void bindStation(Binder binder, String stationId, Set<String> targets,
+                                  Key<PcxStation> stationKey) {
+    bindStationId(binder, stationId);
+    bindTargets(binder, targets);
+    binder.bind(stationKey).to(PcxStationImpl.class);
+  }
 
   /**
    * {@inheritDoc}
@@ -87,9 +106,8 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new AnyTargetSelectingWithTuCountThresholdPcxStationModule(STATION_JPP01,
-                                                                           ImmutableSet.of("any"),
-                                                                           STATION_JPP01_KEY));
+        bindStation(binder(), STATION_JPP01, ImmutableSet.of("any"), STATION_JPP01_KEY);
+        install(new AnyTargetSelectingWithTuCountThresholdPcxStationModule());
         expose(STATION_JPP01_KEY);
       }
     });
@@ -97,10 +115,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP02,
-                                                          ImmutableSet
-                                                              .of("TEJP12"/* , "TEJP11" */),
-                                                          STATION_JPP02_KEY));
+        bindStation(binder(), STATION_JPP02, ImmutableSet
+            .of("TEJP12"/* , "TEJP11" */), STATION_JPP02_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_JPP02_KEY);
       }
     });
@@ -108,10 +125,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP03,
-                                                          ImmutableSet
-                                                              .of("TCRS01"/* , "TEXIT" */),
-                                                          STATION_JPP03_KEY));
+        bindStation(binder(), STATION_JPP03, ImmutableSet
+            .of("TCRS01"/* , "TEXIT" */), STATION_JPP03_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_JPP03_KEY);
       }
     });
@@ -119,9 +135,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP04, ImmutableSet.of("TJPP02",
-                                                                                         "TJPP10"),
-                                                          STATION_JPP04_KEY));
+        bindStation(binder(), STATION_JPP04, ImmutableSet.of("TJPP02",
+                                                             "TJPP10"), STATION_JPP04_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_JPP04_KEY);
       }
     });
@@ -129,10 +145,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP10,
-                                                          ImmutableSet
-                                                              .of("TJPP11"/* , "TTPS05" */),
-                                                          STATION_JPP10_KEY));
+        bindStation(binder(), STATION_JPP10, ImmutableSet
+            .of("TJPP11"/* , "TTPS05" */), STATION_JPP10_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_JPP10_KEY);
       }
     });
@@ -140,10 +155,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP11,
-                                                          ImmutableSet
-                                                              .of("TJPP12"/* , "TTPS06" */),
-                                                          STATION_JPP11_KEY));
+        bindStation(binder(), STATION_JPP11, ImmutableSet
+            .of("TJPP12"/* , "TTPS06" */), STATION_JPP11_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_JPP11_KEY);
       }
     });
@@ -151,9 +165,10 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_JPP12, ImmutableSet.of("TJPP02",
-                                                                                         "TJPP10"/* , "TEXIT" */),
-                                                          STATION_JPP12_KEY));
+        bindStation(binder(), STATION_JPP12, ImmutableSet.of("TJPP02",
+                                                             "TJPP10"/* , "TEXIT" */),
+                    STATION_JPP12_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_JPP12_KEY);
       }
     });
@@ -161,10 +176,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS01,
-                                                          ImmutableSet
-                                                              .of("TCRS02"/* , "TTPS01" */),
-                                                          STATION_CRS01_KEY));
+        bindStation(binder(), STATION_CRS01, ImmutableSet
+            .of("TCRS02"/* , "TTPS01" */), STATION_CRS01_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_CRS01_KEY);
       }
     });
@@ -172,10 +186,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS02,
-                                                          ImmutableSet
-                                                              .of("TCRS03"/* , "TTPS02" */),
-                                                          STATION_CRS02_KEY));
+        bindStation(binder(), STATION_CRS02, ImmutableSet
+            .of("TCRS03"/* , "TTPS02" */), STATION_CRS02_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_CRS02_KEY);
       }
     });
@@ -183,9 +196,10 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS03, ImmutableSet.of("TCRS04",
-                                                                                         "TJPP02"/* , "TTPS03" */),
-                                                          STATION_CRS03_KEY));
+        bindStation(binder(), STATION_CRS03, ImmutableSet.of("TCRS04",
+                                                             "TJPP02"/* , "TTPS03" */),
+                    STATION_CRS03_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_CRS03_KEY);
       }
     });
@@ -193,10 +207,9 @@ public class DemoWarehousePcxStationsModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new RandomTargetSelectingPcxStationModule(STATION_CRS04,
-                                                          ImmutableSet
-                                                              .of("TJPP04"/* , "TTPS04" */),
-                                                          STATION_CRS04_KEY));
+        bindStation(binder(), STATION_CRS04, ImmutableSet
+            .of("TJPP04"/* , "TTPS04" */), STATION_CRS04_KEY);
+        install(new RandomTargetSelectingPcxStationModule());
         expose(STATION_CRS04_KEY);
       }
     });

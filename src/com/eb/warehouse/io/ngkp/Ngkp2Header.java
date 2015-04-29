@@ -2,32 +2,53 @@ package com.eb.warehouse.io.ngkp;
 
 import com.google.common.base.MoreObjects;
 
+import com.eb.warehouse.io.ByteMessage;
+
+import javax.annotation.Nonnull;
+
 /**
  * <p> Usage: TODO add some usage examples. </p>
  */
 
-public class Ngkp2Header {
+public class Ngkp2Header implements ByteMessage {
 
   private int telegramLength;
   private int destinationAddress;
-  private int telegramType;
+  private char telegramType;
   private char telegramCounter;
   private int protocolVersion = 2;
 
   public Ngkp2Header() {
   }
 
-  /**
-   * TODO JavaDoc according to WAMAS C conventions
-   */
-  public static Ngkp2Header fromBytes(byte[] bytes) {
-    Ngkp2Header header = new Ngkp2Header();
-    header.telegramLength = BytesToInt.shortFromBytes(bytes[0], bytes[1]);
-    header.destinationAddress = bytes[2];
-    header.telegramType = bytes[3];
-    header.telegramCounter = (char) bytes[4];
-    header.protocolVersion = bytes[5];
-    return header;
+  public Ngkp2Header(Ngkp2Header toCopy) {
+    telegramLength = toCopy.telegramLength;
+    destinationAddress = toCopy.destinationAddress;
+    telegramType = toCopy.telegramType;
+    telegramCounter = toCopy.telegramCounter;
+    protocolVersion = 2;
+  }
+
+  @Override
+  public void intoByteArray(@Nonnull byte[] bytes, int offset) {
+    bytes[offset] = (byte) ((telegramLength >> 8) & 0xFF);
+    bytes[offset + 1] = (byte) (telegramLength & 0xFF);
+    bytes[offset + 2] = (byte) (destinationAddress & 0xFF);
+    bytes[offset + 3] = (byte) telegramType;
+    bytes[offset + 4] = (byte) telegramCounter;
+    bytes[offset + 5] = (byte) 2; // version
+    int crc16 = CRC16.calculate(bytes, offset, 8);
+    bytes[offset + 8] = (byte) (crc16 & 0xFF);
+    bytes[offset + 9] = (byte) ((crc16 >> 8) & 0xFF);
+  }
+
+  @Override
+  public void fromByteArray(@Nonnull byte[] bytes, int offset) {
+    telegramLength = Bytes2.shortFromBytes(bytes[offset], bytes[offset + 1]);
+    destinationAddress = bytes[offset + 2] & 0xFF;
+    telegramType = (char) bytes[offset + 3];
+    telegramCounter = (char) bytes[offset + 4];
+    protocolVersion = bytes[offset + 5];
   }
 
   public int getTelegramLength() {
@@ -46,11 +67,11 @@ public class Ngkp2Header {
     this.destinationAddress = destinationAddress;
   }
 
-  public int getTelegramType() {
+  public char getTelegramType() {
     return telegramType;
   }
 
-  public void setTelegramType(int telegramType) {
+  public void setTelegramType(char telegramType) {
     this.telegramType = telegramType;
   }
 

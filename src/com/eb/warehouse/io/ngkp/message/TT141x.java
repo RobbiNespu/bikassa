@@ -6,7 +6,7 @@ package com.eb.warehouse.io.ngkp.message;
 
 import com.google.common.base.Charsets;
 
-import static com.eb.warehouse.io.ngkp.BytesToInt.shortFromBytes;
+import static com.eb.warehouse.io.ngkp.Bytes2.shortFromBytes;
 
 public abstract class TT141x extends NGKPTelegram {
 

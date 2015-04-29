@@ -4,9 +4,15 @@ import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
+import com.google.inject.name.Names;
 
+import com.eb.warehouse.io.ByteMessageListener;
+import com.eb.warehouse.io.ByteStreamConsumer;
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.PermanentSocketConnectionModule;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
+import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
+import com.eb.warehouse.util.EventBusRegistrationListener;
+import com.eb.warehouse.util.SubclassesOf;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -14,10 +20,21 @@ import com.eb.warehouse.io.socket.PermanentSocketConnectionModule;
 
 public class Ngkp2ConnectionModule extends AbstractModule {
 
-  private final int port;
+  public static final String TELEGRAM_EVENTS_BINDING_NAME = "telegramEvents";
+  private static final Key<SocketConnection> SENDER_CONN_KEY = Key.get(SocketConnection.class,
+                                                                       Names.named(
+                                                                           Ngkp2ConnectionImpl.SENDER_CONN_BINDING_NAME));
+  private static final Key<SocketConnection> RECEIVER_CONN_KEY = Key.get(SocketConnection.class,
+                                                                         Names.named(
+                                                                             Ngkp2ConnectionImpl.RECEIVER_CONN_BINDING_NAME));
+  private final int senderPort;
+  private final int receiverPort;
+  private final Key<Ngkp2Connection> bindingKey;
 
-  public Ngkp2ConnectionModule(int port) {
-    this.port = port;
+  public Ngkp2ConnectionModule(int senderPort, int receiverPort, Key<Ngkp2Connection> bindingKey) {
+    this.senderPort = senderPort;
+    this.receiverPort = receiverPort;
+    this.bindingKey = bindingKey;
   }
 
   /**
@@ -25,13 +42,54 @@ public class Ngkp2ConnectionModule extends AbstractModule {
    */
   @Override
   protected void configure() {
+    bind(bindingKey).to(Ngkp2ConnectionImpl.class);
+
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        install(new PermanentSocketConnectionModule(port, new EventBus(),
-                                                    Key.get(SocketConnection.class),
-                                                    Void.class));
-        expose(SocketConnection.class);
+        EventBus socketEvents = new EventBus();
+        EventBus telegramEvents = new EventBus();
+        bind(EventBus.class)
+            .annotatedWith(
+                Names.named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME))
+            .toInstance(socketEvents);
+        bind(EventBus.class).annotatedWith(Names.named(TELEGRAM_EVENTS_BINDING_NAME)).toInstance(
+            telegramEvents);
+        bindListener(new SubclassesOf(Ngkp2SenderSocketConnection.class),
+                     new EventBusRegistrationListener(socketEvents));
+        bindListener(new SubclassesOf(Ngkp2SenderSocketConnection.class),
+                     new EventBusRegistrationListener(telegramEvents));
+
+        bind(ByteMessageListener.class).to(Ngkp2MessageParser.class);
+        bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
+
+        bind(SENDER_CONN_KEY).to(Ngkp2SenderSocketConnection.class);
+        install(new AutoLifeSendSocketConnectionModule(senderPort, "life-sender", socketEvents));
+        expose(SENDER_CONN_KEY);
+      }
+    });
+
+    install(new PrivateModule() {
+      @Override
+      protected void configure() {
+        EventBus telegramEvents = new EventBus();
+        bind(EventBus.class).annotatedWith(
+            Names.named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME)).toInstance(
+            new EventBus());
+        bind(EventBus.class).annotatedWith(Names.named(TELEGRAM_EVENTS_BINDING_NAME)).toInstance(
+            telegramEvents);
+        bindListener(new SubclassesOf(Ngkp2ReceiverSocketConnection.class),
+                     new EventBusRegistrationListener(telegramEvents));
+
+        bind(ByteMessageListener.class).to(Ngkp2MessageParser.class);
+        bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
+
+        bind(RECEIVER_CONN_KEY).to(Ngkp2ReceiverSocketConnection.class);
+        install(new AutoConnectSocketConnectionModule(receiverPort,
+                                                      Key.get(SocketConnection.class, Names
+                                                          .named(
+                                                              Ngkp2ReceiverSocketConnection.WRAPPED_CONN_BINDING_NAME))));
+        expose(RECEIVER_CONN_KEY);
       }
     });
   }

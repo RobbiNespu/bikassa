@@ -6,7 +6,8 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.AliveSocketConnectionModule;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
+import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
 import com.eb.warehouse.util.EventBusRegistrationListener;
 import com.eb.warehouse.util.SubclassesOf;
 
@@ -29,9 +30,12 @@ public class PcxSocketConnectionModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    install(new AliveSocketConnectionModule(port, sendLifeMessageThreadName, socketEventBus));
+    install(
+        new AutoLifeSendSocketConnectionModule(port, sendLifeMessageThreadName, socketEventBus));
     bind(socketConnectionBindingKey).to(PcxSocketConnection.class);
-    bind(EventBus.class).annotatedWith(Names.named("socketEvents")).toInstance(socketEventBus);
+    bind(EventBus.class)
+        .annotatedWith(Names.named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME))
+        .toInstance(socketEventBus);
     bindListener(new SubclassesOf(PcxSocketConnection.class),
                  new EventBusRegistrationListener(socketEventBus));
   }

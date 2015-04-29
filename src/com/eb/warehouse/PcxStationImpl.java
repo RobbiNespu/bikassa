@@ -78,11 +78,11 @@ public class PcxStationImpl implements PcxStation {
       rs.setOrder("");
       a.setStation(rs);
       try {
-        L.debug("Try send PCX message={} to hardware.", a);
+        L.info("Send TU to target with PCX message={}.", a);
         pcxCommunication.sendAnnounceMessage(a);
       } catch (IOException e) {
         // TODO: Add handling if connection broken.
-        L.error("Not send PCX station announce to hardware.", e);
+        L.error("Not sent PCX station announce to hardware.", e);
       }
 
     } else {

@@ -4,6 +4,9 @@ import com.google.common.util.concurrent.Uninterruptibles;
 
 import com.eb.warehouse.util.Service2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.CountDownLatch;
 
 import javax.inject.Inject;
@@ -14,6 +17,7 @@ import javax.inject.Inject;
 
 public class WarehouseApplication implements ServerApplication {
 
+  private static final Logger L = LoggerFactory.getLogger(WarehouseApplication.class);
   /**
    * Controls the shutdown of the {@link #run2()} method.
    */
@@ -30,6 +34,7 @@ public class WarehouseApplication implements ServerApplication {
    */
   @Override
   public void run2() {
+    L.info("Starting warehouse application.");
     hardwareCommunication.startAsync2();
     /**
      * Blocks main thread until someone triggers shutdown of application.

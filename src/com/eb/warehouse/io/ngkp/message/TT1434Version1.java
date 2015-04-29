@@ -1,6 +1,15 @@
 package com.eb.warehouse.io.ngkp.message;
 
 
+import com.eb.warehouse.io.ByteMessage;
+
+import java.nio.ByteBuffer;
+
+import javax.annotation.Nonnull;
+
+import static com.eb.warehouse.io.ngkp.Bytes2.intFromBytes;
+import static com.eb.warehouse.io.ngkp.Bytes2.shortFromBytes;
+
 /**
  * Concrete extension of the TT1434 telegram class.
  *
@@ -11,52 +20,91 @@ package com.eb.warehouse.io.ngkp.message;
 
 public class TT1434Version1 extends TT1434 {
 
-  private static final long serialVersionUID = 1L;
+  private Header header;
 
   public TT1434Version1() {
-    super();
-    version = 1;
-    subType = 0;
-    statusRequestID = 0;
   }
 
-  @Override
-  public int getContentOffset() {
-    return 16;
-  }
+  public final class Header implements ByteMessage {
 
-  @Override
-  public int getContentLength() {
-    return 84;
-  }
+    private int senderId;
+    private int receiverId;
+    private int telegramType;
+    private int telegramSubType;
+    private int version = 1;
+    private int topic;
+    private int statusRequestId;
 
-  @Override
-  public String fieldsToString() {
-    String result = super.fieldsToString();
-    result += " topic=" + topic + ",";
-    result += " statusRequestID=" + statusRequestID + ",";
-    result += " content=" + content + ",";
-    return result;
-  }
+    public int getSenderId() {
+      return senderId;
+    }
 
-  @Override
-  public String toHex() {
-    String str = super.toHex();
-    str = str.substring(0, str.length() - 12);
-    str = insertIntIntoHex(str, topic, 2);
-    str = insertIntIntoHex(str, statusRequestID, 4);
-    return str + content;
-  }
+    public void setSenderId(int senderId) {
+      this.senderId = senderId;
+    }
 
-  @Override
-  public void fromHex(String hex) {
-    super.fromHex(hex);
-    requestID = 0;
-    producerID = 0;
-    topic = extractIntFromHex(hex, 10, 2);
-    statusRequestID = extractIntFromHex(hex, 12, 4);
-    int start = getContentOffset() * 2;
-    int stop = (getContentOffset() + getContentLength()) * 2;
-    content = hex.substring(start, stop);
+    public int getReceiverId() {
+      return receiverId;
+    }
+
+    public void setReceiverId(int receiverId) {
+      this.receiverId = receiverId;
+    }
+
+    public int getTelegramType() {
+      return telegramType;
+    }
+
+    public void setTelegramType(int telegramType) {
+      this.telegramType = telegramType;
+    }
+
+    public int getTelegramSubType() {
+      return telegramSubType;
+    }
+
+    public void setTelegramSubType(int telegramSubType) {
+      this.telegramSubType = telegramSubType;
+    }
+
+    public int getVersion() {
+      return version;
+    }
+
+    public int getTopic() {
+      return topic;
+    }
+
+    public void setTopic(int topic) {
+      this.topic = topic;
+    }
+
+    public int getStatusRequestId() {
+      return statusRequestId;
+    }
+
+    public void setStatusRequestId(int statusRequestId) {
+      this.statusRequestId = statusRequestId;
+    }
+
+    @Override
+    public void fromByteArray(@Nonnull byte[] bytes, int offset) {
+      senderId = shortFromBytes(bytes[offset + 0], bytes[offset + 1]);
+      receiverId = shortFromBytes(bytes[offset + 2], bytes[offset + 3]);
+      telegramType = shortFromBytes(bytes[offset + 4], bytes[offset + 5]);
+      telegramSubType = shortFromBytes(bytes[offset + 6], bytes[offset + 7]);
+      version = shortFromBytes(bytes[offset + 8], bytes[offset + 9]);
+      topic = shortFromBytes(bytes[offset + 10], bytes[offset + 11]);
+      statusRequestId =
+          intFromBytes(bytes[offset + 12], bytes[offset + 13], bytes[offset + 14],
+                       bytes[offset + 15]);
+    }
+
+    @Override
+    public void intoByteArray(@Nonnull byte[] bytes, int offset) {
+      ByteBuffer.wrap(bytes).putShort((short) senderId).putShort((short) receiverId)
+          .putShort((short) telegramType).putShort((short) telegramSubType)
+          .putShort((short) version).putShort((short) topic).putInt(statusRequestId);
+    }
   }
 }

@@ -37,7 +37,7 @@ final class Ngkp2SlicingByteStreamConsumer extends ByteStreamBufferedByteConsume
       int actualChecksum = ((msb & 0xFF) << 8) | (lsb & 0xFF);
       if (expectedChecksum == actualChecksum) {
         // We received a correct NGKPv2 header
-        telegramLength = BytesToInt.shortFromBytes(headerBytes[0], headerBytes[1]);
+        telegramLength = Bytes2.shortFromBytes(headerBytes[0], headerBytes[1]);
       } else {
         resetPosition();
       }

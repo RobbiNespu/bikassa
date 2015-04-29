@@ -24,11 +24,9 @@ public class ReconnectingSocketConnectionModuleTest {
 
   @Test
   public void inject() {
-    Injector injector = Guice.createInjector(new PermanentSocketConnectionModule(2,
-                                                                                 new EventBus(),
+    Injector injector = Guice.createInjector(new AutoConnectSocketConnectionModule(2,
                                                                                  Key.get(
-                                                                                     SocketConnection.class),
-                                                                                 Void.class),
+                                                                                     SocketConnection.class)),
                                              new TestModule2());
     SocketConnection communication = injector.getInstance(SocketConnection.class);
     assertNotNull(communication);

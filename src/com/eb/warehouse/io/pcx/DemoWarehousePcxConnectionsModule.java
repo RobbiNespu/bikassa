@@ -74,8 +74,6 @@ public class DemoWarehousePcxConnectionsModule extends AbstractModule {
     bind(PcxMessageSender.class).to(PcxCommunication.class);
     bind(EventConsumer.class).to(PcxCommunication.class);
 
-    bind(String.class).annotatedWith(Names.named("hostname")).toInstance("localhost");
-    bind(Integer.class).annotatedWith(Names.named("bufferSize")).toInstance(1024);
     bind(Byte.class).toInstance((byte) 0x1A);
 
     install(new PrivateModule() {

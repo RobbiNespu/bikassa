@@ -32,7 +32,7 @@ public class PcxCommunication extends PcxMessageSender implements Service2, Even
   private final Map<String, StationEventBus> registeredStations = Maps.newHashMap();
   private final Set<PcxConnection> connections;
   private final Map<String, PcxConnection> stationToConnectionMapping;
-  private final EventBus loopbackEventBus = new AsyncEventBus(Executors.newFixedThreadPool(4));
+  private final EventBus loopbackEventBus = new AsyncEventBus(Executors.newFixedThreadPool(8));
 
   @Inject
   public PcxCommunication(Set<PcxConnection> pcxConnections) {
@@ -78,7 +78,7 @@ public class PcxCommunication extends PcxMessageSender implements Service2, Even
 
   @Subscribe
   public void deliverResponse(Response response) {
-    L.debug("Try deliver PCX response={} to station.", response);
+    L.debug("Received PCX response={} from station.", response);
     if (response.getQuery() != null) {
       ResponseQuery rq = response.getQuery();
       String stationId = rq.getFrom();
@@ -86,7 +86,7 @@ public class PcxCommunication extends PcxMessageSender implements Service2, Even
       if (station != null) {
         station.eventBus.post(rq);
       } else {
-        L.debug(
+        L.error(
             "Not delivered PCX response query={} to station={} because no station for this name registered.",
             rq, stationId);
       }

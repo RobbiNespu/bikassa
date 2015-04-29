@@ -18,9 +18,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 
-final class RecurringConnectSocketTask implements ConnectSocketTask {
+final class ConnectSocketTaskImpl implements ConnectSocketTask {
 
-  private static final Logger L = LoggerFactory.getLogger(RecurringConnectSocketTask.class);
+  private static final Logger L = LoggerFactory.getLogger(ConnectSocketTaskImpl.class);
   private final Provider<Socket> socketProvider;
   private final InetSocketAddress address;
   private final int reconnectDelay;
@@ -30,9 +30,9 @@ final class RecurringConnectSocketTask implements ConnectSocketTask {
   private Socket socket;
 
   @Inject
-  RecurringConnectSocketTask(Provider<Socket> socketProvider, InetSocketAddress address,
-                             @Named("reconnectDelay") int reconnectDelay,
-                             @Named("reconnectDelayTimeUnit") TimeUnit reconnectDelayTimeUnit) {
+  ConnectSocketTaskImpl(Provider<Socket> socketProvider, InetSocketAddress address,
+                        @Named("reconnectDelay") int reconnectDelay,
+                        @Named("reconnectDelayTimeUnit") TimeUnit reconnectDelayTimeUnit) {
     this.socketProvider = socketProvider;
     this.address = address;
     this.reconnectDelay = reconnectDelay;
@@ -40,8 +40,8 @@ final class RecurringConnectSocketTask implements ConnectSocketTask {
     thread = ThreadDelegator.REAL;
   }
 
-  RecurringConnectSocketTask(Provider<Socket> socketProvider, InetSocketAddress address,
-                             ThreadDelegator thread) {
+  ConnectSocketTaskImpl(Provider<Socket> socketProvider, InetSocketAddress address,
+                        ThreadDelegator thread) {
     this.socketProvider = socketProvider;
     this.address = address;
     reconnectDelay = 0;
