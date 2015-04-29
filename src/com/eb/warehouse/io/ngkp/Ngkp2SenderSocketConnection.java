@@ -3,7 +3,7 @@ package com.eb.warehouse.io.ngkp;
 import com.google.common.eventbus.Subscribe;
 
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.AutoLifeSendSocketConnection;
+import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionBinding;
 import com.eb.warehouse.io.socket.ForwardingSocketConnection;
 import com.eb.warehouse.io.socket.LifeSendEvent;
 
@@ -13,14 +13,12 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * <p> TODO </p>
  */
 final class Ngkp2SenderSocketConnection extends ForwardingSocketConnection {
 
-  static final String BINDING_NAME = "ngkp2SenderConnection";
   private static final Logger L = LoggerFactory.getLogger(Ngkp2SenderSocketConnection.class);
   private static final char START_TELEGRAM_COUNTER = '/';
   private static final char LIFE_TELEGRAM_TYPE = 'D';
@@ -28,8 +26,7 @@ final class Ngkp2SenderSocketConnection extends ForwardingSocketConnection {
   private char currentTelegramCounter = START_TELEGRAM_COUNTER;
 
   @Inject
-  Ngkp2SenderSocketConnection(
-      @Named(AutoLifeSendSocketConnection.BINDING_NAME) SocketConnection wrapped) {
+  Ngkp2SenderSocketConnection(@AutoLifeSendSocketConnectionBinding SocketConnection wrapped) {
     this.wrapped = wrapped;
   }
 

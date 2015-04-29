@@ -5,7 +5,6 @@ import com.google.common.base.MoreObjects;
 import java.util.concurrent.ThreadFactory;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -13,11 +12,10 @@ import javax.inject.Named;
 
 public final class NamedThreadFactory implements ThreadFactory {
 
-  public static final String THREAD_NAME_BINDING_NAME = "threadName";
   private final String name;
 
   @Inject
-  public NamedThreadFactory(@Named(THREAD_NAME_BINDING_NAME) String name) {
+  public NamedThreadFactory(@ThreadNameBinding String name) {
     this.name = name;
   }
 

@@ -5,7 +5,7 @@ import com.google.common.eventbus.Subscribe;
 
 import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.pcx.message.Life;
-import com.eb.warehouse.io.socket.AutoLifeSendSocketConnection;
+import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionBinding;
 import com.eb.warehouse.io.socket.ForwardingSocketConnection;
 import com.eb.warehouse.io.socket.LifeSendEvent;
 
@@ -16,7 +16,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
@@ -34,9 +33,9 @@ final class PcxSocketConnection extends ForwardingSocketConnection {
 
   @Inject
   public PcxSocketConnection(
-      @Named(AutoLifeSendSocketConnection.BINDING_NAME) SocketConnection wrapped,
+      @AutoLifeSendSocketConnectionBinding SocketConnection wrapped,
       Marshaller marshaller,
-                             byte delimiter) {
+      byte delimiter) {
     this.wrapped = wrapped;
     this.marshaller = marshaller;
     this.delimiter = delimiter;

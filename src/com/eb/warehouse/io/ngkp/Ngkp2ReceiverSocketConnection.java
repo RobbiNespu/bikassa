@@ -3,7 +3,7 @@ package com.eb.warehouse.io.ngkp;
 import com.google.common.eventbus.Subscribe;
 
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnectionBinding;
 import com.eb.warehouse.io.socket.ForwardingSocketConnection;
 
 import org.slf4j.Logger;
@@ -12,22 +12,18 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * Created by ebe on 25.03.2015.
  */
 final class Ngkp2ReceiverSocketConnection extends ForwardingSocketConnection {
 
-  static final String
-      WRAPPED_CONN_BINDING_NAME =
-      AutoConnectSocketConnectionModule.AUTO_CONNECT_SOCKET_CONN_BINDING_NAME;
   private static final Logger L = LoggerFactory.getLogger(Ngkp2ReceiverSocketConnection.class);
   private static final char ACK_TELEGRAM_TYPE = 'Q';
   private final SocketConnection wrapped;
 
   @Inject
-  Ngkp2ReceiverSocketConnection(@Named(WRAPPED_CONN_BINDING_NAME) SocketConnection wrapped) {
+  Ngkp2ReceiverSocketConnection(@AutoConnectSocketConnectionBinding SocketConnection wrapped) {
     this.wrapped = wrapped;
   }
 

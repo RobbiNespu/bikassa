@@ -9,8 +9,10 @@ import com.google.inject.name.Names;
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamConsumer;
 import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnectionBinding;
 import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
+import com.eb.warehouse.io.socket.SocketEventBusBinding;
 import com.eb.warehouse.util.EventBusRegistrationListener;
 import com.eb.warehouse.util.SubclassesOf;
 
@@ -49,10 +51,7 @@ public class Ngkp2ConnectionModule extends AbstractModule {
       protected void configure() {
         EventBus socketEvents = new EventBus();
         EventBus telegramEvents = new EventBus();
-        bind(EventBus.class)
-            .annotatedWith(
-                Names.named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME))
-            .toInstance(socketEvents);
+        bind(EventBus.class).annotatedWith(SocketEventBusBinding.class).toInstance(socketEvents);
         bind(EventBus.class).annotatedWith(Names.named(TELEGRAM_EVENTS_BINDING_NAME)).toInstance(
             telegramEvents);
         bindListener(new SubclassesOf(Ngkp2SenderSocketConnection.class),
@@ -73,9 +72,7 @@ public class Ngkp2ConnectionModule extends AbstractModule {
       @Override
       protected void configure() {
         EventBus telegramEvents = new EventBus();
-        bind(EventBus.class).annotatedWith(
-            Names.named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME)).toInstance(
-            new EventBus());
+        bind(EventBus.class).annotatedWith(SocketEventBusBinding.class).toInstance(new EventBus());
         bind(EventBus.class).annotatedWith(Names.named(TELEGRAM_EVENTS_BINDING_NAME)).toInstance(
             telegramEvents);
         bindListener(new SubclassesOf(Ngkp2ReceiverSocketConnection.class),
@@ -85,10 +82,8 @@ public class Ngkp2ConnectionModule extends AbstractModule {
         bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
 
         bind(RECEIVER_CONN_KEY).to(Ngkp2ReceiverSocketConnection.class);
-        install(new AutoConnectSocketConnectionModule(receiverPort,
-                                                      Key.get(SocketConnection.class, Names
-                                                          .named(
-                                                              Ngkp2ReceiverSocketConnection.WRAPPED_CONN_BINDING_NAME))));
+        install(new AutoConnectSocketConnectionModule(receiverPort, Key.get(SocketConnection.class,
+                                                                            AutoConnectSocketConnectionBinding.class)));
         expose(RECEIVER_CONN_KEY);
       }
     });

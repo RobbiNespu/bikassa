@@ -11,8 +11,8 @@ import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.util.NamedThreadFactory;
 import com.eb.warehouse.util.NamedThreadFactoryModule;
+import com.eb.warehouse.util.ThreadNameBinding;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Callable;
@@ -28,12 +28,9 @@ import javax.inject.Named;
 
 public class AutoConnectSocketConnectionModule extends AbstractModule {
 
-  public static final String SOCKET_EVENTS_BINDING_NAME = "socketEvents";
-  public static final String AUTO_CONNECT_SOCKET_CONN_BINDING_NAME = "autoConnect";
   private static final Key<ListeningExecutorService>
       CONNECT_AND_READ_SOCKET_KEY =
-      Key.get(ListeningExecutorService.class, Names
-          .named(AutoConnectSocketConnection.CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING));
+      Key.get(ListeningExecutorService.class, ConnectAndReadSocketExecServiceBinding.class);
   private final int port;
   private final Key<SocketConnection> socketConnectionBindingKey;
 
@@ -63,13 +60,13 @@ public class AutoConnectSocketConnectionModule extends AbstractModule {
       }
 
       @Provides
-      @Named(NamedThreadFactory.THREAD_NAME_BINDING_NAME)
+      @ThreadNameBinding
       String createReaderThreadName(@Named("hostname") String hostname, @Named("port") int port) {
         return hostname + ":" + port + "-reader";
       }
 
       @Provides
-      @Named(AutoConnectSocketConnection.CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING)
+      @ConnectAndReadSocketExecServiceBinding
       ListeningExecutorService createConnectAndReadRunner(ThreadFactory threadFactory) {
         return MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor(threadFactory));
       }

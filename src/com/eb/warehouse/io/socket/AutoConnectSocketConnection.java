@@ -17,7 +17,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -44,10 +43,10 @@ final class AutoConnectSocketConnection implements SocketConnection {
 
   @Inject
   AutoConnectSocketConnection(
-      @Named(CONNECT_AND_READ_EXECUTOR_SERVICE_NAME_BINDING) ListeningExecutorService connectAndReadRunner,
+      @ConnectAndReadSocketExecServiceBinding ListeningExecutorService connectAndReadRunner,
       ConnectSocketTask connectSocketTask,
       ReadSocketTaskFactory readSocketTaskFactory,
-      @Named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME) EventBus socketConnectEvents) {
+      @SocketEventBusBinding EventBus socketConnectEvents) {
     this.connectAndReadRunner = connectAndReadRunner;
     this.connectSocketTask = connectSocketTask;
     this.readSocketTaskFactory = readSocketTaskFactory;

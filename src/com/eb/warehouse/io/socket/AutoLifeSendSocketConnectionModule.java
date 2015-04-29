@@ -7,18 +7,15 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
 import com.google.inject.Provides;
-import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.util.EventBusRegistrationListener;
-import com.eb.warehouse.util.NamedThreadFactory;
 import com.eb.warehouse.util.NamedThreadFactoryModule;
 import com.eb.warehouse.util.SubclassesOf;
+import com.eb.warehouse.util.ThreadNameBinding;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-
-import javax.inject.Named;
 
 /**
  * Created by ebe on 24.03.2015.
@@ -27,9 +24,7 @@ public class AutoLifeSendSocketConnectionModule extends AbstractModule {
 
   private static final Key<ListeningScheduledExecutorService>
       LIFE_SENDER_KEY =
-      Key.get(ListeningScheduledExecutorService.class,
-              Names.named(
-                  AutoLifeSendSocketConnection.SEND_LIFE_SCHEDULED_EXECUTOR_SERVICE_BINDING_NAME));
+      Key.get(ListeningScheduledExecutorService.class, LifeSendExecServiceBinding.class);
   private final int port;
   private final String sendLifeMessageThreadName;
   private final EventBus socketEventBus;
@@ -46,14 +41,14 @@ public class AutoLifeSendSocketConnectionModule extends AbstractModule {
     install(new PrivateModule() {
       @Override
       protected void configure() {
-        bind(String.class).annotatedWith(Names.named(NamedThreadFactory.THREAD_NAME_BINDING_NAME))
-            .toInstance(sendLifeMessageThreadName);
+        bind(String.class).annotatedWith(ThreadNameBinding.class).toInstance(
+            sendLifeMessageThreadName);
         install(new NamedThreadFactoryModule());
         expose(LIFE_SENDER_KEY);
       }
 
       @Provides
-      @Named(AutoLifeSendSocketConnection.SEND_LIFE_SCHEDULED_EXECUTOR_SERVICE_BINDING_NAME)
+      @LifeSendExecServiceBinding
       ListeningScheduledExecutorService createLifeMessageSendService(ThreadFactory threadFactory) {
         return MoreExecutors.listeningDecorator(Executors
                                                     .newSingleThreadScheduledExecutor(
@@ -62,11 +57,10 @@ public class AutoLifeSendSocketConnectionModule extends AbstractModule {
     });
 
     install(
-        new AutoConnectSocketConnectionModule(port,
-                                              Key.get(SocketConnection.class, Names.named(
-                                                  AutoConnectSocketConnectionModule.AUTO_CONNECT_SOCKET_CONN_BINDING_NAME))));
+        new AutoConnectSocketConnectionModule(port, Key.get(SocketConnection.class,
+                                                            AutoConnectSocketConnectionBinding.class)));
     bind(SocketConnection.class)
-        .annotatedWith(Names.named(AutoLifeSendSocketConnection.BINDING_NAME))
+        .annotatedWith(AutoLifeSendSocketConnectionBinding.class)
         .to(AutoLifeSendSocketConnection.class);
 
     bindListener(new SubclassesOf(AutoLifeSendSocketConnection.class),

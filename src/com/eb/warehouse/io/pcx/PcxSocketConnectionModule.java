@@ -3,11 +3,10 @@ package com.eb.warehouse.io.pcx;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
-import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.SocketConnection;
-import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
+import com.eb.warehouse.io.socket.SocketEventBusBinding;
 import com.eb.warehouse.util.EventBusRegistrationListener;
 import com.eb.warehouse.util.SubclassesOf;
 
@@ -33,9 +32,7 @@ public class PcxSocketConnectionModule extends AbstractModule {
     install(
         new AutoLifeSendSocketConnectionModule(port, sendLifeMessageThreadName, socketEventBus));
     bind(socketConnectionBindingKey).to(PcxSocketConnection.class);
-    bind(EventBus.class)
-        .annotatedWith(Names.named(AutoConnectSocketConnectionModule.SOCKET_EVENTS_BINDING_NAME))
-        .toInstance(socketEventBus);
+    bind(EventBus.class).annotatedWith(SocketEventBusBinding.class).toInstance(socketEventBus);
     bindListener(new SubclassesOf(PcxSocketConnection.class),
                  new EventBusRegistrationListener(socketEventBus));
   }
