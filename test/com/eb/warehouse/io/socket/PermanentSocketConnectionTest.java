@@ -11,6 +11,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 
 import com.eb.warehouse.io.socket.AutoConnectSocketConnection.ConnectSocketCallback;
 import com.eb.warehouse.io.socket.AutoConnectSocketConnection.ReadSocketCallback;
+import com.eb.warehouse.util.SelfCallable;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class PermanentSocketConnectionTest {
 
   private AutoConnectSocketConnection connection;
   private ListeningExecutorService connectAndReadRunner;
-  private ConnectSocketTask connectSocketTask;
+  private SelfCallable<Socket> connectSocketTask;
   private ReadSocketTaskFactory readSocketTaskFactory;
   private EventBus socketConnectEvents;
   private FutureCallback<Socket> connectSocketCallback;
@@ -55,7 +56,7 @@ public class PermanentSocketConnectionTest {
   @Before
   public void setUp() {
     connectAndReadRunner = MoreExecutors.newDirectExecutorService();
-    connectSocketTask = mock(ConnectSocketTask.class);
+    connectSocketTask = mock(SelfCallable.class);
     connectSocketCallback = mock(FutureCallback.class);
     connectFuture = mock(ListenableFuture.class);
     readSocketTaskFactory = mock(ReadSocketTaskFactory.class);

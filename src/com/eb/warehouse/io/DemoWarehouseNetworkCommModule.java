@@ -13,6 +13,7 @@ final class DemoWarehouseNetworkCommModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(String.class).annotatedWith(HostnameBinding.class).toInstance("localhost");
-    bind(Integer.class).annotatedWith(Names.named("bufferSize")).toInstance(1024);
+    bind(Integer.class).annotatedWith(Names.named(NamedBindings.BUFFER_SIZE_BINDING)).toInstance(
+        1024);
   }
 }

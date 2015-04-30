@@ -7,6 +7,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 
 import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.util.SelfCallable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ import static com.google.common.base.Preconditions.checkState;
 final class AutoConnectSocketConnection implements SocketConnection {
 
   private static final Logger L = LoggerFactory.getLogger(AutoConnectSocketConnection.class);
-  private final ConnectSocketTask connectSocketTask;
+  private final SelfCallable<Socket> connectSocketTask;
   private final ReadSocketTaskFactory readSocketTaskFactory;
   private final EventBus socketConnectEvents;
   private final FutureCallback<Socket> connectCallback;
@@ -43,7 +44,7 @@ final class AutoConnectSocketConnection implements SocketConnection {
   @Inject
   AutoConnectSocketConnection(
       @ConnectAndReadSocketExecServiceBinding ListeningExecutorService connectAndReadExecService,
-      ConnectSocketTask connectSocketTask,
+      SelfCallable<Socket> connectSocketTask,
       ReadSocketTaskFactory readSocketTaskFactory,
       @SocketEventBusBinding EventBus socketConnectEvents) {
     this.connectAndReadExecService = connectAndReadExecService;
@@ -55,7 +56,7 @@ final class AutoConnectSocketConnection implements SocketConnection {
   }
 
   AutoConnectSocketConnection(ListeningExecutorService connectAndReadExecService,
-                              ConnectSocketTask connectSocketTask,
+                              SelfCallable<Socket> connectSocketTask,
                               ReadSocketTaskFactory readSocketTaskFactory,
                               EventBus socketConnectEvents,
                               FutureCallback<Socket> connectCallback,

@@ -13,8 +13,9 @@ public class MagicByteSlicingByteStreamConsumer extends ByteStreamBufferedByteCo
   private final ByteMessageListener listener;
 
   @Inject
-  public MagicByteSlicingByteStreamConsumer(@Named("bufferSize") int bufferSize, byte delimiter,
-                                            ByteMessageListener listener) {
+  public MagicByteSlicingByteStreamConsumer(
+      @Named(NamedBindings.BUFFER_SIZE_BINDING) int bufferSize, byte delimiter,
+      ByteMessageListener listener) {
     super(bufferSize);
     this.delimiter = delimiter;
     this.listener = listener;
@@ -27,7 +28,7 @@ public class MagicByteSlicingByteStreamConsumer extends ByteStreamBufferedByteCo
   public void consumeByte(byte b) {
     if (getPosition() >= getInitialBufferSize()) {
       L.warn(
-          "Not found delimiterByte={} in stream before maximum buffer size={} exceeded. Reset byte consumer.",
+          "Not found delimiterByte={} in stream before maximum buffer size={} exceeded. Discard whole buffer and reset.",
           delimiter, getInitialBufferSize());
       resetPosition();
       super.consumeByte(b);

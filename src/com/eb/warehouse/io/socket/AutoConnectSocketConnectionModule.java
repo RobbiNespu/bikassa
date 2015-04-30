@@ -12,9 +12,11 @@ import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.util.NamedThreadFactoryModule;
+import com.eb.warehouse.util.SelfCallable;
 import com.eb.warehouse.util.ThreadNameBinding;
 
 import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -22,9 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
 
-/**
- * <p> Usage: TODO add some usage examples. </p>
- */
 public class AutoConnectSocketConnectionModule extends AbstractModule {
 
   public static final String
@@ -41,7 +40,8 @@ public class AutoConnectSocketConnectionModule extends AbstractModule {
   protected void configure() {
     bind(SocketConnection.class).annotatedWith(AutoConnectSocketConnectionBinding.class).to(
         AutoConnectSocketConnection.class);
-    bind(ConnectSocketTask.class).to(ConnectSocketTaskImpl.class);
+    bind(new TypeLiteral<SelfCallable<Socket>>() {
+    }).to(ConnectSocketTask.class);
     install(new FactoryModuleBuilder().implement(new TypeLiteral<Callable<Void>>() {
                                                  },
                                                  ReadSocketTask.class)
@@ -68,9 +68,11 @@ public class AutoConnectSocketConnectionModule extends AbstractModule {
       }
     });
 
-    bind(Integer.class).annotatedWith(Names.named("reconnectDelay")).toInstance(7);
-    bind(TimeUnit.class).annotatedWith(Names.named("reconnectDelayTimeUnit")).toInstance(
-        TimeUnit.SECONDS);
+    bind(Integer.class).annotatedWith(Names.named(NamedBindings.RECONNECT_DELAY_BINDING))
+        .toInstance(7);
+    bind(TimeUnit.class).annotatedWith(Names.named(NamedBindings.RECONNECT_DELAY_TIME_UNIT_BINDING))
+        .toInstance(
+            TimeUnit.SECONDS);
   }
 
   @Provides

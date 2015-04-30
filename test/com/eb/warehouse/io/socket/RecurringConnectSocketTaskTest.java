@@ -3,7 +3,7 @@ package com.eb.warehouse.io.socket;
 
 import com.google.common.util.concurrent.MoreExecutors;
 
-import com.eb.warehouse.util.ThreadDelegator;
+import com.eb.warehouse.util.ThreadWrapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,9 +34,9 @@ public class RecurringConnectSocketTaskTest {
 
   private Socket fakeSocket;
   private Provider<Socket> socketProvider;
-  private ThreadDelegator mockThread;
+  private ThreadWrapper mockThread;
   private InetSocketAddress anyAddress;
-  private ConnectSocketTaskImpl task;
+  private ConnectSocketTask task;
 
   @SuppressWarnings("unchecked")
   @Before
@@ -44,9 +44,9 @@ public class RecurringConnectSocketTaskTest {
     fakeSocket = mock(Socket.class);
     socketProvider = mock(Provider.class);
     when(socketProvider.get()).thenReturn(fakeSocket);
-    mockThread = mock(ThreadDelegator.class);
+    mockThread = mock(ThreadWrapper.class);
     anyAddress = new InetSocketAddress(0);
-    task = new ConnectSocketTaskImpl(socketProvider, anyAddress, mockThread);
+    task = new ConnectSocketTask(socketProvider, anyAddress, mockThread);
   }
 
   @Test
@@ -55,7 +55,7 @@ public class RecurringConnectSocketTaskTest {
     verify(socketProvider).get();
     verify(fakeSocket).connect(eq(anyAddress));
     verify(fakeSocket, times(0)).close();
-    verify(mockThread, times(0)).sleepCurrentThread(anyInt(), any(TimeUnit.class));
+    verify(mockThread, times(0)).sleep2(anyInt(), any(TimeUnit.class));
   }
 
   @Test
@@ -79,12 +79,12 @@ public class RecurringConnectSocketTaskTest {
     verify(socketProvider, times(attempts)).get();
     verify(fakeSocket, times(attempts)).connect(eq(anyAddress));
     verify(fakeSocket, times(attempts - 1)).close();
-    verify(mockThread, times(attempts - 1)).sleepCurrentThread(anyInt(), any(TimeUnit.class));
+    verify(mockThread, times(attempts - 1)).sleep2(anyInt(), any(TimeUnit.class));
   }
 
   @Test
   public void call_throwsInterruptedExceptionBecauseSleepThrowsInterruptedException() throws Exception {
-    doThrow(new InterruptedException()).when(mockThread).sleepCurrentThread(anyInt(), any(TimeUnit.class));
+    doThrow(new InterruptedException()).when(mockThread).sleep2(anyInt(), any(TimeUnit.class));
     doThrow(new IOException()).when(fakeSocket).connect(any(InetSocketAddress.class));
     try {
       task.call();
@@ -95,13 +95,13 @@ public class RecurringConnectSocketTaskTest {
     verify(socketProvider).get();
     verify(fakeSocket).connect(eq(anyAddress));
     verify(fakeSocket).close();
-    verify(mockThread).sleepCurrentThread(anyInt(), any(TimeUnit.class));
+    verify(mockThread).sleep2(anyInt(), any(TimeUnit.class));
   }
 
   @Test
   public void cancelTask_futureClosesSocketWhileConnectBlocksThread() throws Exception {
     doThrow(new IOException()).when(fakeSocket).connect(any(InetSocketAddress.class));
-    when(mockThread.isCurrentThreadInterrupted(anyBoolean())).thenReturn(true);
+    when(mockThread.isInterruptedAndReset(anyBoolean())).thenReturn(true);
     Future<Socket> f = task.submitTo(MoreExecutors.newDirectExecutorService());
     f.cancel(false); // 
     verify(fakeSocket, times(2)).close();
