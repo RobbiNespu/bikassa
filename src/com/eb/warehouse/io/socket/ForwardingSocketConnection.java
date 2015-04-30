@@ -1,12 +1,10 @@
 package com.eb.warehouse.io.socket;
 
-import com.eb.warehouse.io.SocketConnection;
-
 import java.io.IOException;
 
 /**
  * <p>Socket connection that delegates all method calls to another {@link
- * com.eb.warehouse.io.SocketConnection}.</p>
+ * SocketConnection}.</p>
  */
 public abstract class ForwardingSocketConnection implements SocketConnection {
 

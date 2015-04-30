@@ -10,8 +10,8 @@ import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamConsumer;
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
+import com.eb.warehouse.io.socket.SocketConnection;
 
 import org.junit.Ignore;
 import org.junit.Test;

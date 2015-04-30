@@ -8,7 +8,6 @@ import com.google.inject.Key;
 import com.google.inject.PrivateModule;
 import com.google.inject.Provides;
 
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.util.EventBusRegistrationListener;
 import com.eb.warehouse.util.NamedThreadFactoryModule;
 import com.eb.warehouse.util.SubclassesOf;

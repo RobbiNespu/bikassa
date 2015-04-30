@@ -5,8 +5,6 @@ import com.google.common.eventbus.Subscribe;
 import com.google.common.util.concurrent.ListenableScheduledFuture;
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
 
-import com.eb.warehouse.io.SocketConnection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

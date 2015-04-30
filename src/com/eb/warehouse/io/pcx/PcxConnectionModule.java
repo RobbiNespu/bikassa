@@ -8,11 +8,11 @@ import com.google.inject.Provides;
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamConsumer;
 import com.eb.warehouse.io.MagicByteSlicingByteStreamConsumer;
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.XmlMessageListener;
 import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
 import com.eb.warehouse.io.socket.PortBinding;
+import com.eb.warehouse.io.socket.SocketConnection;
 
 import javax.inject.Named;
 

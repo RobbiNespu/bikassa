@@ -10,7 +10,6 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.util.NamedThreadFactoryModule;
 import com.eb.warehouse.util.SelfCallable;
 import com.eb.warehouse.util.ThreadNameBinding;

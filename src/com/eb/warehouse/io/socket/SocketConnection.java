@@ -1,4 +1,4 @@
-package com.eb.warehouse.io;
+package com.eb.warehouse.io.socket;
 
 import com.eb.warehouse.util.Service2;
 

@@ -8,7 +8,6 @@ import com.google.inject.Provides;
 import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.ByteMessageListener;
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.XmlMessageListener;
 
 import org.junit.Test;

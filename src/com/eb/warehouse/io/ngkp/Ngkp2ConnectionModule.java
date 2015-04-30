@@ -8,10 +8,10 @@ import com.google.inject.name.Names;
 
 import com.eb.warehouse.io.ByteMessageListener;
 import com.eb.warehouse.io.ByteStreamConsumer;
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
 import com.eb.warehouse.io.socket.PortBinding;
+import com.eb.warehouse.io.socket.SocketConnection;
 import com.eb.warehouse.io.socket.SocketEventBusBinding;
 import com.eb.warehouse.util.EventBusRegistrationListener;
 import com.eb.warehouse.util.SubclassesOf;

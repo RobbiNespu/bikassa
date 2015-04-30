@@ -4,8 +4,8 @@ import com.google.common.base.Charsets;
 import com.google.common.base.MoreObjects;
 import com.google.common.util.concurrent.ListenableScheduledFuture;
 
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.pcx.message.Life;
+import com.eb.warehouse.io.socket.SocketConnection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

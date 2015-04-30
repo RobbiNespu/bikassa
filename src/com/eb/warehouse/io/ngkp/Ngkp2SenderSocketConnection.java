@@ -2,10 +2,10 @@ package com.eb.warehouse.io.ngkp;
 
 import com.google.common.eventbus.Subscribe;
 
-import com.eb.warehouse.io.SocketConnection;
 import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionBinding;
 import com.eb.warehouse.io.socket.ForwardingSocketConnection;
 import com.eb.warehouse.io.socket.SendLifeEvent;
+import com.eb.warehouse.io.socket.SocketConnection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

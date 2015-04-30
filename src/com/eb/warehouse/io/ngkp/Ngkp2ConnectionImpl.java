@@ -1,6 +1,6 @@
 package com.eb.warehouse.io.ngkp;
 
-import com.eb.warehouse.io.SocketConnection;
+import com.eb.warehouse.io.socket.SocketConnection;
 
 import javax.inject.Inject;
 import javax.inject.Named;
