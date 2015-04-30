@@ -1,6 +1,7 @@
 package com.eb.warehouse.io.socket;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -18,14 +19,12 @@ import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
-import static com.google.common.base.Preconditions.checkState;
-
 /**
  * <p> Socket connection that tries to be connected to the socket as long as the connection is
  * running. Reconnect is triggered either if {@link #writeToSocket(byte[])} throws an exception or a
  * previous connect to the socket failed.</p>
  */
-final class AutoConnectSocketConnection implements SocketConnection {
+final class AutoConnectSocketConnection extends AbstractIdleService implements SocketConnection {
 
   private static final Logger L = LoggerFactory.getLogger(AutoConnectSocketConnection.class);
   private final SelfCallable<Socket> connectSocketTask;
@@ -68,14 +67,8 @@ final class AutoConnectSocketConnection implements SocketConnection {
     this.readCallback = readCallback;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public void startAsync2() {
-    checkState(!running,
-               "Connection is already started. Call 'stop2()' before starting the connection again!");
-    running = true;
+  protected void startUp() throws Exception {
     connectAsync();
   }
 
@@ -91,11 +84,8 @@ final class AutoConnectSocketConnection implements SocketConnection {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public void stop2() {
+  protected void shutDown() throws Exception {
     if (connectFuture != null) {
       connectFuture.cancel(true);
     }
@@ -107,7 +97,6 @@ final class AutoConnectSocketConnection implements SocketConnection {
     } catch (InterruptedException e) {
     } catch (ExecutionException e) {
     }
-    running = false;
   }
 
   /**
@@ -136,7 +125,8 @@ final class AutoConnectSocketConnection implements SocketConnection {
   }
 
   /**
-   * Inject a socket and ListenableFuture for testing. The future is the handle to the in-progress process of connecting the socket.
+   * Inject a socket and ListenableFuture for testing. The future is the handle to the in-progress
+   * process of connecting the socket.
    */
   void setSocketAndConnecting(Socket socket, ListenableFuture<Socket> connectFuture) {
     this.socket = socket;

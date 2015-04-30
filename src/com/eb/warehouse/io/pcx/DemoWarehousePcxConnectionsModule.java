@@ -1,6 +1,7 @@
 package com.eb.warehouse.io.pcx;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.util.concurrent.Service;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Key;
@@ -20,7 +21,6 @@ import com.eb.warehouse.io.pcx.message.Request;
 import com.eb.warehouse.io.pcx.message.Response;
 import com.eb.warehouse.io.pcx.message.Status;
 import com.eb.warehouse.util.EventConsumer;
-import com.eb.warehouse.util.Service2;
 
 import java.util.Set;
 
@@ -42,17 +42,15 @@ import static com.eb.warehouse.DemoWarehousePcxStationsModule.STATION_JPP10;
 import static com.eb.warehouse.DemoWarehousePcxStationsModule.STATION_JPP11;
 import static com.eb.warehouse.DemoWarehousePcxStationsModule.STATION_JPP12;
 
-/**
- * <p> Usage: TODO add some usage examples. </p>
- */
-
 public class DemoWarehousePcxConnectionsModule extends AbstractModule {
 
+  private static final String PCX_COMM = "pcx-comm";
   private static final String PCX1 = "pcx1";
   private static final String PCX2 = "pcx2";
   private static final String PCX3 = "pcx3";
   private static final String PCX4 = "pcx4";
 
+  private static final Key<Service> PCX_COMM_KEY = Key.get(Service.class, Names.named(PCX_COMM));
   private static final Key<PcxConnection>
       PCX_1_KEY =
       Key.get(PcxConnection.class, Names.named("pcx1"));
@@ -79,13 +77,10 @@ public class DemoWarehousePcxConnectionsModule extends AbstractModule {
     }).toInstance(stationIds);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected void configure() {
     bind(PcxCommunication.class).in(Singleton.class);
-    bind(Service2.class).to(PcxCommunication.class);
+    bind(PCX_COMM_KEY).to(PcxCommunication.class);
     bind(PcxMessageSender.class).to(PcxCommunication.class);
     bind(EventConsumer.class).to(PcxCommunication.class);
 
@@ -141,6 +136,10 @@ public class DemoWarehousePcxConnectionsModule extends AbstractModule {
     pcxConnectionsMultibinder.addBinding().to(PCX_2_KEY);
     pcxConnectionsMultibinder.addBinding().to(PCX_3_KEY);
     pcxConnectionsMultibinder.addBinding().to(PCX_4_KEY);
+
+    Multibinder<Service> networkCommServicesMultibinder =
+        Multibinder.newSetBinder(binder(), Service.class);
+    networkCommServicesMultibinder.addBinding().to(PCX_COMM_KEY);
   }
 
   @Provides

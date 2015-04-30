@@ -73,7 +73,7 @@ public class PermanentSocketConnectionTest {
   public void startConnection_succeedsConnectingToSocket() throws Exception {
     ListenableFuture<Socket> future = Futures.immediateFuture(socket);
     when(connectSocketTask.submitTo(any(ListeningExecutorService.class))).thenReturn(future);
-    connection.startAsync2();
+    connection.startAsync();
     verify(connectSocketCallback).onSuccess(eq(socket));
   }
 
@@ -82,13 +82,14 @@ public class PermanentSocketConnectionTest {
     Exception fakeConnectException = new Exception();
     ListenableFuture<Socket> future = Futures.immediateFailedFuture(fakeConnectException);
     when(connectSocketTask.submitTo(any(ListeningExecutorService.class))).thenReturn(future);
-    connection.startAsync2();
+    connection.startAsync();
     verify(connectSocketCallback).onFailure(eq(fakeConnectException));
   }
 
   @Test
   public void stopConnection_doesNothingBecauseSocketNotConnectedNorConnecting() throws IOException {
-    connection.stop2();
+    connection.stopAsync();
+    connection.awaitTerminated();
     verify(connectFuture, times(0)).cancel(anyBoolean());
     verify(socket, times(0)).close();
   }
@@ -96,7 +97,8 @@ public class PermanentSocketConnectionTest {
   @Test
   public void stopConnection_stopsConnectingAndClosesSocket() throws IOException {
     connection.setSocketAndConnecting(socket, connectFuture);
-    connection.stop2();
+    connection.stopAsync();
+    connection.awaitTerminated();
     verify(connectFuture).cancel(eq(true));
     verify(socket).close();
   }
@@ -104,7 +106,8 @@ public class PermanentSocketConnectionTest {
   @Test
   public void stopConnection_closesSocketOnlyBecauseNotConnecting() throws IOException {
     connection.setSocketAndConnecting(socket, null);
-    connection.stop2();
+    connection.stopAsync();
+    connection.awaitTerminated();
     verify(connectFuture, times(0)).cancel(eq(true));
     verify(socket).close();
   }

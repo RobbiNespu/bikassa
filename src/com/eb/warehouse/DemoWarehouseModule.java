@@ -2,13 +2,17 @@ package com.eb.warehouse;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
+import com.google.common.util.concurrent.Service;
+import com.google.common.util.concurrent.ServiceManager;
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 
 import com.eb.warehouse.io.DemoWarehousePcxNetworkCommModule;
 
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Set;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -25,6 +29,11 @@ public class DemoWarehouseModule extends AbstractModule {
 //    install(new DemoWarehouseNgkp2NetworkCommModule());
     install(new DemoWarehousePcxNetworkCommModule());
     install(new DemoWarehousePcxStationsModule());
+  }
+
+  @Provides
+  ServiceManager provideNetworkCommServiceManager(Set<Service> networkCommServices) {
+    return new ServiceManager(networkCommServices);
   }
 
   private void setUpLogging() {

@@ -2,6 +2,7 @@ package com.eb.warehouse.io.pcx;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.MoreObjects;
+import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.ListenableScheduledFuture;
 
 import com.eb.warehouse.io.pcx.message.Life;
@@ -22,7 +23,7 @@ import javax.xml.bind.Marshaller;
  * <p> Usage: TODO add some usage examples. </p>
  */
 
-public final class PcxConnectionImpl implements PcxConnection {
+public final class PcxConnectionImpl extends AbstractIdleService implements PcxConnection {
 
   private static final Logger L = LoggerFactory.getLogger(PcxConnectionImpl.class);
   private static final Life LIFE_MESSAGE = new Life();
@@ -50,22 +51,18 @@ public final class PcxConnectionImpl implements PcxConnection {
     return associatedStationIds;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public void startAsync2() {
-    command.startAsync2();
-    status.startAsync2();
+  protected void startUp() throws Exception {
+    command.startAsync();
+    status.startAsync();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public void stop2() {
-    command.stop2();
-    status.stop2();
+  protected void shutDown() throws Exception {
+    command.stopAsync();
+    status.stopAsync();
+    command.awaitTerminated();
+    status.awaitTerminated();
   }
 
   @Override

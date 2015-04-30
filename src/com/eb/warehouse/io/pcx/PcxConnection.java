@@ -1,6 +1,6 @@
 package com.eb.warehouse.io.pcx;
 
-import com.eb.warehouse.util.Service2;
+import com.google.common.util.concurrent.Service;
 
 import java.io.IOException;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Created by ebe on 24.03.2015.
  */
-public interface PcxConnection extends Service2 {
+public interface PcxConnection extends Service {
 
   void sendMessage(Object message) throws IOException;
 

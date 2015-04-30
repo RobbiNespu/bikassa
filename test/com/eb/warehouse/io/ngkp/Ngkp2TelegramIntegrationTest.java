@@ -33,7 +33,7 @@ public class Ngkp2TelegramIntegrationTest {
                              new TestModule());
     SocketConnection connectionService =
         injector.getInstance(SocketConnection.class);
-    connectionService.startAsync2();
+    connectionService.startAsync();
     Uninterruptibles.sleepUninterruptibly(100, TimeUnit.SECONDS);
   }
 

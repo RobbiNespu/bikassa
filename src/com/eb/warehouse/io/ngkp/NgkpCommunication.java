@@ -1,16 +1,20 @@
 package com.eb.warehouse.io.ngkp;
 
+import com.google.common.util.concurrent.Service;
+
 import com.eb.warehouse.io.ngkp.message.TT1411;
-import com.eb.warehouse.util.Service2;
 
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 
 /**
  * Created by ebe on 25.03.2015.
  */
-final class NgkpCommunication extends NgkpMessageSender implements Service2 {
+final class NgkpCommunication extends NgkpMessageSender implements Service {
 
   private final Set<Ngkp2Connection> connections;
 
@@ -24,16 +28,52 @@ final class NgkpCommunication extends NgkpMessageSender implements Service2 {
   }
 
   @Override
-  public void startAsync2() {
-    for (Ngkp2Connection conn : connections) {
-      conn.startAsync2();
-    }
+  public Service startAsync() {
+    return null;
   }
 
   @Override
-  public void stop2() {
-    for (Ngkp2Connection conn : connections) {
-      conn.stop2();
-    }
+  public boolean isRunning() {
+    return false;
+  }
+
+  @Override
+  public State state() {
+    return null;
+  }
+
+  @Override
+  public Service stopAsync() {
+    return null;
+  }
+
+  @Override
+  public void awaitRunning() {
+
+  }
+
+  @Override
+  public void awaitRunning(long l, TimeUnit timeUnit) throws TimeoutException {
+
+  }
+
+  @Override
+  public void awaitTerminated() {
+
+  }
+
+  @Override
+  public void awaitTerminated(long l, TimeUnit timeUnit) throws TimeoutException {
+
+  }
+
+  @Override
+  public Throwable failureCause() {
+    return null;
+  }
+
+  @Override
+  public void addListener(Listener listener, Executor executor) {
+
   }
 }

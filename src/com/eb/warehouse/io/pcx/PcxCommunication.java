@@ -5,13 +5,15 @@ import com.google.common.collect.Maps;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.common.util.concurrent.AbstractIdleService;
+import com.google.common.util.concurrent.Service;
+import com.google.common.util.concurrent.ServiceManager;
 
 import com.eb.warehouse.PcxStation;
 import com.eb.warehouse.io.pcx.message.Announce;
 import com.eb.warehouse.io.pcx.message.Response;
 import com.eb.warehouse.io.pcx.message.ResponseQuery;
 import com.eb.warehouse.util.EventConsumer;
-import com.eb.warehouse.util.Service2;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,20 +21,37 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 
 /**
  * Created by ebe on 24.03.2015.
  */
-public class PcxCommunication extends PcxMessageSender implements Service2, EventConsumer {
+public class PcxCommunication extends PcxMessageSender implements Service, EventConsumer {
 
   private static final Logger L = LoggerFactory.getLogger(PcxCommunication.class);
   private final Map<String, StationEventBus> registeredStations = Maps.newHashMap();
   private final Set<PcxConnection> connections;
+  private final ServiceManager connectionsManager;
   private final Map<String, PcxConnection> stationToConnectionMapping;
   private final EventBus loopbackEventBus = new AsyncEventBus(Executors.newFixedThreadPool(8));
+  private final Service delegateService = new AbstractIdleService() {
+    @Override
+    protected void startUp() throws Exception {
+      connectionsManager.startAsync();
+      connectionsManager.awaitHealthy();
+    }
+
+    @Override
+    protected void shutDown() throws Exception {
+      connectionsManager.stopAsync();
+      connectionsManager.awaitStopped();
+    }
+  };
 
   @Inject
   public PcxCommunication(Set<PcxConnection> pcxConnections) {
@@ -43,6 +62,7 @@ public class PcxCommunication extends PcxMessageSender implements Service2, Even
       }
     }
     this.connections = pcxConnections;
+    this.connectionsManager = new ServiceManager(pcxConnections);
     this.stationToConnectionMapping = connectionsBuilder.build();
     loopbackEventBus.register(this);
   }
@@ -94,17 +114,53 @@ public class PcxCommunication extends PcxMessageSender implements Service2, Even
   }
 
   @Override
-  public void startAsync2() {
-    for (PcxConnection conn : connections) {
-      conn.startAsync2();
-    }
+  public Service startAsync() {
+    return delegateService.startAsync();
   }
 
   @Override
-  public void stop2() {
-    for (PcxConnection conn : connections) {
-      conn.stop2();
-    }
+  public boolean isRunning() {
+    return delegateService.isRunning();
+  }
+
+  @Override
+  public State state() {
+    return delegateService.state();
+  }
+
+  @Override
+  public Service stopAsync() {
+    return delegateService.stopAsync();
+  }
+
+  @Override
+  public void awaitRunning() {
+    delegateService.awaitRunning();
+  }
+
+  @Override
+  public void awaitRunning(long l, TimeUnit timeUnit) throws TimeoutException {
+    delegateService.awaitRunning(l, timeUnit);
+  }
+
+  @Override
+  public void awaitTerminated() {
+    delegateService.awaitTerminated();
+  }
+
+  @Override
+  public void awaitTerminated(long l, TimeUnit timeUnit) throws TimeoutException {
+    delegateService.awaitRunning(l, timeUnit);
+  }
+
+  @Override
+  public Throwable failureCause() {
+    return delegateService.failureCause();
+  }
+
+  @Override
+  public void addListener(Listener listener, Executor executor) {
+    delegateService.addListener(listener, executor);
   }
 
   private static final class StationEventBus {

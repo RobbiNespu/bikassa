@@ -1,6 +1,12 @@
 package com.eb.warehouse.io.ngkp;
 
+import com.google.common.util.concurrent.Service;
+
 import com.eb.warehouse.io.socket.SocketConnection;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,14 +30,52 @@ final class Ngkp2ConnectionImpl implements Ngkp2Connection {
   }
 
   @Override
-  public void startAsync2() {
-    senderConnection.startAsync2();
-    receiverConnection.startAsync2();
+  public Service startAsync() {
+    return null;
   }
 
   @Override
-  public void stop2() {
-    senderConnection.stop2();
-    receiverConnection.stop2();
+  public boolean isRunning() {
+    return false;
+  }
+
+  @Override
+  public State state() {
+    return null;
+  }
+
+  @Override
+  public Service stopAsync() {
+    return null;
+  }
+
+  @Override
+  public void awaitRunning() {
+
+  }
+
+  @Override
+  public void awaitRunning(long l, TimeUnit timeUnit) throws TimeoutException {
+
+  }
+
+  @Override
+  public void awaitTerminated() {
+
+  }
+
+  @Override
+  public void awaitTerminated(long l, TimeUnit timeUnit) throws TimeoutException {
+
+  }
+
+  @Override
+  public Throwable failureCause() {
+    return null;
+  }
+
+  @Override
+  public void addListener(Listener listener, Executor executor) {
+
   }
 }

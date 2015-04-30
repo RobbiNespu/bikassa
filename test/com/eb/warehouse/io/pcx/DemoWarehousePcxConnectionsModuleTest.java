@@ -1,22 +1,22 @@
 
 package com.eb.warehouse.io.pcx;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Collection;
-
-import javax.inject.Named;
-
-import org.junit.Test;
-
-import com.eb.warehouse.util.Service2;
 import com.google.common.eventbus.EventBus;
+import com.google.common.util.concurrent.Service;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
+
+import org.junit.Test;
+
+import java.util.Collection;
+
+import javax.inject.Named;
+
+import static org.junit.Assert.assertNotNull;
 
 public class DemoWarehousePcxConnectionsModuleTest {
 
@@ -33,7 +33,9 @@ public class DemoWarehousePcxConnectionsModuleTest {
         return new EventBus();
       }
     });
-    Collection<Service2> pcxConnections = injector.getInstance(Key.get(new TypeLiteral<Collection<Service2>>() {
+    Collection<Service>
+        pcxConnections =
+        injector.getInstance(Key.get(new TypeLiteral<Collection<Service>>() {
     }));
     assertNotNull(pcxConnections);
   }

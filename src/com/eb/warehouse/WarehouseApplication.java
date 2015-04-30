@@ -1,8 +1,7 @@
 package com.eb.warehouse;
 
+import com.google.common.util.concurrent.ServiceManager;
 import com.google.common.util.concurrent.Uninterruptibles;
-
-import com.eb.warehouse.util.Service2;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +21,10 @@ public class WarehouseApplication implements ServerApplication {
    * Controls the shutdown of the {@link #run2()} method.
    */
   final CountDownLatch appShutdownLatch = new CountDownLatch(1);
-  private final Service2 hardwareCommunication;
+  private final ServiceManager hardwareCommunication;
 
   @Inject
-  public WarehouseApplication(Service2 hardwareCommunication) {
+  public WarehouseApplication(ServiceManager hardwareCommunication) {
     this.hardwareCommunication = hardwareCommunication;
   }
 
@@ -35,12 +34,13 @@ public class WarehouseApplication implements ServerApplication {
   @Override
   public void run2() {
     L.info("Starting warehouse application.");
-    hardwareCommunication.startAsync2();
+    hardwareCommunication.startAsync();
     /**
      * Blocks main thread until someone triggers shutdown of application.
      */
     Uninterruptibles.awaitUninterruptibly(appShutdownLatch);
-    hardwareCommunication.stop2();
+    hardwareCommunication.stopAsync();
+    hardwareCommunication.awaitStopped(); // TODO: add timeout and shutdown hook listener.
   }
 }
 
