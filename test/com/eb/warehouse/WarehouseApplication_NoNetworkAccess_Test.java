@@ -24,7 +24,7 @@ import static org.mockito.Mockito.mock;
 /**
  * Created by eb on 09.06.2015.
  */
-public class WarehouseApplication_NoNetworkAcess_Test {
+public class WarehouseApplication_NoNetworkAccess_Test {
 
     private static final ImmutableSet<String> NO_STRINGS = ImmutableSet.of();
     private Module sameHostConnModule;
@@ -68,11 +68,11 @@ public class WarehouseApplication_NoNetworkAcess_Test {
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx-conn", 0, 0, NO_STRINGS));
             }
         }, mockSocketModule);
-        runAppAndAssertHealthy(injector);
+        WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
+        runAppAndAssertHealthy(app);
     }
 
-    private void runAppAndAssertHealthy(Injector injector) {
-        final WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
+    private void runAppAndAssertHealthy(WarehouseApplication app) {
         AssertionListener listener = new AssertionListener(app);
         app.addListener(listener);
         app.run2();
@@ -90,7 +90,8 @@ public class WarehouseApplication_NoNetworkAcess_Test {
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx2-conn", 0, 0, NO_STRINGS));
             }
         }, mockSocketModule);
-        runAppAndAssertHealthy(injector);
+        WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
+        runAppAndAssertHealthy(app);
     }
 
     @Test(timeout = 10000)
@@ -104,7 +105,8 @@ public class WarehouseApplication_NoNetworkAcess_Test {
                 install(new PcxConnectionWithHostModule(mb, "test-pcx2-conn", "secondHost.me", 0, 0, NO_STRINGS));
             }
         }, mockSocketModule);
-        runAppAndAssertHealthy(injector);
+        WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
+        runAppAndAssertHealthy(app);
     }
 
     @Test(timeout = 20000)
@@ -125,7 +127,8 @@ public class WarehouseApplication_NoNetworkAcess_Test {
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx9-conn", 0, 0, NO_STRINGS));
             }
         }, mockSocketModule);
-        runAppAndAssertHealthy(injector);
+        WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
+        runAppAndAssertHealthy(app);
     }
 
     @Test(timeout = 30000)
@@ -146,7 +149,8 @@ public class WarehouseApplication_NoNetworkAcess_Test {
                 install(new PcxConnectionWithHostModule(mb, "test-pcx9-conn", "ninethHost.me", 0, 0, NO_STRINGS));
             }
         }, mockSocketModule);
-        runAppAndAssertHealthy(injector);
+        WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
+        runAppAndAssertHealthy(app);
     }
 
     private static final class AssertionListener extends ServiceManager.Listener {

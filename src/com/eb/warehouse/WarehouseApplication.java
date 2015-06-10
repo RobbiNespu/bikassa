@@ -1,6 +1,8 @@
 package com.eb.warehouse;
 
+import com.eb.warehouse.io.pcx.PcxConnections;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.ServiceManager;
 import com.google.common.util.concurrent.Uninterruptibles;
 import org.slf4j.Logger;
@@ -20,11 +22,13 @@ public class WarehouseApplication implements ServerApplication {
      * Controls the shutdown of the {@link #run2()} method.
      */
     private final CountDownLatch appShutdownLatch = new CountDownLatch(1);
-    private final ServiceManager hardwareCommunication;
+    private final PcxConnections pcxConnections;
+    private final ServiceManager serviceManager;
 
     @Inject
-    public WarehouseApplication(ServiceManager hardwareCommunication) {
-        this.hardwareCommunication = hardwareCommunication;
+    public WarehouseApplication(PcxConnections pcxConnections) {
+        this.pcxConnections = pcxConnections;
+        serviceManager = new ServiceManager(ImmutableSet.of(pcxConnections));
     }
 
     @Override
@@ -36,14 +40,14 @@ public class WarehouseApplication implements ServerApplication {
                 triggerStop2();
             }
         });
-        hardwareCommunication.startAsync();
+        serviceManager.startAsync();
         /**
          * Blocks main thread until someone triggers shutdown of application.
          */
         Uninterruptibles.awaitUninterruptibly(appShutdownLatch);
         L.info("Stopping warehouse application.");
-        hardwareCommunication.stopAsync();
-        hardwareCommunication.awaitStopped();
+        serviceManager.stopAsync();
+        serviceManager.awaitStopped();
         L.info("Stopped gracefully warehouse application.");
         // TODO: add timeout and shutdown hook listener.
     }
@@ -58,7 +62,7 @@ public class WarehouseApplication implements ServerApplication {
 
     @VisibleForTesting
     void addListener(ServiceManager.Listener listener) {
-        hardwareCommunication.addListener(listener);
+        serviceManager.addListener(listener);
     }
 }
 

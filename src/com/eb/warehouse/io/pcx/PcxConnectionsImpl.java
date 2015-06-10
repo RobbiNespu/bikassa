@@ -4,7 +4,6 @@ import com.eb.warehouse.PcxStation;
 import com.eb.warehouse.io.pcx.message.Announce;
 import com.eb.warehouse.io.pcx.message.Response;
 import com.eb.warehouse.io.pcx.message.ResponseQuery;
-import com.eb.warehouse.util.EventConsumer;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.eventbus.AsyncEventBus;
@@ -28,9 +27,9 @@ import java.util.concurrent.TimeoutException;
 /**
  * Created by ebe on 24.03.2015.
  */
-public class PcxCommunication extends PcxMessageSender implements Service, EventConsumer {
+public class PcxConnectionsImpl extends PcxMessageSender implements PcxConnections {
 
-  private static final Logger L = LoggerFactory.getLogger(PcxCommunication.class);
+  private static final Logger L = LoggerFactory.getLogger(PcxConnectionsImpl.class);
   private final Map<String, StationEventBus> registeredStations = Maps.newHashMap();
   private final Set<PcxConnection> connections;
   private final ServiceManager connectionsManager;
@@ -55,7 +54,7 @@ public class PcxCommunication extends PcxMessageSender implements Service, Event
   };
 
   @Inject
-  public PcxCommunication(Set<PcxConnection> pcxConnections) {
+  public PcxConnectionsImpl(Set<PcxConnection> pcxConnections) {
     ImmutableMap.Builder<String, PcxConnection> connectionsBuilder = ImmutableMap.builder();
     for (PcxConnection conn : pcxConnections) {
       for (String stationId : conn.getAssociatedStationIds()) {
@@ -68,6 +67,7 @@ public class PcxCommunication extends PcxMessageSender implements Service, Event
     loopbackEventBus.register(this);
   }
 
+  @Override
   public void registerStation(PcxStation station) {
     if (!registeredStations.containsKey(station.getStationId())) {
       EventBus eventBus = new EventBus();

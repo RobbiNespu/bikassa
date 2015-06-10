@@ -2,14 +2,10 @@ package com.eb.warehouse;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
-import com.google.common.util.concurrent.Service;
-import com.google.common.util.concurrent.ServiceManager;
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Set;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -22,11 +18,6 @@ public class WarehouseApplicationBaseModule extends AbstractModule {
     protected void configure() {
         setUpLogging();
         bind(ServerApplication.class).to(WarehouseApplication.class);
-    }
-
-    @Provides
-    ServiceManager provideNetworkCommServiceManager(Set<Service> networkCommServices) {
-        return new ServiceManager(networkCommServices);
     }
 
     private void setUpLogging() {
