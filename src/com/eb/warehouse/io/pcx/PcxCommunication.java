@@ -1,5 +1,10 @@
 package com.eb.warehouse.io.pcx;
 
+import com.eb.warehouse.PcxStation;
+import com.eb.warehouse.io.pcx.message.Announce;
+import com.eb.warehouse.io.pcx.message.Response;
+import com.eb.warehouse.io.pcx.message.ResponseQuery;
+import com.eb.warehouse.util.EventConsumer;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.eventbus.AsyncEventBus;
@@ -8,16 +13,10 @@ import com.google.common.eventbus.Subscribe;
 import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.Service;
 import com.google.common.util.concurrent.ServiceManager;
-
-import com.eb.warehouse.PcxStation;
-import com.eb.warehouse.io.pcx.message.Announce;
-import com.eb.warehouse.io.pcx.message.Response;
-import com.eb.warehouse.io.pcx.message.ResponseQuery;
-import com.eb.warehouse.util.EventConsumer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -25,8 +24,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import javax.inject.Inject;
 
 /**
  * Created by ebe on 24.03.2015.
@@ -42,14 +39,18 @@ public class PcxCommunication extends PcxMessageSender implements Service, Event
   private final Service delegateService = new AbstractIdleService() {
     @Override
     protected void startUp() throws Exception {
+      L.trace("Starting PCX connections service={}.", connectionsManager);
       connectionsManager.startAsync();
       connectionsManager.awaitHealthy();
+      L.trace("Started PCX connections service.");
     }
 
     @Override
     protected void shutDown() throws Exception {
+      L.trace("Stopping PCX connections service={}.", connectionsManager);
       connectionsManager.stopAsync();
       connectionsManager.awaitStopped();
+      L.trace("Stopped PCX connections service.");
     }
   };
 

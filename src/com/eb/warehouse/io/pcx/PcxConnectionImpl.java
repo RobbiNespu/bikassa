@@ -1,23 +1,20 @@
 package com.eb.warehouse.io.pcx;
 
+import com.eb.warehouse.io.pcx.message.Life;
+import com.eb.warehouse.io.socket.SocketConnection;
 import com.google.common.base.Charsets;
 import com.google.common.base.MoreObjects;
 import com.google.common.util.concurrent.AbstractIdleService;
 import com.google.common.util.concurrent.ListenableScheduledFuture;
-
-import com.eb.warehouse.io.pcx.message.Life;
-import com.eb.warehouse.io.socket.SocketConnection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Set;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -53,16 +50,19 @@ public final class PcxConnectionImpl extends AbstractIdleService implements PcxC
 
   @Override
   protected void startUp() throws Exception {
+    L.trace("Starting PCX command connection={} and status connection={}.", command, status);
     command.startAsync();
     status.startAsync();
   }
 
   @Override
   protected void shutDown() throws Exception {
+    L.trace("Stopping PCX command connection={} and status connection={}.", command, status);
     command.stopAsync();
     status.stopAsync();
     command.awaitTerminated();
     status.awaitTerminated();
+    L.trace("Stopped PCX command/status connection.");
   }
 
   @Override

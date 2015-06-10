@@ -10,7 +10,7 @@ public class DemoWarehousePcxNetworkCommModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    install(new LocalhostNetworkBaseModule());
+    install(new NetworkBaseModule("localhost"));
     install(new DemoWarehousePcxConnectionsModule());
   }
 }

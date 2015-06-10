@@ -11,7 +11,7 @@ public class DemoWarehouseNgkp2NetworkCommModule
 
   @Override
   protected void configure() {
-    install(new LocalhostNetworkBaseModule());
+    install(new NetworkBaseModule("localhost"));
     install(new DemoWarehouseNgkp2ConnectionsModule());
   }
 

@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -16,61 +15,51 @@ import java.util.concurrent.CountDownLatch;
 
 public class WarehouseApplication implements ServerApplication {
 
-  private static final Logger L = LoggerFactory.getLogger(WarehouseApplication.class);
-  /**
-   * Controls the shutdown of the {@link #run2()} method.
-   */
-  final CountDownLatch appShutdownLatch = new CountDownLatch(1);
-  private final ServiceManager hardwareCommunication;
-
-  @Inject
-  public WarehouseApplication(ServiceManager hardwareCommunication) {
-    this.hardwareCommunication = hardwareCommunication;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void run2() {
-    L.info("Starting warehouse application.");
-    hardwareCommunication.startAsync();
+    private static final Logger L = LoggerFactory.getLogger(WarehouseApplication.class);
     /**
-     * Blocks main thread until someone triggers shutdown of application.
+     * Controls the shutdown of the {@link #run2()} method.
      */
-    Uninterruptibles.awaitUninterruptibly(appShutdownLatch);
-    stop();
-    // TODO: add timeout and shutdown hook listener.
-  }
+    private final CountDownLatch appShutdownLatch = new CountDownLatch(1);
+    private final ServiceManager hardwareCommunication;
 
-  /**
-   * Stop the running warehouse application. If not running nothing is done.
-   */
-  @VisibleForTesting
-  void stop() {
-    hardwareCommunication.stopAsync();
-    hardwareCommunication.awaitStopped();
-  }
+    @Inject
+    public WarehouseApplication(ServiceManager hardwareCommunication) {
+        this.hardwareCommunication = hardwareCommunication;
+    }
 
-  /**
-   * Indicate whether the warehouse application is running successfully with no errors.
-   *
-   * @return
-   */
-  @VisibleForTesting
-  boolean isHealthy() {
-    return hardwareCommunication.isHealthy();
-  }
+    @Override
+    public void run2() {
+        L.info("Starting warehouse application.");
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                triggerStop2();
+            }
+        });
+        hardwareCommunication.startAsync();
+        /**
+         * Blocks main thread until someone triggers shutdown of application.
+         */
+        Uninterruptibles.awaitUninterruptibly(appShutdownLatch);
+        L.info("Stopping warehouse application.");
+        hardwareCommunication.stopAsync();
+        hardwareCommunication.awaitStopped();
+        L.info("Stopped gracefully warehouse application.");
+        // TODO: add timeout and shutdown hook listener.
+    }
 
-  @VisibleForTesting
-  void addListener(ServiceManager.Listener listener) {
-    hardwareCommunication.addListener(listener);
-  }
+    /**
+     * Trigger to stop the running warehouse application. If not running nothing is done.
+     */
+    @VisibleForTesting
+    void triggerStop2() {
+        appShutdownLatch.countDown();
+    }
 
-  @VisibleForTesting
-  Set<PcxStation> getPcxStations() {
-    return null;
-  }
+    @VisibleForTesting
+    void addListener(ServiceManager.Listener listener) {
+        hardwareCommunication.addListener(listener);
+    }
 }
 
 //---------------------------- Revision History ----------------------------

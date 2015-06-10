@@ -10,7 +10,7 @@ import com.google.inject.name.Names;
 import javax.inject.Singleton;
 
 /**
- * Configures PCX connections including classes that all connections share. It uses a Multibinder to expose a set of Service instances each of them representing one PCX connection.
+ * Configures classes of PCX connections that all share and creates a Multibinder to expose a set of Service instances each of them representing one PCX connection.
  */
 public final class PcxConnectionsBaseModule extends AbstractModule {
 

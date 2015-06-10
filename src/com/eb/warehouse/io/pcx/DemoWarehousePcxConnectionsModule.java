@@ -19,7 +19,7 @@ public final class DemoWarehousePcxConnectionsModule extends AbstractModule {
 
         Multibinder<PcxConnection> pcxConnectionsMultibinder =
                 Multibinder.newSetBinder(binder(), PcxConnection.class);
-        install(new PcxConnectionExposingModule(pcxConnectionsMultibinder, PCX1, 9200, 8888, ImmutableSet.of(STATION_JPP01,
+        install(new PcxConnectionWithoutHostModule(pcxConnectionsMultibinder, PCX1, 9200, 8888, ImmutableSet.of(STATION_JPP01,
                 STATION_JPP02,
                 STATION_JPP03,
                 STATION_JPP04,
@@ -27,9 +27,9 @@ public final class DemoWarehousePcxConnectionsModule extends AbstractModule {
                 STATION_CRS02,
                 STATION_CRS03,
                 STATION_CRS04)));
-        install(new PcxConnectionExposingModule(pcxConnectionsMultibinder, PCX2, 9201, 8889, ImmutableSet.of("AIP01")));
-        install(new PcxConnectionExposingModule(pcxConnectionsMultibinder, PCX3, 9202, 8890,
+        install(new PcxConnectionWithoutHostModule(pcxConnectionsMultibinder, PCX2, 9201, 8889, ImmutableSet.of("AIP01")));
+        install(new PcxConnectionWithoutHostModule(pcxConnectionsMultibinder, PCX3, 9202, 8890,
                 ImmutableSet.of(STATION_JPP10, STATION_JPP11, STATION_JPP12)));
-        install(new PcxConnectionExposingModule(pcxConnectionsMultibinder, PCX4, 9203, 8891, ImmutableSet.<String>of()));
+        install(new PcxConnectionWithoutHostModule(pcxConnectionsMultibinder, PCX4, 9203, 8891, ImmutableSet.<String>of()));
     }
 }
