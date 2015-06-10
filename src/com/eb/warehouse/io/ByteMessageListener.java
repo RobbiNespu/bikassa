@@ -13,7 +13,7 @@ public interface ByteMessageListener {
    * error. It's the consumers responsibility to detect whether the message is valid and can be
    * further processed. </p>
    *
-   * @param messageBuffer. The length of delivered message may vary from <code>0</code> to a maximum
+   * @param buffer. The length of delivered message may vary from <code>0</code> to a maximum
    *                       limit defined by the caller. Not NULL.
    */
   void consumeMessage(byte[] buffer);

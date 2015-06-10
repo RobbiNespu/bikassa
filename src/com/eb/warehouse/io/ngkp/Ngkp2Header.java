@@ -1,8 +1,7 @@
 package com.eb.warehouse.io.ngkp;
 
-import com.google.common.base.MoreObjects;
-
 import com.eb.warehouse.io.ByteMessage;
+import com.google.common.base.MoreObjects;
 
 import javax.annotation.Nonnull;
 
@@ -16,8 +15,15 @@ public class Ngkp2Header implements ByteMessage {
   private char telegramType;
   private char telegramCounter;
   private int protocolVersion = 2;
-
   public Ngkp2Header() {
+  }
+
+  private Ngkp2Header(Builder b) {
+    telegramLength = b.telegramLength;
+    destinationAddress = b.destinationAddress;
+    telegramType = b.telegramType;
+    telegramCounter = b.telegramCounter;
+    protocolVersion = b.protocolVersion;
   }
 
   public Ngkp2Header(Ngkp2Header toCopy) {
@@ -90,17 +96,73 @@ public class Ngkp2Header implements ByteMessage {
     this.protocolVersion = protocolVersion;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this)
-        .add("telegramLength", telegramLength)
-        .add("dstAddress", destinationAddress)
-        .add("telegramType", telegramType)
-        .add("telegramCounter", telegramCounter)
-        .add("protocolVers", protocolVersion)
-        .toString();
+    return MoreObjects.toStringHelper(this).add("telLen", telegramLength).add("dstAddr", destinationAddress)
+            .add("telType", telegramType).add("telCounter", telegramCounter).add("protVers", protocolVersion).toString();
+  }
+
+  public static final class Builder {
+
+    private int telegramLength;
+    private int destinationAddress;
+    private char telegramType;
+    private char telegramCounter;
+    private int protocolVersion;
+
+    public int getTelegramLength() {
+      return telegramLength;
+    }
+
+    public Builder telegramLength(int telegramLength) {
+      this.telegramLength = telegramLength;
+      return this;
+    }
+
+    public int getDestinationAddress() {
+      return destinationAddress;
+    }
+
+    public Builder destinationAddress(int destinationAddress) {
+      this.destinationAddress = destinationAddress;
+      return this;
+    }
+
+    public char getTelegramType() {
+      return telegramType;
+    }
+
+    public Builder telegramType(char telegramType) {
+      this.telegramType = telegramType;
+      return this;
+    }
+
+    public char getTelegramCounter() {
+      return telegramCounter;
+    }
+
+    public Builder telegramCounter(char telegramCounter) {
+      this.telegramCounter = telegramCounter;
+      return this;
+    }
+
+    public int getProtocolVersion() {
+      return protocolVersion;
+    }
+
+    public Builder protocolVersion(int protocolVersion) {
+      this.protocolVersion = protocolVersion;
+      return this;
+    }
+
+    public Ngkp2Header build() {
+      return new Ngkp2Header(this);
+    }
+
+    @Override
+    public String toString() {
+      return MoreObjects.toStringHelper(this).add("telLen", telegramLength).add("dstAddr", destinationAddress)
+              .add("telType", telegramType).add("telCounter", telegramCounter).add("protVers", protocolVersion).toString();
+    }
   }
 }

@@ -1,14 +1,14 @@
 package com.eb.warehouse;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.ServiceManager;
 import com.google.common.util.concurrent.Uninterruptibles;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.CountDownLatch;
-
 import javax.inject.Inject;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -39,8 +39,37 @@ public class WarehouseApplication implements ServerApplication {
      * Blocks main thread until someone triggers shutdown of application.
      */
     Uninterruptibles.awaitUninterruptibly(appShutdownLatch);
+    stop();
+    // TODO: add timeout and shutdown hook listener.
+  }
+
+  /**
+   * Stop the running warehouse application. If not running nothing is done.
+   */
+  @VisibleForTesting
+  void stop() {
     hardwareCommunication.stopAsync();
-    hardwareCommunication.awaitStopped(); // TODO: add timeout and shutdown hook listener.
+    hardwareCommunication.awaitStopped();
+  }
+
+  /**
+   * Indicate whether the warehouse application is running successfully with no errors.
+   *
+   * @return
+   */
+  @VisibleForTesting
+  boolean isHealthy() {
+    return hardwareCommunication.isHealthy();
+  }
+
+  @VisibleForTesting
+  void addListener(ServiceManager.Listener listener) {
+    hardwareCommunication.addListener(listener);
+  }
+
+  @VisibleForTesting
+  Set<PcxStation> getPcxStations() {
+    return null;
   }
 }
 

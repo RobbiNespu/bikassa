@@ -2,9 +2,10 @@
   <library name="mockito">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/mockito/mockito-all.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/mockito/mockito-all-sources.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/mockito/mockito-all-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

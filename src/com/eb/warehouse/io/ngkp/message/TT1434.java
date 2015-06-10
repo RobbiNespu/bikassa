@@ -24,7 +24,7 @@ public abstract class TT1434 {
 //  }
 //
 //  public static TT1434 fromBytes(byte[] bytes, int offset) {
-//    NgkpTelegramHeader telegram = new NgkpTelegramHeader();
+//    NgkpPayloadHeader telegram = new NgkpPayloadHeader();
 //    telegram.fromByteArray(bytes, offset);
 //    TT1434 msg = null;
 //    if (version == 0) {

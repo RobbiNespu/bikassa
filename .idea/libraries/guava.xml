@@ -2,10 +2,12 @@
   <library name="guava">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/guava/guava.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/guava/guava-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/guava/guava-javadoc.jar!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/guava/guava-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/guava/guava-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

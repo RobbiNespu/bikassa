@@ -1,21 +1,16 @@
 package com.eb.warehouse.io.ngkp;
 
+import com.eb.warehouse.io.ByteMessageListener;
+import com.eb.warehouse.io.ByteStreamConsumer;
+import com.eb.warehouse.io.socket.*;
+import com.eb.warehouse.util.EventBusRegistrationListener;
+import com.eb.warehouse.util.SubclassesOf;
+import com.eb.warehouse.util.ThreadNameBinding;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.PrivateModule;
 import com.google.inject.name.Names;
-
-import com.eb.warehouse.io.ByteMessageListener;
-import com.eb.warehouse.io.ByteStreamConsumer;
-import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
-import com.eb.warehouse.io.socket.AutoLifeSendSocketConnectionModule;
-import com.eb.warehouse.io.socket.PortBinding;
-import com.eb.warehouse.io.socket.SocketConnection;
-import com.eb.warehouse.io.socket.SocketEventBusBinding;
-import com.eb.warehouse.util.EventBusRegistrationListener;
-import com.eb.warehouse.util.SubclassesOf;
-import com.eb.warehouse.util.ThreadNameBinding;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -60,7 +55,7 @@ public class Ngkp2ConnectionModule extends AbstractModule {
         bindListener(new SubclassesOf(Ngkp2SenderSocketConnection.class),
                      new EventBusRegistrationListener(telegramEvents));
 
-        bind(ByteMessageListener.class).to(Ngkp2MessageParser.class);
+        bind(ByteMessageListener.class).to(NgkpMessageListener.class);
         bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
         bind(Integer.class).annotatedWith(PortBinding.class).toInstance(senderPort);
         bind(String.class).annotatedWith(ThreadNameBinding.class).toInstance("life-sender");
@@ -81,7 +76,7 @@ public class Ngkp2ConnectionModule extends AbstractModule {
         bindListener(new SubclassesOf(Ngkp2ReceiverSocketConnection.class),
                      new EventBusRegistrationListener(telegramEvents));
 
-        bind(ByteMessageListener.class).to(Ngkp2MessageParser.class);
+        bind(ByteMessageListener.class).to(NgkpMessageListener.class);
         bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
         bind(Integer.class).annotatedWith(PortBinding.class).toInstance(receiverPort);
 

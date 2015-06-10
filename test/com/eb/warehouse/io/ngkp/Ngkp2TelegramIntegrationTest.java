@@ -1,5 +1,9 @@
 package com.eb.warehouse.io.ngkp;
 
+import com.eb.warehouse.io.ByteMessageListener;
+import com.eb.warehouse.io.ByteStreamConsumer;
+import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
+import com.eb.warehouse.io.socket.SocketConnection;
 import com.google.common.eventbus.EventBus;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.inject.AbstractModule;
@@ -7,18 +11,11 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
-
-import com.eb.warehouse.io.ByteMessageListener;
-import com.eb.warehouse.io.ByteStreamConsumer;
-import com.eb.warehouse.io.socket.AutoConnectSocketConnectionModule;
-import com.eb.warehouse.io.socket.SocketConnection;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Named;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p> TODO </p>
@@ -43,7 +40,7 @@ public class Ngkp2TelegramIntegrationTest {
     protected void configure() {
       bind(Integer.class).annotatedWith(Names.named("bufferSize")).toInstance(300);
       bind(String.class).annotatedWith(Names.named("hostname")).toInstance("localhost");
-      bind(ByteMessageListener.class).to(Ngkp2MessageParser.class);
+      bind(ByteMessageListener.class).to(NgkpMessageListener.class);
       bind(ByteStreamConsumer.class).to(Ngkp2SlicingByteStreamConsumer.class);
       bind(String.class).annotatedWith(Names.named("threadName")).toInstance("thread");
     }
