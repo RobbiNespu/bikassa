@@ -74,4 +74,13 @@ public abstract class ForwardingSocketConnection implements SocketConnection {
     delegate().writeToSocket(bytes);
   }
 
+  @Override
+  public String getHostname() {
+    return delegate().getHostname();
+  }
+
+  @Override
+  public int getPort() {
+    return delegate().getPort();
+  }
 }

@@ -1,5 +1,6 @@
 package com.eb.warehouse;
 
+import com.eb.warehouse.io.pcx.PcxConnectionInfo;
 import com.eb.warehouse.io.pcx.PcxConnections;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableSet;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -63,6 +65,10 @@ public class WarehouseApplication implements ServerApplication {
     @VisibleForTesting
     void addListener(ServiceManager.Listener listener) {
         serviceManager.addListener(listener);
+    }
+
+    public Set<PcxConnectionInfo> getPcxConnectionInfos() {
+        return pcxConnections.getInfos();
     }
 }
 

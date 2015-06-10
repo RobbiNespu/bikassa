@@ -35,15 +35,15 @@ public final class PcxConnectionModule extends AbstractModule {
         this.pcxConnectionBindingKey = pcxConnectionBindingKey;
     }
 
-    public static void bindParameters(Binder binder, int cmdPort, int statusPort, String connName,
+    public static void bindParameters(Binder binder, int cmdPort, int statusPort, String connectionId,
                                       Set<String> targetStationIds) {
         binder.bind(Integer.class).annotatedWith(Names.named(PcxConnectionModule.COMMAND_PORT_BINDING))
                 .toInstance(cmdPort);
         binder.bind(Integer.class).annotatedWith(Names.named(PcxConnectionModule.STATUS_PORT_BINDING))
                 .toInstance(statusPort);
         binder.bind(String.class)
-                .annotatedWith(Names.named(PcxConnectionModule.CONNECTION_NAME_BINDING))
-                .toInstance(connName);
+                .annotatedWith(PcxConnectionId.class)
+                .toInstance(connectionId);
         binder.bind(new TypeLiteral<Set<String>>() {
         }).toInstance(targetStationIds);
     }
@@ -69,13 +69,13 @@ public final class PcxConnectionModule extends AbstractModule {
 
             @Provides
             @Named(AutoLifeSendSocketConnectionModule.LIFE_SEND_THREAD_NAME_BINDING)
-            String provideLifeSendThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+            String provideLifeSendThreadName(@PcxConnectionId String connectionName) {
                 return connectionName + "-cmd-life";
             }
 
             @Provides
             @Named(AutoConnectSocketConnectionModule.CONNECT_READ_SOCKET_THREAD_NAME_BINDING)
-            String provideConnectReadThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+            String provideConnectReadThreadName(@PcxConnectionId String connectionName) {
                 return connectionName + "-cmd-reader";
             }
         });
@@ -95,13 +95,13 @@ public final class PcxConnectionModule extends AbstractModule {
 
             @Provides
             @Named(AutoLifeSendSocketConnectionModule.LIFE_SEND_THREAD_NAME_BINDING)
-            String provideLifeSendThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+            String provideLifeSendThreadName(@PcxConnectionId String connectionName) {
                 return connectionName + "-status-life";
             }
 
             @Provides
             @Named(AutoConnectSocketConnectionModule.CONNECT_READ_SOCKET_THREAD_NAME_BINDING)
-            String provideConnectReadThreadName(@Named(CONNECTION_NAME_BINDING) String connectionName) {
+            String provideConnectReadThreadName(@PcxConnectionId String connectionName) {
                 return connectionName + "-status-reader";
             }
         });

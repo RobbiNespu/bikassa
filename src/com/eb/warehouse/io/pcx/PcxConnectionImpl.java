@@ -24,6 +24,7 @@ public final class PcxConnectionImpl extends AbstractIdleService implements PcxC
 
   private static final Logger L = LoggerFactory.getLogger(PcxConnectionImpl.class);
   private static final Life LIFE_MESSAGE = new Life();
+  private final String connectionId;
   private final SocketConnection command;
   private final SocketConnection status;
   private final Marshaller marshaller;
@@ -32,10 +33,11 @@ public final class PcxConnectionImpl extends AbstractIdleService implements PcxC
   private ListenableScheduledFuture<?> sendLifeFuture;
 
   @Inject
-  public PcxConnectionImpl(@PcxCommandConnectionBinding SocketConnection command,
+  public PcxConnectionImpl(@PcxConnectionId String connectionId, @PcxCommandConnectionBinding SocketConnection command,
                            @PcxStatusConnectionBinding SocketConnection status,
                            Marshaller marshaller,
                            Set<String> associatedStationIds, byte delimiter) {
+    this.connectionId = connectionId;
     this.command = command;
     this.status = status;
     this.marshaller = marshaller;
@@ -46,6 +48,26 @@ public final class PcxConnectionImpl extends AbstractIdleService implements PcxC
   @Override
   public Set<String> getAssociatedStationIds() {
     return associatedStationIds;
+  }
+
+  @Override
+  public String getId() {
+    return connectionId;
+  }
+
+  @Override
+  public String getHostname() {
+    return command.getHostname();
+  }
+
+  @Override
+  public int getCommandPort() {
+    return command.getPort();
+  }
+
+  @Override
+  public int getStatusPort() {
+    return status.getPort();
   }
 
   @Override

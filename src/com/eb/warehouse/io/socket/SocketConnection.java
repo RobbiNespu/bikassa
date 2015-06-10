@@ -2,11 +2,10 @@ package com.eb.warehouse.io.socket;
 
 import com.google.common.util.concurrent.Service;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-
-import javax.annotation.Nonnull;
 
 /**
  * <p> Connection using a socket that manages the whole life-cycle of the underlying {@link Socket}
@@ -22,4 +21,17 @@ public interface SocketConnection extends Service {
    */
   void writeToSocket(@Nonnull byte[] bytes) throws IOException;
 
+  /**
+   * Get the hostname associated with this connection.
+   *
+   * @return
+   */
+  String getHostname();
+
+  /**
+   * Get the port number associated with this connection.
+   *
+   * @return
+   */
+  int getPort();
 }

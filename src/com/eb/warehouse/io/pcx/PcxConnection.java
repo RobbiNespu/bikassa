@@ -13,4 +13,12 @@ public interface PcxConnection extends Service {
   void sendMessage(Object message) throws IOException;
 
   Set<String> getAssociatedStationIds();
+
+  String getId();
+
+  String getHostname();
+
+  int getCommandPort();
+
+  int getStatusPort();
 }

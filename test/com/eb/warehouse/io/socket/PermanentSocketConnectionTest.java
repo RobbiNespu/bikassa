@@ -1,18 +1,12 @@
 package com.eb.warehouse.io.socket;
 
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
-import com.google.common.net.InetAddresses;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
-
 import com.eb.warehouse.io.socket.AutoConnectSocketConnection.ConnectSocketCallback;
 import com.eb.warehouse.io.socket.AutoConnectSocketConnection.ReadSocketCallback;
 import com.eb.warehouse.util.SelfCallable;
-
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+import com.google.common.net.InetAddresses;
+import com.google.common.util.concurrent.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,17 +20,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 
 
@@ -63,7 +48,7 @@ public class PermanentSocketConnectionTest {
     readSocketCallback = mock(FutureCallback.class);
     socketConnectEvents = new EventBus();
     connection =
-        new AutoConnectSocketConnection(connectAndReadRunner, connectSocketTask,
+            new AutoConnectSocketConnection("localhost", 10000, connectAndReadRunner, connectSocketTask,
             readSocketTaskFactory, socketConnectEvents, connectSocketCallback, readSocketCallback);
 
     socket = mock(Socket.class);

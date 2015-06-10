@@ -5,6 +5,7 @@ import com.eb.warehouse.io.pcx.message.Announce;
 import com.eb.warehouse.io.pcx.message.Response;
 import com.eb.warehouse.io.pcx.message.ResponseQuery;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
@@ -32,6 +33,7 @@ public class PcxConnectionsImpl extends PcxMessageSender implements PcxConnectio
   private static final Logger L = LoggerFactory.getLogger(PcxConnectionsImpl.class);
   private final Map<String, StationEventBus> registeredStations = Maps.newHashMap();
   private final Set<PcxConnection> connections;
+  private final Set<PcxConnectionInfo> infos;
   private final ServiceManager connectionsManager;
   private final Map<String, PcxConnection> stationToConnectionMapping;
   private final EventBus loopbackEventBus = new AsyncEventBus(Executors.newFixedThreadPool(8));
@@ -56,15 +58,23 @@ public class PcxConnectionsImpl extends PcxMessageSender implements PcxConnectio
   @Inject
   public PcxConnectionsImpl(Set<PcxConnection> pcxConnections) {
     ImmutableMap.Builder<String, PcxConnection> connectionsBuilder = ImmutableMap.builder();
+    ImmutableSet.Builder<PcxConnectionInfo> infos = ImmutableSet.builder();
     for (PcxConnection conn : pcxConnections) {
+      infos.add(new PcxConnectionInfo(conn.getId(), conn.getHostname(), conn.getCommandPort(), conn.getStatusPort(), conn.getAssociatedStationIds()));
       for (String stationId : conn.getAssociatedStationIds()) {
         connectionsBuilder.put(stationId, conn);
       }
     }
     this.connections = pcxConnections;
+    this.infos = infos.build();
     this.connectionsManager = new ServiceManager(pcxConnections);
     this.stationToConnectionMapping = connectionsBuilder.build();
     loopbackEventBus.register(this);
+  }
+
+  @Override
+  public Set<PcxConnectionInfo> getInfos() {
+    return infos;
   }
 
   @Override

@@ -22,6 +22,8 @@ import java.util.concurrent.ExecutionException;
 final class AutoConnectSocketConnection extends AbstractIdleService implements SocketConnection {
 
     private static final Logger L = LoggerFactory.getLogger(AutoConnectSocketConnection.class);
+    private final String hostname;
+    private final int port;
     private final SelfCallable<Socket> connectSocketTask;
     private final ReadSocketTaskFactory readSocketTaskFactory;
     private final EventBus socketConnectEvents;
@@ -35,11 +37,14 @@ final class AutoConnectSocketConnection extends AbstractIdleService implements S
     private ListenableFuture<Void> readFuture;
 
     @Inject
-    AutoConnectSocketConnection(
-            @ConnectAndReadSocketExecServiceBinding ListeningExecutorService connectAndReadExecService,
-            SelfCallable<Socket> connectSocketTask,
-            ReadSocketTaskFactory readSocketTaskFactory,
-            @SocketEventBusBinding EventBus socketConnectEvents) {
+    AutoConnectSocketConnection(@HostnameBinding String hostname,
+                                @PortBinding int port,
+                                @ConnectAndReadSocketExecServiceBinding ListeningExecutorService connectAndReadExecService,
+                                SelfCallable<Socket> connectSocketTask,
+                                ReadSocketTaskFactory readSocketTaskFactory,
+                                @SocketEventBusBinding EventBus socketConnectEvents) {
+        this.hostname = hostname;
+        this.port = port;
         this.connectAndReadExecService = connectAndReadExecService;
         this.connectSocketTask = connectSocketTask;
         this.readSocketTaskFactory = readSocketTaskFactory;
@@ -48,12 +53,16 @@ final class AutoConnectSocketConnection extends AbstractIdleService implements S
         readCallback = new ReadSocketCallback();
     }
 
-    AutoConnectSocketConnection(ListeningExecutorService connectAndReadExecService,
+    AutoConnectSocketConnection(String hostname,
+                                int port,
+                                ListeningExecutorService connectAndReadExecService,
                                 SelfCallable<Socket> connectSocketTask,
                                 ReadSocketTaskFactory readSocketTaskFactory,
                                 EventBus socketConnectEvents,
                                 FutureCallback<Socket> connectCallback,
                                 FutureCallback<Void> readCallback) {
+        this.hostname = hostname;
+        this.port = port;
         this.connectAndReadExecService = connectAndReadExecService;
         this.connectSocketTask = connectSocketTask;
         this.readSocketTaskFactory = readSocketTaskFactory;
@@ -96,6 +105,16 @@ final class AutoConnectSocketConnection extends AbstractIdleService implements S
         } catch (CancellationException e) {
         }
         L.trace("Stopped auto-connecting socket connection.");
+    }
+
+    @Override
+    public String getHostname() {
+        return hostname;
+    }
+
+    @Override
+    public int getPort() {
+        return port;
     }
 
     /**
