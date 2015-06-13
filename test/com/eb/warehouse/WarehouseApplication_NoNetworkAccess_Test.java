@@ -118,7 +118,7 @@ public class WarehouseApplication_NoNetworkAccess_Test {
         assertThat(app.getPcxStations()).hasSize(1).have(new Condition<PcxStation>() {
             @Override
             public boolean matches(PcxStation pcxStation) {
-                return pcxStation.getStationId().equals(stationId);
+                return pcxStation.getId().equals(stationId);
             }
         });
     }

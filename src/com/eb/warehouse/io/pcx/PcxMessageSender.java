@@ -1,6 +1,6 @@
 package com.eb.warehouse.io.pcx;
 
-import com.eb.warehouse.io.pcx.message.Announce;
+import com.eb.warehouse.io.pcx.message.AnnounceStation;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public abstract class PcxMessageSender {
 
-  public void sendAnnounceMessage(Announce announce) throws IOException {
+  public void sendAnnounceMessage(AnnounceStation announceStation) throws IOException {
     throw new UnsupportedOperationException();
   }
 }

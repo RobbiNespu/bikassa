@@ -2,15 +2,10 @@ package com.eb.warehouse.io.pcx.message;
 
 import com.google.common.base.MoreObjects;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p> Java class for announce-station complex type. <p> The following schema fragment specifies the
@@ -55,7 +50,7 @@ public class AnnounceStation implements Serializable {
    * targets property. <p> For example, to add a new item, do as follows:
    *
    * <pre>
-   * getTargets().add(newItem);
+   * getTargetIds().add(newItem);
    * </pre>
    * <p> Objects of the following type(s) are allowed in the list {@link AnnounceTarget }
    */

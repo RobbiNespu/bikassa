@@ -1,11 +1,10 @@
 package com.eb.warehouse;
 
-import com.google.inject.Provider;
-
 import com.eb.warehouse.graph.Graph;
 import com.eb.warehouse.graph.Graphs;
 import com.eb.warehouse.graph.Graphs.GraphBuilder;
 import com.eb.warehouse.graph.Graphs.GraphNodeBuilder;
+import com.google.inject.Provider;
 
 import java.util.Collection;
 
@@ -29,8 +28,8 @@ public class ConveyorGraphProvider implements Provider<Graph<String>> {
   public Graph<String> get() {
     GraphBuilder<String> graphBuilder = Graphs.newGraph("conveyor");
     for (PcxStation station : pcxStations) {
-      GraphNodeBuilder<String> nodeBuilder = graphBuilder.withNode(station.getStationId());
-      for (String target : station.getTargets()) {
+      GraphNodeBuilder<String> nodeBuilder = graphBuilder.withNode(station.getId());
+      for (String target : station.getTargetIds()) {
 //        int targetTuPosCount = targetTuPositionCount.get(target);
 //        nodeBuilder.withEdge(target, targetTuPosCount);
       }

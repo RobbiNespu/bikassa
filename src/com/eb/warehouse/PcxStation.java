@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface PcxStation {
 
-  String getStationId();
+  String getId();
 
-  Set<String> getTargets();
+  Set<String> getTargetIds();
 }

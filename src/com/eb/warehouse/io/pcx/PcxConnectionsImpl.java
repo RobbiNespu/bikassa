@@ -2,6 +2,7 @@ package com.eb.warehouse.io.pcx;
 
 import com.eb.warehouse.PcxStation;
 import com.eb.warehouse.io.pcx.message.Announce;
+import com.eb.warehouse.io.pcx.message.AnnounceStation;
 import com.eb.warehouse.io.pcx.message.Response;
 import com.eb.warehouse.io.pcx.message.ResponseQuery;
 import com.google.common.base.MoreObjects;
@@ -80,24 +81,26 @@ public class PcxConnectionsImpl extends PcxMessageSender implements PcxConnectio
 
   @Override
   public void registerStation(PcxStation station) {
-    if (!registeredStations.containsKey(station.getStationId())) {
+    if (!registeredStations.containsKey(station.getId())) {
       EventBus eventBus = new EventBus();
       eventBus.register(station);
-      registeredStations.put(station.getStationId(), new StationEventBus(station, eventBus));
+      registeredStations.put(station.getId(), new StationEventBus(station, eventBus));
       L.trace("Register PCX station={} at PCX connections for receiving events.", station);
     }
   }
 
   @Override
-  public void sendAnnounceMessage(Announce announce) throws IOException {
-    String stationId = announce.getStation().getFrom();
+  public void sendAnnounceMessage(AnnounceStation announceStation) throws IOException {
+    Announce a = new Announce();
+    a.setStation(announceStation);
+    String stationId = announceStation.getFrom();
     PcxConnection pcxConn = stationToConnectionMapping.get(stationId);
     if (pcxConn != null) {
-      pcxConn.sendMessage(announce);
+      pcxConn.sendMessage(a);
     } else {
       L.warn(
           "Not sent PCX message={} to station={} because no connection of station configured.",
-          announce, stationId);
+              a, stationId);
     }
   }
 
@@ -191,12 +194,12 @@ public class PcxConnectionsImpl extends PcxMessageSender implements PcxConnectio
 
     @Override
     public boolean equals(Object obj) {
-      return station.getStationId().equals(((StationEventBus) obj).station.getStationId());
+      return station.getId().equals(((StationEventBus) obj).station.getId());
     }
 
     @Override
     public int hashCode() {
-      return station.getStationId().hashCode();
+      return station.getId().hashCode();
     }
   }
 }

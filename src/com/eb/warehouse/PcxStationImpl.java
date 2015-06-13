@@ -1,7 +1,6 @@
 package com.eb.warehouse;
 
 import com.eb.warehouse.io.pcx.PcxMessageSender;
-import com.eb.warehouse.io.pcx.message.Announce;
 import com.eb.warehouse.io.pcx.message.AnnounceStation;
 import com.eb.warehouse.io.pcx.message.AnnounceTarget;
 import com.eb.warehouse.io.pcx.message.ResponseQuery;
@@ -43,7 +42,7 @@ public class PcxStationImpl implements PcxStation {
    * {@inheritDoc}
    */
   @Override
-  public String getStationId() {
+  public String getId() {
     return stationId;
   }
 
@@ -51,7 +50,7 @@ public class PcxStationImpl implements PcxStation {
    * {@inheritDoc}
    */
   @Override
-  public Set<String> getTargets() {
+  public Set<String> getTargetIds() {
     return targets;
   }
 
@@ -64,7 +63,6 @@ public class PcxStationImpl implements PcxStation {
 
     Optional<String> dstLoc = targetSelector.selectTarget(stationId, targets, responseQuery);
     if (dstLoc.isPresent()) {
-      Announce a = new Announce();
       AnnounceStation rs = new AnnounceStation();
       AnnounceTarget target = new AnnounceTarget();
       target.setTo(dstLoc.get());
@@ -73,10 +71,9 @@ public class PcxStationImpl implements PcxStation {
       rs.setBox(tuCode);
       rs.setFrom(atLocation);
       rs.setOrder("");
-      a.setStation(rs);
       try {
-        L.info("Send TU to target with PCX message={}.", a);
-        pcxCommunication.sendAnnounceMessage(a);
+        L.info("Send TU to target with PCX message={}.", rs);
+        pcxCommunication.sendAnnounceMessage(rs);
       } catch (IOException e) {
         // TODO: Add handling if connection broken.
         L.error("Not sent PCX station announce to hardware.", e);
@@ -94,7 +91,7 @@ public class PcxStationImpl implements PcxStation {
   public boolean equals(Object obj) {
     if (obj instanceof PcxStation) {
       PcxStation other = (PcxStation) obj;
-      return stationId.equals(other.getStationId());
+      return stationId.equals(other.getId());
     }
     return false;
   }
