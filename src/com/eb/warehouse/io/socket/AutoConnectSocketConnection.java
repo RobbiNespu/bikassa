@@ -165,6 +165,8 @@ final class AutoConnectSocketConnection extends AbstractIdleService implements S
                 socketConnectEvents.post(new SocketConnectedEvent());
             } catch (IOException e) {
                 closeOldSocketAndReconnectAsync();
+            } catch (RuntimeException e) {
+                L.error("Must never show up in log.", e);
             }
         }
 

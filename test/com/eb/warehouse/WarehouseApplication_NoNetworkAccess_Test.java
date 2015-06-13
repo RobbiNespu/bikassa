@@ -2,6 +2,8 @@ package com.eb.warehouse;
 
 import com.eb.warehouse.io.NetworkBaseModule;
 import com.eb.warehouse.io.pcx.*;
+import com.eb.warehouse.util.OneOf;
+import com.eb.warehouse.util.SubclassesOf;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.util.concurrent.Service;
 import com.google.common.util.concurrent.ServiceManager;
@@ -10,14 +12,19 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.multibindings.Multibinder;
+import org.assertj.core.api.Condition;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by eb on 09.06.2015.
@@ -28,6 +35,7 @@ public class WarehouseApplication_NoNetworkAccess_Test {
     private Module sameHostConnModule;
     private Module noHostConnModule;
     private Module mockSocketModule;
+    private Module noPcxStationModule;
     private Socket mockSocket;
 
     @Before
@@ -47,7 +55,16 @@ public class WarehouseApplication_NoNetworkAccess_Test {
                 install(new PcxConnectionsBaseModule());
             }
         };
+        noPcxStationModule = new AbstractModule() {
+            @Override
+            protected void configure() {
+                Multibinder.newSetBinder(binder(), PcxStation.class); // Just to inject empty set.
+            }
+        };
         mockSocket = mock(Socket.class);
+        doThrow(new IOException()).when(mockSocket).connect(any(InetSocketAddress.class)); // Avoids reading bytes from socket.
+        InputStream mockStream = mock(InputStream.class);
+        when(mockSocket.getInputStream()).thenReturn(mockStream);
         mockSocketModule = new AbstractModule() {
             @Override
             protected void configure() {
@@ -66,7 +83,7 @@ public class WarehouseApplication_NoNetworkAccess_Test {
                 Multibinder<PcxConnection> m = Multibinder.newSetBinder(binder(), PcxConnection.class);
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx-conn", 0, 0, NO_STRINGS));
             }
-        }, mockSocketModule);
+        }, mockSocketModule, noPcxStationModule);
         WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
         assertThat(app.getPcxConnectionInfos()).hasSize(1).contains(connInfo);
         runAppAndAssertHealthy(app);
@@ -77,6 +94,33 @@ public class WarehouseApplication_NoNetworkAccess_Test {
         app.addListener(listener);
         app.run2();
         assertFalse(listener.hasError);
+    }
+
+    @Test(timeout = 7000)
+    public void run2_onePcxConnectionRegisteredOnOnePcxStation_isHealthyAfterStarted() throws Exception {
+        final String stationId = "test-station-id";
+        final ImmutableSet<String> stationIds = ImmutableSet.of(stationId);
+        PcxConnectionInfo connInfo = new PcxConnectionInfo("test-pcx-conn", "somehost.me", 0, 0, stationIds);
+        Injector injector = Guice.createInjector(sameHostConnModule
+                , new AbstractModule() {
+            @Override
+            protected void configure() {
+                bindListener(new OneOf(new SubclassesOf(PcxStation.class), new SubclassesOf(PcxConnections.class)), new PcxStationEventRegistrationListener());
+
+                Multibinder<PcxConnection> m = Multibinder.newSetBinder(binder(), PcxConnection.class);
+                install(new PcxConnectionWithoutHostModule(m, "test-pcx-conn", 0, 0, stationIds));
+
+                Multibinder<PcxStation> m2 = Multibinder.newSetBinder(binder(), PcxStation.class);
+                install(new PcxStationImplModule(m2, stationId, ImmutableSet.<String>of(), new RandomTargetSelectingPcxStationModule()));
+            }
+        }, mockSocketModule);
+        WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
+        assertThat(app.getPcxStations()).hasSize(1).have(new Condition<PcxStation>() {
+            @Override
+            public boolean matches(PcxStation pcxStation) {
+                return pcxStation.getStationId().equals(stationId);
+            }
+        });
     }
 
     @Test(timeout = 10000)
@@ -91,7 +135,7 @@ public class WarehouseApplication_NoNetworkAccess_Test {
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx1-conn", 1, 2, NO_STRINGS));
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx2-conn", 3, 4, NO_STRINGS));
             }
-        }, mockSocketModule);
+        }, mockSocketModule, noPcxStationModule);
         WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
         assertThat(app.getPcxConnectionInfos()).hasSize(2).contains(conn1Info).contains(conn2Info);
         runAppAndAssertHealthy(app);
@@ -109,7 +153,7 @@ public class WarehouseApplication_NoNetworkAccess_Test {
                 install(new PcxConnectionWithHostModule(mb, "test-pcx1-conn", "firstHost.me", 1, 2, NO_STRINGS));
                 install(new PcxConnectionWithHostModule(mb, "test-pcx2-conn", "secondHost.me", 3, 4, NO_STRINGS));
             }
-        }, mockSocketModule);
+        }, mockSocketModule, noPcxStationModule);
         WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
         assertThat(app.getPcxConnectionInfos()).hasSize(2).contains(conn1Info).contains(conn2Info);
         runAppAndAssertHealthy(app);
@@ -141,7 +185,7 @@ public class WarehouseApplication_NoNetworkAccess_Test {
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx8-conn", 15, 16, NO_STRINGS));
                 install(new PcxConnectionWithoutHostModule(m, "test-pcx9-conn", 17, 18, NO_STRINGS));
             }
-        }, mockSocketModule);
+        }, mockSocketModule, noPcxStationModule);
         WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
         assertThat(app.getPcxConnectionInfos()).hasSize(9).contains(conn1Info).contains(conn2Info).contains(conn3Info)
                 .contains(conn4Info).contains(conn5Info).contains(conn6Info).contains(conn7Info).contains(conn8Info)
@@ -175,7 +219,7 @@ public class WarehouseApplication_NoNetworkAccess_Test {
                 install(new PcxConnectionWithHostModule(mb, "test-pcx8-conn", "eighthHost.me", 15, 16, NO_STRINGS));
                 install(new PcxConnectionWithHostModule(mb, "test-pcx9-conn", "ninethHost.me", 17, 18, NO_STRINGS));
             }
-        }, mockSocketModule);
+        }, mockSocketModule, noPcxStationModule);
         WarehouseApplication app = injector.getInstance(WarehouseApplication.class);
         assertThat(app.getPcxConnectionInfos()).hasSize(9).contains(conn1Info).contains(conn2Info).contains(conn3Info)
                 .contains(conn4Info).contains(conn5Info).contains(conn6Info).contains(conn7Info).contains(conn8Info)

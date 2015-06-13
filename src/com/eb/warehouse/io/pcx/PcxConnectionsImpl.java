@@ -4,6 +4,7 @@ import com.eb.warehouse.PcxStation;
 import com.eb.warehouse.io.pcx.message.Announce;
 import com.eb.warehouse.io.pcx.message.Response;
 import com.eb.warehouse.io.pcx.message.ResponseQuery;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
@@ -83,9 +84,7 @@ public class PcxConnectionsImpl extends PcxMessageSender implements PcxConnectio
       EventBus eventBus = new EventBus();
       eventBus.register(station);
       registeredStations.put(station.getStationId(), new StationEventBus(station, eventBus));
-      L.trace(
-          "Register PCX station={} at PCX hardware communication={} for receiving events.", station,
-          this);
+      L.trace("Register PCX station={} at PCX connections for receiving events.", station);
     }
   }
 
@@ -172,6 +171,12 @@ public class PcxConnectionsImpl extends PcxMessageSender implements PcxConnectio
   @Override
   public void addListener(Listener listener, Executor executor) {
     delegateService.addListener(listener, executor);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("connInfos", infos).add("conns", connections)
+            .add("stationToConn", stationToConnectionMapping).add("regStations", registeredStations).toString();
   }
 
   private static final class StationEventBus {

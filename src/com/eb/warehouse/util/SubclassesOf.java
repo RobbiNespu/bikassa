@@ -7,18 +7,15 @@ import com.google.inject.matcher.AbstractMatcher;
 import java.io.Serializable;
 
 
-public class SubclassesOf extends AbstractMatcher<TypeLiteral<?>> implements Serializable {
+public final class SubclassesOf extends AbstractMatcher<TypeLiteral<?>> implements Serializable {
 
   private static final long serialVersionUID = 0L;
   private final Class<?> superclass;
 
   public SubclassesOf(Class<?> superclass) {
-    this.superclass = (Preconditions.checkNotNull(superclass, "superclass"));
+    this.superclass = Preconditions.checkNotNull(superclass, "superclass");
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean matches(TypeLiteral<?> obj) {
     return superclass.isAssignableFrom(obj.getRawType());

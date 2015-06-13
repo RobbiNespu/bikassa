@@ -26,11 +26,13 @@ public class WarehouseApplication implements ServerApplication {
     private final CountDownLatch appShutdownLatch = new CountDownLatch(1);
     private final PcxConnections pcxConnections;
     private final ServiceManager serviceManager;
+    private final Set<PcxStation> pcxStations;
 
     @Inject
-    public WarehouseApplication(PcxConnections pcxConnections) {
+    public WarehouseApplication(PcxConnections pcxConnections, Set<PcxStation> pcxStations) {
         this.pcxConnections = pcxConnections;
         serviceManager = new ServiceManager(ImmutableSet.of(pcxConnections));
+        this.pcxStations = pcxStations;
     }
 
     @Override
@@ -69,6 +71,10 @@ public class WarehouseApplication implements ServerApplication {
 
     public Set<PcxConnectionInfo> getPcxConnectionInfos() {
         return pcxConnections.getInfos();
+    }
+
+    public Set<PcxStation> getPcxStations() {
+        return pcxStations;
     }
 }
 

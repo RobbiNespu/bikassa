@@ -1,23 +1,20 @@
 package com.eb.warehouse;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Optional;
-import com.google.common.eventbus.Subscribe;
-
 import com.eb.warehouse.io.pcx.PcxMessageSender;
 import com.eb.warehouse.io.pcx.message.Announce;
 import com.eb.warehouse.io.pcx.message.AnnounceStation;
 import com.eb.warehouse.io.pcx.message.AnnounceTarget;
 import com.eb.warehouse.io.pcx.message.ResponseQuery;
-
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
+import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Set;
-
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.util.Set;
 
 /**
  * <p> Usage: TODO add some usage examples. </p>
@@ -115,8 +112,7 @@ public class PcxStationImpl implements PcxStation {
    */
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("pcxComm", pcxCommunication)
-        .add("stationId", stationId).add("targets", targets).add("targetSelector", targetSelector)
-        .toString();
+    return MoreObjects.toStringHelper(this).add("stationId", stationId).add("targets", targets)
+            .add("targetSelector", targetSelector).toString();
   }
 }
