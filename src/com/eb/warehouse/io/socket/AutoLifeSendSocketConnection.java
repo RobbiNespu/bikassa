@@ -4,14 +4,12 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.common.util.concurrent.ListenableScheduledFuture;
 import com.google.common.util.concurrent.ListeningScheduledExecutorService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 /**
  * <p> Socket connection that provides periodic life-message-sending functionality and delegates
@@ -48,7 +46,7 @@ public final class AutoLifeSendSocketConnection extends ForwardingSocketConnecti
         @Override
         public void run() {
           L.trace("Trigger send life message.");
-          lifeEventBus.post(new SendLifeEvent());
+          lifeEventBus.post(new SendLifeEvent(getHostname(), getPort()));
         }
       }, 5, 5, TimeUnit.SECONDS);
     }

@@ -117,9 +117,6 @@ final class AutoConnectSocketConnection extends AbstractIdleService implements S
         return port;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void writeToSocket(byte[] bytes) throws IOException {
         L.trace("Try writing bytes={} to socket={} output stream.", bytes, socket);
@@ -162,7 +159,7 @@ final class AutoConnectSocketConnection extends AbstractIdleService implements S
                         readSocketTaskFactory.createReadSocketInputStreamTask(connected.getInputStream());
                 readFuture = connectAndReadExecService.submit(readTask);
                 Futures.addCallback(readFuture, readCallback);
-                socketConnectEvents.post(new SocketConnectedEvent());
+                socketConnectEvents.post(new SocketConnectedEvent(hostname, port));
             } catch (IOException e) {
                 closeOldSocketAndReconnectAsync();
             } catch (RuntimeException e) {

@@ -14,7 +14,7 @@ import java.net.Socket;
 public interface SocketConnection extends Service {
 
   /**
-   * Write bytes to the socket's underlying {@link OutputStream}.
+   * Write bytes to the underlying socket's {@link OutputStream}.
    *
    * @param bytes not NULL.
    * @throws IOException if writing failed.
